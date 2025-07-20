@@ -8,11 +8,12 @@ export const theme = createTheme({
     secondary: {
       main: '#22af88', 
     },
-    text: {
-      primary: '#333333', 
-    },
     background: {
-      default: '#f4f6f8',
+      default: '#F5F5F3', // Nowy, cieplejszy kolor tła strony
+      paper: '#ffffff',   // Tło dla "kartek" (Paper) i kart (Card) pozostaje białe
+    },
+    text: {
+      primary: '#333333',
     },
   },
   typography: {

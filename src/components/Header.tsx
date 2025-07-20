@@ -53,7 +53,7 @@ export function Header() {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Box component={RouterLink} to="/" sx={{ display: 'inline-block', my: 2 }}>
-        <img src='/logo.png' alt="Logo Firmy" style={{ height: 40 }} />
+        <img src='./logo.png' alt="Logo Firmy" style={{ height: 40 }} />
       </Box>
       <Divider />
       <List>
