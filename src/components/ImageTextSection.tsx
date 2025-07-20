@@ -17,7 +17,7 @@ export function ImageTextSection({ image, title, text, imageLeft = false }: Imag
               component="img"
               image={image}
               alt={title}
-              sx={{ width: '100%', borderRadius: 2, boxShadow: 3 }}
+              sx={{ width: '100%', borderRadius:  imageLeft ? '0px 50px 0px 50px' : '50px 0px 50px 0px', boxShadow: 3,}}
             />
           </Grid>
           <Grid size={{xs:12, md:6}}>
