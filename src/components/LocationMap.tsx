@@ -12,7 +12,7 @@ export function LocationMap() {
               Naturalnie blisko miasta
             </Typography>
             <Typography paragraph>
-              Iglasta Ostoja zlokalizowana jest przy ul. Iglastej we wschodniej części Bełchatowa, tuż przy dużym obszarze leśnym, co zapewni Ci ciszę, bliskość natury i zdrowy klimat. To dobrze skomunikowana okolica – korzystając z samochodu lub komunikacji miejskiej (w pobliżu przystanki autobusowe) szybko dotrzesz do centrum miasta. Dodatkowym atutem jest rozległa sieć tras spacerowych oraz rowerowych, idealna dla miłośników wędrówek i jednośladów.
+              Osiedle Symfonia zlokalizowana jest przy ul. Symfonicznej we wschodniej części miejscowości Górki, tuż przy dużym obszarze leśnym, co zapewni Ci ciszę, bliskość natury i zdrowy klimat. To dobrze skomunikowana okolica – korzystając z samochodu lub komunikacji miejskiej (w pobliżu przystanki autobusowe) szybko dotrzesz do centrum miasta. Dodatkowym atutem jest rozległa sieć tras spacerowych oraz rowerowych, idealna dla miłośników wędrówek i jednośladów.
             </Typography>
             <Button
               variant="contained"

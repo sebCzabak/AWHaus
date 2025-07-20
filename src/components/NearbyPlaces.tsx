@@ -6,9 +6,9 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import ChildFriendlyIcon from '@mui/icons-material/ChildFriendly';
 
 const places = [
-  { icon: <ParkIcon sx={{ fontSize: 60 }} />, name: 'Plac Narutowicza w centrum Bełchatowa (2,5 km)', time: '– 5 min samochodem' },
-  { icon: <ShoppingBagIcon sx={{ fontSize: 60 }} />, name: 'Galeria Bawełnianka (2,5 km)', time: '– 5 min samochodem' },
-  { icon: <ShoppingCartIcon sx={{ fontSize: 60 }} />, name: 'Hipermarket E.Leclerc (2,0 km)', time: '– 4 min samochodem' },
+  { icon: <ParkIcon sx={{ fontSize: 60 }} />, name: 'Kąpielisko bolko (3,5 km)', time: '– 7 min samochodem' },
+  { icon: <ShoppingBagIcon sx={{ fontSize: 60 }} />, name: 'Galeria Karolinka (10 km)', time: '– 15 min samochodem' },
+  { icon: <ShoppingCartIcon sx={{ fontSize: 60 }} />, name: 'Supermarket Aldi w Opolu (6,0 km)', time: '– 6 min samochodem' },
   { icon: <ParkIcon sx={{ fontSize: 60 }} />, name: 'Rozległy las (0 m)', time: '– na miejscu!' },
   { icon: <StorefrontIcon sx={{ fontSize: 60 }} />, name: 'Dino i paczkomat (450 m)', time: '– 5 min spacerem' },
   { icon: <ChildFriendlyIcon sx={{ fontSize: 60 }} />, name: 'Publiczne przedszkole i szkoła podstawowa (2,5 km)', time: '– 5 min samochodem' },

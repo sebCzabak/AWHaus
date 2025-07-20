@@ -9,7 +9,7 @@ export const theme = createTheme({
       main: '#22af88', 
     },
     background: {
-      default: '#F5F5F3', // Nowy, cieplejszy kolor tła strony
+      default: '#f1f1eaff', // Nowy, cieplejszy kolor tła strony
       paper: '#ffffff',   // Tło dla "kartek" (Paper) i kart (Card) pozostaje białe
     },
     text: {

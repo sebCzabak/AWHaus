@@ -18,6 +18,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import logo from '/logo.png';
 
 const navItems = [
   { text: 'Start', path: '/' },
@@ -53,7 +54,7 @@ export function Header() {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Box component={RouterLink} to="/" sx={{ display: 'inline-block', my: 2 }}>
-        <img src='./logo.png' alt="Logo Firmy" style={{ height: 40 }} />
+        <img src={logo} alt="Logo Firmy" style={{ height: 40 }} />
       </Box>
       <Divider />
       <List>
@@ -87,7 +88,7 @@ export function Header() {
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Box component={RouterLink} to="/" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-              <Box component="img" src="/logo.png" alt="Logo Firmy" sx={{ height: { xs: 65, md: 70 }, mr: 2 }} />
+              <Box component="img" src={logo} alt="Logo Firmy" sx={{ height: { xs: 65, md: 70 }, mr: 2 }} />
             </Box>
 
             {/* Menu na Desktop */}

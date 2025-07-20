@@ -11,7 +11,7 @@ const features = [
   },
   {
     icon: <SquareFootIcon sx={{ fontSize: 60 }} />,
-    title: 'Apartament 70,64 m² lub 81,73 m²',
+    title: 'Apartament 59 m², 67 m² lub 94 m²',
     description: 'Wybierz jeden z dwóch wariantów funkcjonalnych i nowoczesnych apartamentów – na parterze lub piętrze, z przestronnym układem pomieszczeń oraz wnętrzami pełnymi słońca przez cały dzień.',
   },
   {
