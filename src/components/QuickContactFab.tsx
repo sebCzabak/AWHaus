@@ -22,6 +22,7 @@ export function QuickContactFab() {
       <Stack
         spacing={2}
         sx={{
+          display: { xs: 'none', md: 'flex' }, 
           position: 'fixed',
           top: '50%',
           left: 24,
