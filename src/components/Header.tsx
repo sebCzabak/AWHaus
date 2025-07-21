@@ -103,7 +103,7 @@ export function Header() {
                     <Button
                       sx={{
                         mx: 1,
-                        color: isActive ? 'secondary.main' : 'text.primary',
+                        color: isActive ? 'secondary.main' : 'background.paper',
                         fontWeight: isActive ? 'bold' : 'normal',
                       }}
                     >
@@ -116,7 +116,7 @@ export function Header() {
               <Button
                 onClick={handleMenuOpen}
                 endIcon={<KeyboardArrowDownIcon />}
-                sx={{ mx: 1, color: 'text.primary' }}
+                sx={{ mx: 1, color: 'background.paper' }}
               >
                 Dla klienta
               </Button>

@@ -23,7 +23,18 @@ const features = [
 
 export function KeyFeatures() {
   return (
-    <Box sx={{ py: 6, backgroundColor: '#fff' }}>
+    <Box  sx={{ 
+        // py: 6 - Usuniemy padding na razie, aby lepiej kontrolować pozycję
+        position: 'relative',
+        marginTop: { xs: 0, md: '-100px' }, 
+        // --- POCZĄTEK ZMIANY ---
+        // Ustawiamy przezroczyste tło, aby zobaczyć, co jest pod spodem
+        backgroundColor: 'transparent',
+        // Ustawiamy z-index, aby mieć pewność, że komponent jest na wierzchu
+        zIndex: 2, 
+        // --- KONIEC ZMIANY ---
+      }}
+      >
       <Container maxWidth="lg">
         <Grid container spacing={4} justifyContent="center">
           {features.map((feature, index) => (
@@ -35,7 +46,7 @@ export function KeyFeatures() {
                   textAlign: 'center',
                   height: '100%',
                   backgroundColor: 'primary.main', // Kolor tła z Twojego przykładu
-                  color: 'secondry.main',
+                  color: 'background.paper',
                 }}
               >
                 <Box sx={{ color: 'white', mb: 2 }}>{feature.icon}</Box>
