@@ -2,6 +2,8 @@ import { Container, Grid, Paper, Typography, Box } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SquareFootIcon from '@mui/icons-material/SquareFoot';
 import FenceIcon from '@mui/icons-material/Fence';
+import { strongTextShadow } from '../theme';
+import {subtleTextShadow} from '../theme';
 
 const features = [
   {
@@ -24,15 +26,11 @@ const features = [
 export function KeyFeatures() {
   return (
     <Box  sx={{ 
-        // py: 6 - Usuniemy padding na razie, aby lepiej kontrolować pozycję
         position: 'relative',
         marginTop: { xs: 0, md: '-100px' }, 
-        // --- POCZĄTEK ZMIANY ---
-        // Ustawiamy przezroczyste tło, aby zobaczyć, co jest pod spodem
         backgroundColor: 'transparent',
-        // Ustawiamy z-index, aby mieć pewność, że komponent jest na wierzchu
         zIndex: 2, 
-        // --- KONIEC ZMIANY ---
+
       }}
       >
       <Container maxWidth="lg">
@@ -45,11 +43,11 @@ export function KeyFeatures() {
                   p: 4,
                   textAlign: 'center',
                   height: '100%',
-                  backgroundColor: 'primary.main', // Kolor tła z Twojego przykładu
-                  color: 'background.paper',
+                  backgroundColor: 'primary.main',
+                  color: 'secondary.main',...strongTextShadow,
                 }}
               >
-                <Box sx={{ color: 'white', mb: 2 }}>{feature.icon}</Box>
+                <Box sx={{ color: 'background.default', mb: 2 }}>{feature.icon}</Box>
                 <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
                   {feature.title}
                 </Typography>

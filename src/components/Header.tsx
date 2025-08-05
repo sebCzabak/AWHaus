@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import logo from '/logo.png';
+import logo from '/Logo.png';
 
 const navItems = [
   { text: 'Start', path: '/' },
@@ -103,7 +103,7 @@ export function Header() {
                     <Button
                       sx={{
                         mx: 1,
-                        color: isActive ? 'secondary.main' : 'background.paper',
+                        color: isActive ? 'text.primary':'background.paper',
                         fontWeight: isActive ? 'bold' : 'normal',
                       }}
                     >
@@ -139,7 +139,7 @@ export function Header() {
               aria-label="open drawer"
               edge="end"
               onClick={handleDrawerToggle}
-              sx={{ display: { xs: 'flex', md: 'none' }, color: 'text.primary' }}
+              sx={{ display: { xs: 'flex', md: 'none' }, color: 'text.secondry' }}
             >
               <MenuIcon />
             </IconButton>

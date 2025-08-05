@@ -36,7 +36,13 @@ export function QuickContactFab() {
         </Fab>
 
         {/* Przycisk do otwierania numeru telefonu */}
-        <Fab color="secondary" aria-label="phone" size="medium" onClick={() => setPhoneOpen(true)}>
+        <Fab 
+          color="default" 
+          aria-label="phone" 
+          size="medium" 
+          onClick={() => setPhoneOpen(true)}
+          sx={{ bgcolor: 'green', '&:hover': { bgcolor: 'green.main' } }}
+        >
           <PhoneIcon />
         </Fab>
       </Stack>

@@ -5,7 +5,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 export function TransparentDeveloperBadge() {
   const trigger = useScrollTrigger({
     disableHysteresis: true,
-    threshold: 10,
+
   });
   const [isExpanded,setIsExpaned]=useState(false);
 
@@ -35,7 +35,7 @@ export function TransparentDeveloperBadge() {
         <CheckCircleIcon sx={{
           mr: 1.5,
           fontSize: '2.2rem', 
-          color: 'secondary.main',
+          color: 'green.main',
         }} />
 
         <Collapse in={isExpanded} orientation="horizontal" timeout="auto">

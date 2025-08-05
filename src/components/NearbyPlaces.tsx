@@ -22,7 +22,7 @@ export function NearbyPlaces() {
           {places.map((place, index) => (
             <Grid size={{xs:12, sm:6, md:4}} key={index} >
               <Stack direction="row" spacing={2} alignItems="center">
-                <Box sx={{ p: 2, backgroundColor: '#af2249', borderRadius: 2, color: 'white' }}>
+                <Box sx={{ p: 2, backgroundColor: 'primary.main', borderRadius: 2, color: 'white' }}>
                   {place.icon}
                 </Box>
                 <Box>
