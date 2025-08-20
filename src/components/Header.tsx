@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
 import {
   AppBar,
@@ -37,7 +37,20 @@ const clientMenuItems = [
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+
   const isMenuOpen = Boolean(anchorEl);
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    // Nasłuchujemy na zdarzenie scroll
+    window.addEventListener('scroll', handleScroll);
+    // Czyścimy nasłuchiwanie po odmontowaniu komponentu
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -52,16 +65,34 @@ export function Header() {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Box component={RouterLink} to="/" sx={{ display: 'inline-block', my: 2 }}>
-        <img src={logo} alt="Logo Firmy" style={{ height: 40 }} />
+    <Box
+      onClick={handleDrawerToggle}
+      sx={{ textAlign: 'center' }}
+    >
+      <Box
+        component={RouterLink}
+        to="/"
+        sx={{ display: 'inline-block', my: 2 }}
+      >
+        <img
+          src={logo}
+          alt="Logo Firmy"
+          style={{ height: 40 }}
+        />
       </Box>
       <Divider />
       <List>
         {/* Standardowe linki w menu mobilnym */}
         {navItems.map((item) => (
-          <ListItem key={item.text} disablePadding>
-            <ListItemButton component={RouterLink} to={item.path} sx={{ textAlign: 'center' }}>
+          <ListItem
+            key={item.text}
+            disablePadding
+          >
+            <ListItemButton
+              component={RouterLink}
+              to={item.path}
+              sx={{ textAlign: 'center' }}
+            >
               <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
@@ -69,8 +100,15 @@ export function Header() {
         <Divider>Dla klienta</Divider>
         {/* Linki z dropdownu dodane bezpośrednio do menu mobilnego */}
         {clientMenuItems.map((item) => (
-          <ListItem key={item.text} disablePadding>
-            <ListItemButton component={RouterLink} to={item.path} sx={{ textAlign: 'center' }}>
+          <ListItem
+            key={item.text}
+            disablePadding
+          >
+            <ListItemButton
+              component={RouterLink}
+              to={item.path}
+              sx={{ textAlign: 'center' }}
+            >
               <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
@@ -79,16 +117,34 @@ export function Header() {
     </Box>
   );
 
-   return (
+  return (
     <>
       <AppBar
         position="sticky"
-        sx={{ backgroundColor: 'primary.main', boxShadow: '0 2px 4px -1px rgba(0,0,0,0.06)' }}
+        elevation={isScrolled ? 4 : 0}
+        sx={{
+          backgroundColor: isScrolled ? '#ceb78c' : 'transparent',
+          color: isScrolled ? 'black' : 'text.secondary',
+          transition: 'all 0.3s ease-in-out',
+          '& a, & button, & .MuiIconButton-root': {
+            color: isScrolled ? 'text.primary' : 'black',
+            transition: 'all 0.3s ease-in-out',
+          },
+        }}
       >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Box component={RouterLink} to="/" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-              <Box component="img" src={logo} alt="Logo Firmy" sx={{ height: { xs: 65, md: 70 }, mr: 2 }} />
+            <Box
+              component={RouterLink}
+              to="/"
+              sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}
+            >
+              <Box
+                component="img"
+                src={isScrolled ? '/Logo.png' : '/LogoW.png'}
+                alt="Logo Firmy"
+                sx={{ height: { xs: 55, md: 60 }, mr: 2, transition: 'all 0.3s ease-in-out' }}
+              />
             </Box>
 
             {/* Menu na Desktop */}
@@ -103,7 +159,7 @@ export function Header() {
                     <Button
                       sx={{
                         mx: 1,
-                        color: isActive ? 'text.primary':'background.paper',
+                        color: isActive ? 'text.primary' : 'background.paper',
                         fontWeight: isActive ? 'bold' : 'normal',
                       }}
                     >
@@ -112,7 +168,7 @@ export function Header() {
                   )}
                 </RouterLink>
               ))}
-              
+
               <Button
                 onClick={handleMenuOpen}
                 endIcon={<KeyboardArrowDownIcon />}
@@ -128,7 +184,12 @@ export function Header() {
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
               >
                 {clientMenuItems.map((item) => (
-                  <MenuItem key={item.text} component={RouterLink} to={item.path} onClick={handleMenuClose}>
+                  <MenuItem
+                    key={item.text}
+                    component={RouterLink}
+                    to={item.path}
+                    onClick={handleMenuClose}
+                  >
                     {item.text}
                   </MenuItem>
                 ))}

@@ -14,6 +14,6 @@ export const sitePlanCoordinates: OverlayData[] = [
   // ... i tak dalej dla wszystkich 32 mieszkań
   { id: '9a', top: '3.5%', left: '53%', width: '27%', height: '5%' },
   { id: '9b', top: '8.5%', left: '53%', width: '27%', height: '4.6%' },
-    { id: '10a', top: '17.8%', left: '53%', width: '27%', height: '5%' },
+  { id: '10a', top: '17.8%', left: '53%', width: '27%', height: '5%' },
   { id: '10b', top: '13%', left: '53%', width: '27%', height: '4.6%' },
 ];

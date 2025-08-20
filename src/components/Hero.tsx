@@ -1,6 +1,9 @@
-import { Box, keyframes, Typography } from '@mui/material';
-
-import heroImage from '../assets/wizualizacja/15.png'
+import { Box, Typography, Button, Stack, Paper } from '@mui/material';
+import { keyframes } from '@mui/system';
+import { strongTextShadow } from '../theme';
+import heroImage from '../assets/wizualizacja/14.png';
+import { Link as RouterLink } from 'react-router-dom';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const kenburns = keyframes`
   0% {
@@ -15,12 +18,12 @@ export function Hero() {
   return (
     <Box
       sx={{
-        height: '70vh',
-        position: 'relative', 
-        overflow: 'hidden',   
+        height: '100vh',
+        position: 'relative',
+        overflow: 'hidden',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-start',
         color: 'white',
         textAlign: 'center',
         px: 2,
@@ -40,13 +43,35 @@ export function Hero() {
         },
       }}
     >
-      <Box sx={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', p: 4, borderRadius: 2 }}>
-        <Typography variant="h1" component="h1" gutterBottom>
+      <Box sx={{ p: { xs: 2, md: 6 }, zIndex: 1, maxWidth: '600px' }}>
+        <Typography
+          variant="h2" // Mniejszy nagłówek
+          component="h1"
+          sx={{ color: '#ab965d', ...strongTextShadow, textAlign: 'left' }}
+        >
           Znajdź swoje wymarzone mieszkanie
         </Typography>
-        <Typography variant="h5">
-          Nowoczesne osiedla w najlepszych lokalizacjach.
-        </Typography>
+
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{ mt: 3, alignItems: 'center' }}
+        >
+          <Paper sx={{ p: '12px 16px', backgroundColor: 'rgba(255,255,255,0.9)', color: 'black' }}>
+            <Typography sx={{ fontWeight: 'bold' }}>
+              Cena za m² już od <span style={{ color: '#b19f87' }}>8500 zł</span>
+            </Typography>
+          </Paper>
+          <Button
+            component={RouterLink}
+            to="/oferta"
+            variant="contained"
+            size="large"
+            endIcon={<ArrowForwardIcon />}
+          >
+            Zobacz ofertę
+          </Button>
+        </Stack>
       </Box>
     </Box>
   );

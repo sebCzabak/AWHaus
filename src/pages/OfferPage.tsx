@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
+  Box,
   Container,
   Typography,
   Grid,
@@ -14,10 +15,10 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 
 // Importy z Firebase
-import { db, storage } from '../data/firebase'; // Zmieniamy import na plik konfiguracyjny
+import { db, storage } from '../data/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
-import { type Investment } from '../data/investments'; // Dalej używamy interfejsu
+import { type Investment } from '../data/investments';
 
 export function OfferPage() {
   const [investments, setInvestments] = useState<Investment[]>([]);
@@ -27,25 +28,36 @@ export function OfferPage() {
   useEffect(() => {
     const fetchInvestments = async () => {
       try {
-        // 1. Pobierz dane dokumentów z kolekcji 'investments'
         const querySnapshot = await getDocs(collection(db, 'investments'));
-        const investmentsFromDb = querySnapshot.docs.map(
-          (doc) => doc.data() as Omit<Investment, 'mainImage'> & { mainImage: string }
-        );
 
-        // 2. Dla każdej inwestycji pobierz publiczny URL do jej zdjęcia ze Storage
+        if (querySnapshot.empty) {
+        }
+
+        const investmentsFromDb = querySnapshot.docs.map((doc) => ({
+          ...(doc.data() as Omit<Investment, 'id'>),
+          id: doc.id,
+        }));
+
         const investmentsWithImages = await Promise.all(
           investmentsFromDb.map(async (inv) => {
-            const imageRef = ref(storage, inv.mainImage);
-            const imageUrl = await getDownloadURL(imageRef);
-            return { ...inv, mainImage: imageUrl };
+            try {
+              if (inv.mainImage && typeof inv.mainImage === 'string' && inv.mainImage.length > 0) {
+                const imageRef = ref(storage, inv.mainImage);
+                const imageUrl = await getDownloadURL(imageRef);
+                return { ...inv, mainImage: imageUrl };
+              }
+              return { ...inv, mainImage: '' };
+            } catch (imageError) {
+              console.error(`Nie udało się pobrać zdjęcia dla inwestycji ${inv.id}:`, imageError);
+              return { ...inv, mainImage: '' };
+            }
           })
         );
 
         setInvestments(investmentsWithImages);
       } catch (err) {
-        console.error(err);
-        setError('Nie udało się załadować inwestycji. Spróbuj ponownie później.');
+        console.error('Główny błąd Firebase:', err);
+        setError('Nie udało się załadować inwestycji. Sprawdź konsolę, aby zobaczyć szczegóły.');
       } finally {
         setLoading(false);
       }
@@ -103,39 +115,42 @@ export function OfferPage() {
             }}
             key={investment.id}
           >
-            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <CardMedia
-                component="img"
-                height="200"
-                image={investment.mainImage}
-                alt={investment.name}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography
-                  gutterBottom
-                  variant="h5"
-                  component="div"
-                >
-                  {investment.name}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  Lokalizacja: {investment.location}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button
-                  component={RouterLink}
-                  to={`/oferta/${investment.id}`}
-                  size="small"
-                  color="primary"
-                >
-                  Zobacz szczegóły
-                </Button>
-              </CardActions>
-            </Card>
+            <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={investment.mainImage}
+                  alt={investment.name}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                  >
+                    {investment.name}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    Lokalizacja: {investment.location}
+                    {investment.cenaM2 && ` | Cena: ${investment.cenaM2} zł/m²`}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    component={RouterLink}
+                    to={`/oferta/${investment.id}`}
+                    size="small"
+                    color="primary"
+                  >
+                    Zobacz szczegóły
+                  </Button>
+                </CardActions>
+              </Card>
+            </Box>
           </Grid>
         ))}
       </Grid>

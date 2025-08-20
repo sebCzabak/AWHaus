@@ -3,40 +3,49 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SquareFootIcon from '@mui/icons-material/SquareFoot';
 import FenceIcon from '@mui/icons-material/Fence';
 import { strongTextShadow } from '../theme';
-import {subtleTextShadow} from '../theme';
 
 const features = [
   {
     icon: <LocationOnIcon sx={{ fontSize: 60 }} />,
     title: 'Tylko 5 minut od centrum miasta',
-    description: 'Zamieszkaj w sąsiedztwie lasu – w spokojnej, cichej i zielonej okolicy, która jednocześnie znajduje się nieopodal serca Bełchatowa, zapewniając wygodny dostęp do całej infrastruktury tego miasta i okolic.',
+    description:
+      'Zamieszkaj w sąsiedztwie lasu – w spokojnej, cichej i zielonej okolicy, która jednocześnie znajduje się nieopodal serca Bełchatowa, zapewniając wygodny dostęp do całej infrastruktury tego miasta i okolic.',
   },
   {
     icon: <SquareFootIcon sx={{ fontSize: 60 }} />,
     title: 'Apartament 59 m², 67 m² lub 94 m²',
-    description: 'Wybierz jeden z dwóch wariantów funkcjonalnych i nowoczesnych apartamentów – na parterze lub piętrze, z przestronnym układem pomieszczeń oraz wnętrzami pełnymi słońca przez cały dzień.',
+    description:
+      'Wybierz jeden z dwóch wariantów funkcjonalnych i nowoczesnych apartamentów – na parterze lub piętrze, z przestronnym układem pomieszczeń oraz wnętrzami pełnymi słońca przez cały dzień.',
   },
   {
     icon: <FenceIcon sx={{ fontSize: 60 }} />,
     title: 'Prywatny ogródek do dyspozycji',
-    description: 'Wypoczywaj w indywidualnym ogródku, znajdującym się bezpośrednio przy budynku – apartamenty na parterze mają w nim gotowe tarasy, a lokale na piętrze posiadają dodatkowo duże balkony.',
+    description:
+      'Wypoczywaj w indywidualnym ogródku, znajdującym się bezpośrednio przy budynku – apartamenty na parterze mają w nim gotowe tarasy, a lokale na piętrze posiadają dodatkowo duże balkony.',
   },
 ];
 
 export function KeyFeatures() {
   return (
-    <Box  sx={{ 
+    <Box
+      sx={{
         position: 'relative',
-        marginTop: { xs: 0, md: '-100px' }, 
+        marginTop: { xs: 0, md: '-100px' },
         backgroundColor: 'transparent',
-        zIndex: 2, 
-
+        zIndex: 2,
       }}
-      >
+    >
       <Container maxWidth="lg">
-        <Grid container spacing={4} justifyContent="center">
+        <Grid
+          container
+          spacing={4}
+          justifyContent="center"
+        >
           {features.map((feature, index) => (
-            <Grid size={{xs:12,md:4}}key={index} >
+            <Grid
+              size={{ xs: 12, md: 4 }}
+              key={index}
+            >
               <Paper
                 elevation={3}
                 sx={{
@@ -44,11 +53,17 @@ export function KeyFeatures() {
                   textAlign: 'center',
                   height: '100%',
                   backgroundColor: 'primary.main',
-                  color: 'secondary.main',...strongTextShadow,
+                  color: 'secondary.main',
+                  ...strongTextShadow,
                 }}
               >
                 <Box sx={{ color: 'background.default', mb: 2 }}>{feature.icon}</Box>
-                <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
+                <Typography
+                  variant="h5"
+                  component="h3"
+                  gutterBottom
+                  sx={{ fontWeight: 'bold' }}
+                >
                   {feature.title}
                 </Typography>
                 <Typography variant="body1">{feature.description}</Typography>

@@ -1,4 +1,4 @@
-import { createTheme,type PaletteColor, type PaletteColorOptions } from '@mui/material/styles';
+import { createTheme, type PaletteColor, type PaletteColorOptions } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -11,21 +11,21 @@ declare module '@mui/material/styles' {
 export const theme = createTheme({
   palette: {
     primary: {
-      main: '#ad9874ff', //#af2249
+      main: '#ceb78c', //#af2249
     },
     secondary: {
-      main: '#000', 
+      main: '#000',
     },
-    green:{
-      main:'#22af88',
+    green: {
+      main: '#22af88',
     },
     background: {
-      default: '#f1f1eaff', 
+      default: '#f1f1eaff',
       paper: '#ffffff',
     },
     text: {
       primary: '#333333',
-      secondary:'#d4b04cff'
+      secondary: '#d4b04cff',
     },
   },
   typography: {
@@ -44,16 +44,14 @@ export const theme = createTheme({
       lineHeight: 1.6,
     },
     button: {
-      textTransform: 'none', 
+      textTransform: 'none',
       fontWeight: 600,
       fontSize: '1rem',
-    }
+    },
   },
-  
 });
 export const strongTextShadow = {
-  textShadow: 
-    '-1px -1px 0 #, 1px -1px 0 #d4b04cff, -1px 1px 0 #d4b04cff, 1px 1px 0 #d4b04cff'
+  textShadow: '-1px -1px 0 #, 1px -1px 0 #d4b04cff, -1px 1px 0 #d4b04cff, 1px 1px 0 #d4b04cff',
 };
 export const subtleTextShadow = {
   // textShadow: '1px 1px 3px rgba(37, 37, 37, 0.9)'

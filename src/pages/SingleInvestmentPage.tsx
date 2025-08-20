@@ -20,11 +20,12 @@ import { NotFoundPage } from './NotFoundPage';
 import { InteractiveMapOverlay } from '../components/InteractiveMapOverlay';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
-import type { Investment } from '../data/investments';
+// Importy z Firebase
+import { db, storage } from '../data/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../data/firebase';
+import { ref, getDownloadURL } from 'firebase/storage';
+import { type Investment } from '../data/investments';
 
-// Komponent pomocniczy do wyświetlania treści aktywnej zakładki
 function TabPanel(props: { children?: React.ReactNode; index: number; value: number }) {
   const { children, value, index, ...other } = props;
   return (
@@ -37,16 +38,13 @@ function TabPanel(props: { children?: React.ReactNode; index: number; value: num
     </div>
   );
 }
-
 export function SingleInvestmentPage() {
   const { investmentId } = useParams<{ investmentId: string }>();
 
-  // Stany do zarządzania danymi, ładowaniem i błędami
   const [investment, setInvestment] = useState<Investment | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Stany dla interfejsu (zakładki, lightbox, podświetlanie)
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -57,12 +55,26 @@ export function SingleInvestmentPage() {
     const fetchInvestment = async () => {
       try {
         setLoading(true);
-        // Tworzymy referencję do konkretnego dokumentu w kolekcji 'investments'
         const docRef = doc(db, 'investments', investmentId);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          setInvestment(docSnap.data() as Investment);
+          const investmentData = {
+            ...(docSnap.data() as Omit<Investment, 'id'>),
+            id: docSnap.id,
+          };
+
+          if (investmentData.investmentGallery && investmentData.investmentGallery.length > 0) {
+            const galleryUrls = await Promise.all(
+              investmentData.investmentGallery.map((imagePath) => {
+                const imageRef = ref(storage, imagePath);
+                return getDownloadURL(imageRef);
+              })
+            );
+            investmentData.investmentGallery = galleryUrls;
+          }
+
+          setInvestment(investmentData);
         } else {
           setError('Nie znaleziono takiej inwestycji.');
         }
@@ -115,8 +127,6 @@ export function SingleInvestmentPage() {
         </Typography>
 
         <Paper sx={{ mt: 4 }}>
-          {/* Reszta komponentu (zakładki, mapa, lista mieszkań) pozostaje bez zmian,
-              ponieważ korzysta ze stanu 'investment', który jest teraz wypełniany danymi z Firebase. */}
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs
               value={activeTab}
@@ -174,8 +184,12 @@ export function SingleInvestmentPage() {
                       }}
                     >
                       <ListItemText
-                        primary={`Mieszkanie ${apt.id.toUpperCase()} - ${apt.area.toFixed(2)} m²`}
-                        secondary={`Piętro: ${apt.floor === 0 ? 'Parter' : apt.floor}, Pokoje: ${apt.rooms}`}
+                        primary={`Mieszkanie ${apt.id.toUpperCase()} - ${
+                          typeof apt.area === 'number' ? apt.area.toFixed(2) : '??'
+                        } m²`}
+                        secondary={`Piętro: ${apt.floor === 0 ? 'Parter' : apt.floor ?? '??'}, Pokoje: ${
+                          apt.rooms ?? '??'
+                        }`}
                       />
                       <Chip
                         label={apt.status}
