@@ -5,9 +5,9 @@ import { ImageTextSection } from '../components/ImageTextSection';
 import { ContactForm } from '../components/ContactForm';
 import { GoogleMap } from '../components/GoogleMap';
 
-import architekturaImage from '../assets/wizualizacja/24.png';
-import lokalizacjaImage from '../assets/wizualizacja/18.png';
-import designImage from '../assets/wizualizacja/19.png';
+import architekturaImage from '../assets/wizualizacja/24.jpg';
+import lokalizacjaImage from '../assets/wizualizacja/18.jpg';
+import designImage from '../assets/wizualizacja/19.jpg';
 import { KeyFeatures } from '../components/KeyFeatures';
 import { NearbyPlaces } from '../components/NearbyPlaces';
 import { LocationMap } from '../components/LocationMap';

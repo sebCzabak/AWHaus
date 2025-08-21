@@ -1,7 +1,7 @@
 import { Box, Typography, Button, Stack, Paper } from '@mui/material';
 import { keyframes } from '@mui/system';
 import { strongTextShadow } from '../theme';
-import heroImage from '../assets/wizualizacja/14.png';
+import heroImage from '../assets/wizualizacja/14.jpg';
 import { Link as RouterLink } from 'react-router-dom';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
@@ -10,7 +10,7 @@ const kenburns = keyframes`
     transform: scale(1);
   }
   100% {
-    transform: scale(1.1); // Możesz dostosować siłę przybliżenia
+    transform: scale(1.1); 
   }
 `;
 
@@ -45,7 +45,7 @@ export function Hero() {
     >
       <Box sx={{ p: { xs: 2, md: 6 }, zIndex: 1, maxWidth: '600px' }}>
         <Typography
-          variant="h2" // Mniejszy nagłówek
+          variant="h2"
           component="h1"
           sx={{ color: '#ab965d', ...strongTextShadow, textAlign: 'left' }}
         >

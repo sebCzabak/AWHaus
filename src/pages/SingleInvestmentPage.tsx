@@ -14,16 +14,17 @@ import {
   Tab,
   ImageList,
   ImageListItem,
-  CircularProgress,
+  Skeleton,
 } from '@mui/material';
 import { NotFoundPage } from './NotFoundPage';
 import { InteractiveMapOverlay } from '../components/InteractiveMapOverlay';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
+import { ImageWithSkeleton } from '../components/ImageWithSkeleton';
 // Importy z Firebase
 import { db, storage } from '../data/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { ref, getDownloadURL } from 'firebase/storage';
+import { ref, getDownloadURL, listAll } from 'firebase/storage';
 import { type Investment } from '../data/investments';
 
 function TabPanel(props: { children?: React.ReactNode; index: number; value: number }) {
@@ -48,13 +49,16 @@ export function SingleInvestmentPage() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [galleryUrls, setGalleryUrls] = useState<string[]>([]);
 
   useEffect(() => {
     if (!investmentId) return;
 
-    const fetchInvestment = async () => {
+    const fetchInvestmentData = async () => {
       try {
         setLoading(true);
+        // Krok 1: Pobierz dane inwestycji z Firestore (bez zmian)
         const docRef = doc(db, 'investments', investmentId);
         const docSnap = await getDoc(docRef);
 
@@ -63,40 +67,86 @@ export function SingleInvestmentPage() {
             ...(docSnap.data() as Omit<Investment, 'id'>),
             id: docSnap.id,
           };
-
-          if (investmentData.investmentGallery && investmentData.investmentGallery.length > 0) {
-            const galleryUrls = await Promise.all(
-              investmentData.investmentGallery.map((imagePath) => {
-                const imageRef = ref(storage, imagePath);
-                return getDownloadURL(imageRef);
-              })
-            );
-            investmentData.investmentGallery = galleryUrls;
-          }
-
           setInvestment(investmentData);
+
+          // --- POCZĄTEK POPRAWKI ---
+          // Krok 2: Pobierz wszystkie zdjęcia ze STAŁEGO folderu 'investments/osiedle'
+          const galleryFolderRef = ref(storage, 'investments/osiedle');
+          // --- KONIEC POPRAWKI ---
+
+          const response = await listAll(galleryFolderRef);
+
+          const urls = await Promise.all(response.items.map((itemRef) => getDownloadURL(itemRef)));
+          setGalleryUrls(urls);
         } else {
           setError('Nie znaleziono takiej inwestycji.');
         }
       } catch (err) {
         setError('Błąd podczas ładowania danych.');
+        console.error('Błąd Firebase:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchInvestment();
+    fetchInvestmentData();
   }, [investmentId]);
 
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
 
-  // Obsługa ładowania i błędów
   if (loading) {
     return (
-      <Container sx={{ py: 5, textAlign: 'center' }}>
-        <CircularProgress />
+      <Container
+        maxWidth="lg"
+        sx={{ py: 5 }}
+      >
+        {/* Szkielet dla tytułów */}
+        <Skeleton
+          variant="text"
+          width="60%"
+          sx={{ fontSize: '3rem' }}
+        />
+        <Skeleton
+          variant="text"
+          width="80%"
+          sx={{ fontSize: '1.5rem' }}
+        />
+
+        <Paper sx={{ mt: 4 }}>
+          {/* Szkielet dla zakładek */}
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={0}>
+              <Tab label={<Skeleton width={150} />} />
+              <Tab label={<Skeleton width={150} />} />
+            </Tabs>
+          </Box>
+
+          {/* Szkielet dla panelu z galerią */}
+          <Box sx={{ p: 3 }}>
+            <ImageList
+              variant="masonry"
+              cols={3}
+              gap={8}
+            >
+              {/* Renderujemy 6 szkieletów w miejscu zdjęć */}
+              {Array.from(new Array(6)).map((_, index) => (
+                <ImageListItem key={index}>
+                  <Skeleton
+                    variant="rectangular"
+                    sx={{ borderRadius: '8px' }}
+                    height={index % 2 === 0 ? 250 : 180}
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </Box>
+        </Paper>
       </Container>
     );
   }
@@ -127,6 +177,7 @@ export function SingleInvestmentPage() {
         </Typography>
 
         <Paper sx={{ mt: 4 }}>
+          {/* Nawigacja w zakładkach */}
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs
               value={activeTab}
@@ -138,6 +189,7 @@ export function SingleInvestmentPage() {
             </Tabs>
           </Box>
 
+          {/* Panel dla pierwszej zakładki - Interaktywny Plan */}
           <TabPanel
             value={activeTab}
             index={0}
@@ -205,27 +257,31 @@ export function SingleInvestmentPage() {
             </Grid>
           </TabPanel>
 
+          {/* Panel dla drugiej zakładki - Galeria */}
           <TabPanel
             value={activeTab}
             index={1}
           >
-            {investment.investmentGallery && investment.investmentGallery.length > 0 ? (
+            {galleryUrls.length > 0 ? (
               <ImageList
                 variant="masonry"
                 cols={3}
                 gap={8}
               >
-                {investment.investmentGallery.map((imgSrc, index) => (
+                {galleryUrls.map((imgSrc, index) => (
                   <ImageListItem
                     key={imgSrc}
-                    onClick={() => setLightboxOpen(true)}
+                    onClick={() => openLightbox(index)}
+                    sx={{ cursor: 'pointer' }}
                   >
-                    <img
+                    {/* --- POCZĄTEK ZMIANY --- */}
+                    {/* Zamiast <img> używamy naszego nowego komponentu */}
+                    <ImageWithSkeleton
                       src={imgSrc}
                       alt={`Wizualizacja ${index + 1}`}
-                      loading="lazy"
-                      style={{ borderRadius: '8px', cursor: 'pointer' }}
+                      height={index % 2 === 0 ? 250 : 180} // Ustawiamy wysokość
                     />
+                    {/* --- KONIEC ZMIANY --- */}
                   </ImageListItem>
                 ))}
               </ImageList>
@@ -236,13 +292,13 @@ export function SingleInvestmentPage() {
         </Paper>
       </Container>
 
-      {investment.investmentGallery && (
-        <Lightbox
-          open={lightboxOpen}
-          close={() => setLightboxOpen(false)}
-          slides={investment.investmentGallery.map((src) => ({ src }))}
-        />
-      )}
+      {/* Lightbox dla galerii inwestycji */}
+      <Lightbox
+        open={lightboxOpen}
+        close={() => setLightboxOpen(false)}
+        slides={galleryUrls.map((src) => ({ src }))}
+        index={lightboxIndex}
+      />
     </>
   );
 }
