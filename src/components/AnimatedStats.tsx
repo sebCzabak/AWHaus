@@ -18,7 +18,7 @@ const stats = [
 export function AnimatedStats() {
   const { ref: inViewRef, inView } = useInView({
     triggerOnce: true,
-    threshold: 0.3,
+    threshold: 0.2,
   });
 
   return (

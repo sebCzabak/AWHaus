@@ -11,7 +11,7 @@ interface Props {
 export function FadeInOnScroll({ children, direction = 'up', delay = 0 }: Props) {
   const { ref, inView } = useInView({
     triggerOnce: true, // Animacja uruchomi się tylko raz
-    threshold: 0.2, // Uruchom, gdy 20% elementu jest widoczne
+    threshold: 0.3, // Uruchom, gdy 20% elementu jest widoczne
   });
 
   const getTransform = () => {
@@ -26,7 +26,7 @@ export function FadeInOnScroll({ children, direction = 'up', delay = 0 }: Props)
       sx={{
         opacity: inView ? 1 : 0,
         transform: inView ? 'none' : getTransform(),
-        transition: `opacity 0.8s ease-out, transform 0.6s ease-out`,
+        transition: `opacity 0.7s ease-out, transform 0.5s ease-out`,
         transitionDelay: `${delay}ms`,
         // Dodajemy większy odstęp między sekcjami
         my: { xs: 4, md: 8 },

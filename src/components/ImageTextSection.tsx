@@ -22,6 +22,7 @@ export function ImageTextSection({ image, title, text, imageLeft = false }: Imag
             <ImageWithOffsetBg
               src={image}
               alt={title}
+              offsetDirection='bottom-right'
             />
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>

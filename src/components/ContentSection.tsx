@@ -20,6 +20,7 @@ export function ContentSection({ imageSrc, title, children, imageOnLeft = false 
     <Box
       ref={ref}
       sx={{ py: { xs: 4, md: 8 }, overflow: 'hidden' }}
+
     >
       {/* Używamy teraz pełnej szerokości lg */}
       <Container maxWidth="lg">
@@ -33,7 +34,7 @@ export function ContentSection({ imageSrc, title, children, imageOnLeft = false 
               left: 0,
               width: '100%',
               height: '100%',
-              backgroundColor: 'white',
+               backgroundColor: '##f4f6f8', 
               borderRadius: { xs: 2, md: '12px' },
               zIndex: 0,
               transform: inView ? 'translateX(0)' : imageOnLeft ? 'translateX(100%)' : 'translateX(-100%)',
@@ -56,16 +57,16 @@ export function ContentSection({ imageSrc, title, children, imageOnLeft = false 
               transition: 'transform 0.9s ease-out 0.3s, opacity 1s ease-out 0.3s',
             }}
           >
-            <Grid size={{ xs: 12, md: 6 }}>
+            <Grid size={{ xs: 12, md: 7 }}>
               <Box sx={{ p: { xs: 2, md: 4 } }}>
                 <ImageWithSkeleton
                   src={imageSrc}
                   alt={title}
-                  height={350}
+                  height={450}
                 />
               </Box>
             </Grid>
-            <Grid size={{ xs: 12, md: 6 }}>
+            <Grid size={{ xs: 12, md: 5 }}>
               <Box sx={{ p: { xs: 2, md: 4 } }}>
                 <Typography
                   variant="h2"

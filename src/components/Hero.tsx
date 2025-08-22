@@ -24,7 +24,7 @@ export function Hero() {
         display: 'flex',
         alignItems: 'flex-end',
         justifyContent: 'flex-start',
-        color: 'white',
+        color: '#f4f6f8',
         textAlign: 'center',
         px: 2,
 
