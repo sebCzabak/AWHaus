@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useParams, Link as RouterLink } from 'react-router-dom';
 import {
   Container,
@@ -39,6 +39,41 @@ function TabPanel(props: { children?: React.ReactNode; index: number; value: num
     </div>
   );
 }
+const customApartmentOrder = [
+  '1a',
+  '1b',
+  '2b',
+  '2a',
+  '9a',
+  '9b',
+  '10b',
+  '10a',
+  '3a',
+  '3b',
+  '4b',
+  '4a',
+  '11a',
+  '11b',
+  '12b',
+  '12a',
+  '5a',
+  '5b',
+  '6b',
+  '6a',
+  '13a',
+  '13b',
+  '14b',
+  '14a',
+  '7a',
+  '7b',
+  '8b',
+  '8a',
+  '15a',
+  '15b',
+  '16b',
+  '16a',
+];
+
 export function SingleInvestmentPage() {
   const { investmentId } = useParams<{ investmentId: string }>();
 
@@ -99,6 +134,17 @@ export function SingleInvestmentPage() {
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
+  const sortedApartments = useMemo(() => {
+    if (!investment?.apartments) {
+      return [];
+    }
+    return [...investment.apartments].sort((a, b) => {
+      // Porównujemy pozycję ID każdego mieszkania w naszej tablicy sortującej
+      const indexA = customApartmentOrder.indexOf(a.id);
+      const indexB = customApartmentOrder.indexOf(b.id);
+      return indexA - indexB;
+    });
+  }, [investment]);
 
   if (loading) {
     return (
@@ -157,6 +203,11 @@ export function SingleInvestmentPage() {
 
   return (
     <>
+      <title>{`${investment.name} - ${investment.location} | AWHaus Deweloper`}</title>
+      <meta
+        name="description"
+        content={investment.description}
+      />
       <Container
         maxWidth="lg"
         sx={{ py: 5 }}
@@ -220,12 +271,12 @@ export function SingleInvestmentPage() {
                   Dostępne lokale
                 </Typography>
                 <List sx={{ border: '1px solid #ddd', borderRadius: 2, overflow: 'hidden' }}>
-                  {investment.apartments.map((apt, index) => (
+                  {sortedApartments.map((apt, index) => (
                     <ListItem
                       key={apt.id}
                       component={RouterLink}
                       to={`/oferta/${investment.id}/${apt.id}`}
-                      divider={index < investment.apartments.length - 1}
+                      divider={index < sortedApartments.length - 1} // Używamy długości nowej tablicy
                       onMouseEnter={() => setHoveredId(apt.id)}
                       onMouseLeave={() => setHoveredId(null)}
                       sx={{
@@ -274,14 +325,11 @@ export function SingleInvestmentPage() {
                     onClick={() => openLightbox(index)}
                     sx={{ cursor: 'pointer' }}
                   >
-                    {/* --- POCZĄTEK ZMIANY --- */}
-                    {/* Zamiast <img> używamy naszego nowego komponentu */}
                     <ImageWithSkeleton
                       src={imgSrc}
                       alt={`Wizualizacja ${index + 1}`}
-                      height={index % 2 === 0 ? 250 : 180} // Ustawiamy wysokość
+                      height={index % 2 === 0 ? 250 : 180}
                     />
-                    {/* --- KONIEC ZMIANY --- */}
                   </ImageListItem>
                 ))}
               </ImageList>

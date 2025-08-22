@@ -1,4 +1,5 @@
-import { Container, Grid, CardMedia, Typography, Box } from '@mui/material';
+import { Container, Grid, Typography, Box } from '@mui/material';
+import { ImageWithOffsetBg } from './ImageWithOffsetBg';
 
 interface ImageTextSectionProps {
   image: string;
@@ -11,17 +12,25 @@ export function ImageTextSection({ image, title, text, imageLeft = false }: Imag
   return (
     <Box sx={{ py: 6 }}>
       <Container>
-        <Grid container spacing={4} alignItems="center" direction={imageLeft ? 'row' : 'row-reverse'}>
-          <Grid size={{xs:12, md:6}}>
-            <CardMedia
-              component="img"
-              image={image}
+        <Grid
+          container
+          spacing={4}
+          alignItems="center"
+          direction={imageLeft ? 'row' : 'row-reverse'}
+        >
+          <Grid size={{ xs: 12, md: 6 }}>
+            <ImageWithOffsetBg
+              src={image}
               alt={title}
-              sx={{ width: '100%', borderRadius:  imageLeft ? '0px 50px 0px 50px' : '50px 0px 50px 0px', boxShadow: 3,}}
             />
           </Grid>
-          <Grid size={{xs:12, md:6}}>
-            <Typography variant="h2" component="h2">{title}</Typography>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Typography
+              variant="h2"
+              component="h2"
+            >
+              {title}
+            </Typography>
             <Typography variant="body1">{text}</Typography>
           </Grid>
         </Grid>

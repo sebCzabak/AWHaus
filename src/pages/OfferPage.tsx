@@ -116,71 +116,78 @@ export function OfferPage() {
   }
 
   return (
-    <Container
-      maxWidth="lg"
-      sx={{ py: 5 }}
-    >
-      <Typography
-        variant="h2"
-        component="h1"
-        gutterBottom
+    <>
+      <title>Nowe Mieszkania i Domy na Sprzedaż w Opolu - Oferta AWHaus</title>
+      <meta
+        name="description"
+        content="Zobacz naszą aktualną ofertę nowych mieszkań i domów w Opolu. Sprawdź dostępne metraże, ceny i lokalizacje na Osiedlu Symfonia. Znajdź swoje wymarzone miejsce."
+      />
+      <Container
+        maxWidth="lg"
+        sx={{ py: 5 }}
       >
-        Nasze Inwestycje
-      </Typography>
-      <Typography
-        variant="h5"
-        color="text.secondary"
-        paragraph
-      >
-        Zobacz nasze aktualne i planowane inwestycje.
-      </Typography>
+        <Typography
+          variant="h2"
+          component="h1"
+          gutterBottom
+        >
+          Nasze Inwestycje
+        </Typography>
+        <Typography
+          variant="h5"
+          color="text.secondary"
+          paragraph
+        >
+          Zobacz nasze aktualne i planowane inwestycje.
+        </Typography>
 
-      <Grid
-        container
-        spacing={4}
-        sx={{ mt: 2 }}
-      >
-        {investments.map((investment) => (
-          <Grid
-            size={{ xs: 12, md: 4 }}
-            key={investment.id}
-          >
-            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <ImageWithSkeleton
-                src={investment.mainImage}
-                alt={investment.name}
-                height={200}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography
-                  gutterBottom
-                  variant="h5"
-                  component="div"
-                >
-                  {investment.name}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  Lokalizacja: {investment.location}
-                  {investment.cenaM2 && ` | Cena: ${investment.cenaM2} zł/m²`}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button
-                  component={RouterLink}
-                  to={`/oferta/${investment.id}`}
-                  size="small"
-                  color="primary"
-                >
-                  Zobacz szczegóły
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+        <Grid
+          container
+          spacing={4}
+          sx={{ mt: 2 }}
+        >
+          {investments.map((investment) => (
+            <Grid
+              size={{ xs: 12, md: 4 }}
+              key={investment.id}
+            >
+              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <ImageWithSkeleton
+                  src={investment.mainImage}
+                  alt={investment.name}
+                  height={200}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                  >
+                    {investment.name}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    Lokalizacja: {investment.location}
+                    {investment.cenaM2 && ` | Cena: ${investment.cenaM2} zł/m²`}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    component={RouterLink}
+                    to={`/oferta/${investment.id}`}
+                    size="small"
+                    color="primary"
+                  >
+                    Zobacz szczegóły
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </>
   );
 }

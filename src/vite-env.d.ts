@@ -1,4 +1,3 @@
-
 /// <reference types="vite/client" />
 
 declare module '*.png' {
@@ -20,3 +19,5 @@ declare module '*.jpg' {
   const value: string;
   export default value;
 }
+declare module 'swiper/css';
+declare module 'swiper/css/pagination';

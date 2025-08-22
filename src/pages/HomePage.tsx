@@ -12,18 +12,30 @@ import { KeyFeatures } from '../components/KeyFeatures';
 import { NearbyPlaces } from '../components/NearbyPlaces';
 import { LocationMap } from '../components/LocationMap';
 import { FadeInOnScroll } from '../components/FadeInOnScroll';
+import { AnimatedStats } from '../components/AnimatedStats';
+import { ContentSection } from '../components/ContentSection';
+import { Box } from '@mui/material';
 
 export function HomePage() {
   return (
     <>
+      <title>Nowe Mieszkania i Domy w Opolu - AWHaus Deweloper</title>
+      <meta
+        name="description"
+        content="Odkryj Osiedle Symfonia - Twoje nowe miejsce do życia. Nowoczesne i komfortowe mieszkania blisko natury. Sprawdź naszą ofertę."
+      />
+
       <Element name="start">
         <Hero />
       </Element>
+
+      <AnimatedStats />
+
       <FadeInOnScroll>
         <KeyFeatures />
       </FadeInOnScroll>
 
-      <FadeInOnScroll direction="left">
+      {/* <FadeInOnScroll direction="left">
         <Element name="o-nas">
           <ImageTextSection
             image={architekturaImage}
@@ -32,9 +44,23 @@ export function HomePage() {
             imageLeft={true}
           />
         </Element>
-      </FadeInOnScroll>
+      </FadeInOnScroll> */}
 
-      <FadeInOnScroll direction="right">
+      <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+        <Element name="o-nas">
+          <ContentSection
+            imageSrc={architekturaImage}
+            title="Nowoczesna Architektura"
+            imageOnLeft={false}
+          >
+            Nasze inwestycje charakteryzują się nowoczesnym designem i wysoką jakością wykonania. Dbamy o każdy detal,
+            aby zapewnić komfort i prestiż przyszłym mieszkańcom. Stosujemy tylko sprawdzone materiały i innowacyjne
+            rozwiązania technologiczne.
+          </ContentSection>
+        </Element>
+      </Box>
+
+      {/* <FadeInOnScroll direction="right">
         <Element name="oferta">
           <ImageTextSection
             image={lokalizacjaImage}
@@ -42,17 +68,33 @@ export function HomePage() {
             text="Wybieramy tylko najlepsze lokalizacje – bliskość terenów zielonych, dogodny dojazd do centrum oraz rozbudowana infrastruktura to nasze priorytety. Twoje nowe mieszkanie będzie idealnym miejscem do życia, pracy i odpoczynku."
             imageLeft={false}
           />
+        </Element> 
+      </FadeInOnScroll>*/}
+
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Element name="oferta">
+          <ContentSection
+            imageSrc={lokalizacjaImage}
+            title="Idealna Lokalizacja"
+            imageOnLeft={true}
+          >
+            Wybieramy tylko najlepsze lokalizacje – bliskość terenów zielonych, dogodny dojazd do centrum oraz
+            rozbudowana infrastruktura to nasze priorytety. Twoje nowe mieszkanie będzie idealnym miejscem do życia,
+            pracy i odpoczynku."
+          </ContentSection>
         </Element>
-      </FadeInOnScroll>
-      <FadeInOnScroll>
+      </Box>
+
+      <FadeInOnScroll direction="left">
         <NearbyPlaces />
       </FadeInOnScroll>
+
       <FadeInOnScroll>
         <Element name="oferta">
           <ImageTextSection
             image={designImage}
             title="Trzy warianty bezczynszowych mieszkań do wyboru"
-            text="Czekająna Ciebie bezczynszowe mieszkania, różniące się m.in. powierzchnią i układem wnętrz. Na parterze znajdują się lokale o powierzchni 55,61 m² z prywatnym ogródkiem, salonem z aneksem kuchennym, 2 sypialniami i łazienką. Na piętrze dostępne są dwa warianty do wyboru: o powierzchni 72,99 m² lub 77,99 m², z balkonem, salonem z aneksem kuchennym, 2 sypialniami i łazienką na poziomie piętra oraz dodatkowo z zamkniętą sypialnią główną na antresoli (11,50 m² lub 16,50 m²)."
+            text="Czekająna Ciebie bezczynszowe mieszkania, różniące się m.in. powierzchnią i układem wnętrz. Na parterze znajdują się lokale o powierzchni...."
             imageLeft={true}
           />
           <FadeInOnScroll>
