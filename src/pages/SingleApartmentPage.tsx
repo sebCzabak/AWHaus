@@ -192,7 +192,9 @@ export function SingleApartmentPage() {
               <Divider sx={{ my: 1 }} />
               <Typography variant="h6">Liczba pokoi: <strong>{apartment.rooms}</strong></Typography>
               <Divider sx={{ my: 1 }} />
-              <Typography variant="h6">Piętro: <strong>{apartment.floor === 0 ? 'Parter' : apartment.floor}</strong></Typography>
+              <Typography variant="h6">Cena: <strong>{apartment.price}</strong></Typography>
+              <Divider sx={{ my: 1 }} />
+               <Typography variant="h6">Cena za m²: <strong>{apartment.cenam2}</strong></Typography>
               <Divider sx={{ my: 1 }} />
               <Typography variant="h6">Status: 
                 <Chip 
