@@ -1,6 +1,6 @@
 import { Box, Typography, Button, Stack, Paper } from '@mui/material';
 import { keyframes } from '@mui/system';
-import { strongTextShadow } from '../theme';
+import { strongTextShadow } from '../oldtheme';
 import heroImage from '../assets/wizualizacja/14.jpg';
 import { Link as RouterLink } from 'react-router-dom';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -47,9 +47,9 @@ export function Hero() {
         <Typography
           variant="h2"
           component="h1"
-          sx={{ color: '#ab965d', ...strongTextShadow, textAlign: 'left' }}
+          sx={{ color: 'primary.main', ...strongTextShadow, textAlign: 'left' }}
         >
-          Znajdź swoje wymarzone mieszkanie
+          Odkrywaj uroki życia blisko natury – każdego dnia
         </Typography>
 
         <Stack
@@ -59,7 +59,7 @@ export function Hero() {
         >
           <Paper sx={{ p: '12px 16px', backgroundColor: 'rgba(255,255,255,0.9)', color: 'black' }}>
             <Typography sx={{ fontWeight: 'bold' }}>
-              Cena za m² już od <span style={{ color: '#b19f87' }}>8500 zł</span>
+              Cena za m² już od <span style={{ color: '#73bb4dff'}}>8500 zł</span>
             </Typography>
           </Paper>
           <Button

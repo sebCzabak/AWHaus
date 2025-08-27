@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { sitePlanCoordinates } from '../data/overlayCoordinates';
 import sitePlanImage from '../assets/site-plan.png';
 import type { Apartment } from '../data/investments';
-import { strongTextShadow } from '../theme';
+import { strongTextShadow } from '../oldtheme';
 
 interface Props {
   investmentId: string;

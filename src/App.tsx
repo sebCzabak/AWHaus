@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { Box, CssBaseline } from '@mui/material';
-import { Routes, Route } from 'react-router-dom'; // <--- IMPORTY Z ROUTERA
+import { Routes, Route } from 'react-router-dom'; 
 
 import { theme } from './theme';
 import { Header } from './components/Header';
@@ -10,7 +10,7 @@ import { QuickContactFab } from './components/QuickContactFab';
 import { CookieConsentBanner } from './components/CookieConsentBanner';
 
 // Importujemy nasze nowe strony
-import { HomePage } from './pages/HomePage';
+import { HomePageAlternative as HomePage } from './pages/HomePageAlternative';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 import { ContactPage } from './pages/ContactPage';
 import { AboutUsPage } from './pages/AboutUsPage';

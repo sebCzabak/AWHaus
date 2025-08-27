@@ -11,7 +11,7 @@ import 'swiper/css/pagination';
 const features = [
   {
     icon: <LocationOnIcon sx={{ fontSize: 60 }} />,
-    title: 'Tylko 5 minut od centrum miasta',
+    title: 'Tylko 10 minut od centrum miasta',
     description:
       'Zamieszkaj w sąsiedztwie lasu – w spokojnej, cichej i zielonej okolicy, która jednocześnie znajduje się nieopodal serca Opola zapewniając wygodny dostęp do całej infrastruktury tego miasta i okolic.',
   },
@@ -19,13 +19,13 @@ const features = [
     icon: <SquareFootIcon sx={{ fontSize: 60 }} />,
     title: 'Apartament 59 m², 67 m² lub 94 m²',
     description:
-      'Wybierz jeden z dwóch wariantów funkcjonalnych i nowoczesnych apartamentów – na parterze lub piętrze, z przestronnym układem pomieszczeń oraz wnętrzami pełnymi słońca przez cały dzień.',
+      'Wybierz jeden z trzech wariantów funkcjonalnych i nowoczesnych mieszkań - z przestronnym dwu poziomowym układem pomieszczeń oraz wnętrzami pełnymi słońca przez cały dzień ',
   },
   {
     icon: <FenceIcon sx={{ fontSize: 60 }} />,
     title: 'Prywatny ogródek do dyspozycji',
     description:
-      'Wypoczywaj w indywidualnym ogródku, znajdującym się bezpośrednio przy budynku – apartamenty na parterze mają w nim gotowe tarasy, a lokale na piętrze posiadają dodatkowo duże balkony.',
+      'wypoczywaj w prywatnym ogródku z przestronnym oknem i nie martw się sąsiadem u góry - mieszkania dwu poziomowe',
   },
 ];
 
@@ -36,7 +36,7 @@ const FeatureCard = ({ feature }: { feature: (typeof features)[0] }) => (
       p: 4,
       textAlign: 'center',
       height: '100%',
-      backgroundColor: 'primary.main',
+      backgroundColor: '#83907c',
       color: '#424242',
       display: 'flex',
       flexDirection: 'column',

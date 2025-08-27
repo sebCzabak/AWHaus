@@ -8,33 +8,46 @@ declare module '@mui/material/styles' {
     green?: PaletteColorOptions;
   }
 }
-
 export const theme = createTheme({
   palette: {
-    mode: 'light', // Jasny tryb
     primary: {
-      main: '#83907c', // Twój nowy kolor główny (szałwiowa zieleń)
+      main: '#ceb78c', //#af2249
     },
     secondary: {
-      main: '#333333', // Ciemny szary/czarny dla kontrastu
+      main: '#000',
     },
     green: {
       main: '#22af88',
     },
     background: {
-      default: '#ffffff', // Cała strona jest biała
-      paper: '#f9f9f9',   // Delikatnie szare tło dla "kartek"
+      default: '#f1f1eaff',
+      paper: '#ffffff',
     },
     text: {
-      primary: '#212121', // Główny tekst
-      secondary: '#757575', // Drugorzędny tekst
+      primary: '#333333',
+      secondary: '#d4b04cff',
     },
   },
   typography: {
-    fontFamily: '"Helvetica Neue", "Arial", sans-serif',
-    h1: { fontSize: '3.5rem', fontWeight: 700 },
-    h2: { fontSize: '2.5rem', fontWeight: 600 },
-    // ...możesz dalej dostosowywać typografię
+    fontFamily: 'Roboto, sans-serif',
+    h1: {
+      fontSize: '3rem',
+      fontWeight: 700,
+    },
+    h2: {
+      fontSize: '2.5rem',
+      fontWeight: 600,
+      marginBottom: '1rem',
+    },
+    body1: {
+      fontSize: '1.1rem',
+      lineHeight: 1.6,
+    },
+    button: {
+      textTransform: 'none',
+      fontWeight: 600,
+      fontSize: '1rem',
+    },
   },
 });
 export const strongTextShadow = {

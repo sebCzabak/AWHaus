@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
 import {
   AppBar,
@@ -18,11 +18,10 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import logo from '/Logo.png';
+// Usunęliśmy import białego logo, bo nie jest już potrzebne
 
 const navItems = [
   { text: 'Start', path: '/' },
-  { text: 'O nas', path: '/o-nas' },
   { text: 'Oferta', path: '/oferta' },
   { text: 'Dziennik budowy', path: '/dziennik-budowy' },
   { text: 'Kontakt', path: '/kontakt' },
@@ -40,13 +39,12 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const isMenuOpen = Boolean(anchorEl);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    // Nasłuchujemy na zdarzenie scroll
     window.addEventListener('scroll', handleScroll);
-    // Czyścimy nasłuchiwanie po odmontowaniu komponentu
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -63,7 +61,6 @@ export function Header() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
   const drawer = (
     <Box
       onClick={handleDrawerToggle}
@@ -75,7 +72,6 @@ export function Header() {
         sx={{ display: 'inline-block', my: 2 }}
       >
         <img
-          src={logo}
           alt="Logo Firmy"
           style={{ height: 40 }}
         />
@@ -118,18 +114,27 @@ export function Header() {
   );
 
   return (
-    <>
+     <>
       <AppBar
         position="sticky"
-        elevation={isScrolled ? 4 : 0}
+        elevation={0} 
         sx={{
-          backgroundColor: isScrolled ? '#ceb78c' : 'transparent',
-          color: isScrolled ? 'black' : 'text.secondary',
-          transition: 'all 0.3s ease-in-out',
-          '& a, & button, & .MuiIconButton-root': {
-            color: isScrolled ? 'text.primary' : 'black',
-            transition: 'all 0.3s ease-in-out',
+          backgroundColor: '#f1f1ea', 
+          borderBottom: '4px solid transparent', 
+          
+          // Definiujemy pseudo-element ::after, który będzie naszą animowaną linią
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            bottom: '-2px', // Pozycjonujemy na dolnej krawędzi
+            left: 0,
+            height: '3px',
+            backgroundColor: 'primary.main',
+            // Kluczowa część: szerokość zależy od stanu 'isScrolled'
+            width: isScrolled ? '100%' : '0%',
+            transition: 'width 0.5s ease-out', // Animacja szerokości
           },
+
         }}
       >
         <Container maxWidth="xl">
@@ -141,9 +146,9 @@ export function Header() {
             >
               <Box
                 component="img"
-                src={isScrolled ? '/Logo.png' : '/LogoW.png'}
+                src={'/LogoW.png'}
                 alt="Logo Firmy"
-                sx={{ height: { xs: 55, md: 60 }, mr: 2, transition: 'all 0.3s ease-in-out' }}
+                sx={{ height: { xs: 55, md: 60 } }}
               />
             </Box>
 
@@ -159,7 +164,7 @@ export function Header() {
                     <Button
                       sx={{
                         mx: 1,
-                        color: isActive ? 'text.primary' : 'background.paper',
+                        color: isActive ? 'main.primary' : 'text.primary',
                         fontWeight: isActive ? 'bold' : 'normal',
                       }}
                     >
@@ -172,7 +177,7 @@ export function Header() {
               <Button
                 onClick={handleMenuOpen}
                 endIcon={<KeyboardArrowDownIcon />}
-                sx={{ mx: 1, color: 'background.paper' }}
+                sx={{ mx:2, color: 'text.primary' }}
               >
                 Dla klienta
               </Button>
