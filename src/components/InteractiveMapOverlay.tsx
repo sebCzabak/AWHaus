@@ -72,6 +72,7 @@ export function InteractiveMapOverlay({ investmentId, apartments, hoveredId, set
                   width: coord.width,
                   height: coord.height,
                   cursor: 'pointer',
+                  clipPath: coord.clipPath || 'none',
                   transition: 'background-color 0.2s ease, border 0.2s ease',
                   ...(hoveredId === coord.id ? getHighlightStyle(coord.id) : { border: '1px dashed rgba(0,0,0,0.2)' }),
                 }}
@@ -102,12 +103,12 @@ export function InteractiveMapOverlay({ investmentId, apartments, hoveredId, set
             >
               <Typography
                 variant="h6"
-                sx={{ color: 'white', fontWeight: 'bold', ...strongTextShadow }}
+                sx={{ color: 'green.main', fontWeight: 'bold', ...strongTextShadow, backgroundColor: '#fff' }}
               >
-                II Etap Budowy
+                - II Etap Budowy -
                 <Typography
                   component="span"
-                  sx={{ display: 'block', fontSize: '0.9rem', fontWeight: 'normal' }}
+                  sx={{ display: 'block', fontSize: '0.9rem', fontWeight: 'normal', backgroundColor: '#fff' }}
                 >
                   Dostępny wkrótce
                 </Typography>

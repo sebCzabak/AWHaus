@@ -104,10 +104,7 @@ export function SingleInvestmentPage() {
           };
           setInvestment(investmentData);
 
-          // --- POCZĄTEK POPRAWKI ---
-          // Krok 2: Pobierz wszystkie zdjęcia ze STAŁEGO folderu 'investments/osiedle'
           const galleryFolderRef = ref(storage, 'investments/osiedle');
-          // --- KONIEC POPRAWKI ---
 
           const response = await listAll(galleryFolderRef);
 

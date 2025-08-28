@@ -10,7 +10,7 @@ import architekturaImage from '../assets/wizualizacja/24.jpg';
 import lokalizacjaImage from '../assets/wizualizacja/18.jpg';
 import { FadeInOnScroll } from '../components/FadeInOnScroll';
 import { KeyFeatures } from '../components/KeyFeatures';
-import { Avatar, Box, Container, Grid, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { GoogleMap } from '../components/GoogleMap';
 import { MasonryGrid, type MasonryItem } from '../components/MasonryGrid';
 import { NearbyPlaces } from '../components/NearbyPlaces';
@@ -108,8 +108,8 @@ export function HomePageAlternative() {
         z łatwym dostępem do wszystkiego, czego potrzebujesz na co dzień.
       </FeatureSection>
 
-      {/*<VideoComponent/>*/}
-      <Box sx={{ py: 8, backgroundColor: 'background.paper' }}>
+      <VideoComponent />
+      {/* <Box sx={{ py: 8, backgroundColor: 'background.paper' }}>
         <Container maxWidth="lg">
           <Typography
             variant="h2"
@@ -176,12 +176,12 @@ export function HomePageAlternative() {
             </Grid>
           </Grid>
         </Container>
-      </Box>
+      </Box> */}
 
       <FeatureSection
         imageSrc={gardenNImage}
-        subheading="Twoje Miejsce"
-        title="Idealna Lokalizacja"
+        subheading="Budynek"
+        title="Żyj w harmonii z naturą"
         imageOnLeft={true}
         backgroundColor="#f9f9f9"
       >
@@ -227,7 +227,7 @@ export function HomePageAlternative() {
             gutterBottom
             textAlign="center"
           >
-            Kluczowe Zalety
+            Dlaczego warto!
           </Typography>
           <Box mt={4}>
             <MasonryGrid items={masonryData} />

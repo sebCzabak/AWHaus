@@ -1,7 +1,7 @@
 import { Container, Grid, Paper, Typography, Box, useTheme, useMediaQuery } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SquareFootIcon from '@mui/icons-material/SquareFoot';
-import FenceIcon from '@mui/icons-material/Fence';
+import FenceIcon from '@mui/icons-material/FenceSharp';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
@@ -36,13 +36,14 @@ const FeatureCard = ({ feature }: { feature: (typeof features)[0] }) => (
       p: 4,
       textAlign: 'center',
       height: '100%',
-      backgroundColor: '#83907c',
+      backgroundColor: '#fff',
       color: '#424242',
       display: 'flex',
       flexDirection: 'column',
+      border: '1px, solid,',
     }}
   >
-    <Box sx={{ color: 'white', mb: 2 }}>{feature.icon}</Box>
+    <Box sx={{ color: 'primary.main', mb: 2, bordr: '1px solid' }}>{feature.icon}</Box>
     <Typography
       variant="h5"
       component="h3"

@@ -1,23 +1,25 @@
 import { Container, Grid, Typography, Box, Stack } from '@mui/material';
 import ParkIcon from '@mui/icons-material/Park';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ApartmentIcon from '@mui/icons-material/Apartment';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import ChildFriendlyIcon from '@mui/icons-material/ChildFriendly';
+import NaturePeopleIcon from '@mui/icons-material/NaturePeople';
+import LocalConvenienceStoreIcon from '@mui/icons-material/LocalConvenienceStore';
 
 const places = [
-  { icon: <ParkIcon sx={{ fontSize: 60 }} />, name: 'Kąpielisko bolko (3,5 km)', time: '– 7 min samochodem' },
-  { icon: <ShoppingBagIcon sx={{ fontSize: 60 }} />, name: 'Galeria Karolinka (10 km)', time: '– 15 min samochodem' },
+  { icon: <NaturePeopleIcon sx={{ fontSize: 60 }} />, name: 'Wyspa bolko, Zoo', time: '– 5 min samochodem' },
+  { icon: <ShoppingBagIcon sx={{ fontSize: 60 }} />, name: 'Galeria Karolinka ', time: '– 10 min samochodem' },
   {
-    icon: <ShoppingCartIcon sx={{ fontSize: 60 }} />,
-    name: 'Supermarket Aldi w Opolu (6,0 km)',
-    time: '– 6 min samochodem',
+    icon: <ApartmentIcon sx={{ fontSize: 60 }} />,
+    name: 'Centrum miasta Opole',
+    time: '– 10 min samochodem',
   },
-  { icon: <ParkIcon sx={{ fontSize: 60 }} />, name: 'Rozległy las (0 m)', time: '– na miejscu!' },
-  { icon: <StorefrontIcon sx={{ fontSize: 60 }} />, name: 'Dino i paczkomat (450 m)', time: '– 5 min spacerem' },
+  { icon: <ParkIcon sx={{ fontSize: 60 }} />, name: 'Rozległy las ', time: '– na miejscu!' },
+  { icon: <LocalConvenienceStoreIcon sx={{ fontSize: 60 }} />, name: 'Sklep i paczkomat ', time: '– 2 min spacerem' },
   {
     icon: <ChildFriendlyIcon sx={{ fontSize: 60 }} />,
-    name: 'Publiczne przedszkole i szkoła podstawowa (2,5 km)',
+    name: 'Publiczne przedszkole i szkoła publiczna',
     time: '– 5 min samochodem',
   },
 ];
