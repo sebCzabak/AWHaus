@@ -14,8 +14,6 @@ import { AnimatedStats } from '../components/AnimatedStats';
 import { ContentSection } from '../components/ContentSection';
 import { FadeInOnScroll } from '../components/FadeInOnScroll';
 
-
-
 export function HomePage() {
   return (
     <>
@@ -23,12 +21,12 @@ export function HomePage() {
         <Hero />
       </Element>
 
-    <FadeInOnScroll>
-      <KeyFeatures />
-       </FadeInOnScroll>
-       <FadeInOnScroll direction="right">
-      <NearbyPlaces />
-          </FadeInOnScroll >
+      <FadeInOnScroll>
+        <KeyFeatures />
+      </FadeInOnScroll>
+      <FadeInOnScroll direction="right">
+        <NearbyPlaces />
+      </FadeInOnScroll>
       <LocationMap />
 
       <AnimatedStats />
@@ -39,7 +37,9 @@ export function HomePage() {
           title="Nowoczesna Architektura"
           imageOnLeft={true}
         >
-          Nasze inwestycje charakteryzują się nowoczesnym designem i wysoką jakością wykonania. Dbamy o każdy detal, aby zapewnić komfort i prestiż przyszłym mieszkańcom. Stosujemy tylko sprawdzone materiały i innowacyjne rozwiązania technologiczne.
+          Nasze inwestycje charakteryzują się nowoczesnym designem i wysoką jakością wykonania. Dbamy o każdy detal, aby
+          zapewnić komfort i prestiż przyszłym mieszkańcom. Stosujemy tylko sprawdzone materiały i innowacyjne
+          rozwiązania technologiczne.
         </ContentSection>
       </Element>
 
@@ -49,7 +49,9 @@ export function HomePage() {
           title="Idealna Lokalizacja"
           imageOnLeft={false}
         >
-          Wybieramy tylko najlepsze lokalizacje – bliskość terenów zielonych, dogodny dojazd do centrum oraz rozbudowana infrastruktura to nasze priorytety. Twoje nowe mieszkanie będzie idealnym miejscem do życia, pracy i odpoczynku.
+          Wybieramy tylko najlepsze lokalizacje – bliskość terenów zielonych, dogodny dojazd do centrum oraz rozbudowana
+          infrastruktura to nasze priorytety. Twoje nowe mieszkanie będzie idealnym miejscem do życia, pracy i
+          odpoczynku.
         </ContentSection>
       </Element>
 
@@ -59,7 +61,9 @@ export function HomePage() {
           title="Idealna Lokalizacja"
           imageOnLeft={true}
         >
-          Wybieramy tylko najlepsze lokalizacje – bliskość terenów zielonych, dogodny dojazd do centrum oraz rozbudowana infrastruktura to nasze priorytety. Twoje nowe mieszkanie będzie idealnym miejscem do życia, pracy i odpoczynku.
+          Wybieramy tylko najlepsze lokalizacje – bliskość terenów zielonych, dogodny dojazd do centrum oraz rozbudowana
+          infrastruktura to nasze priorytety. Twoje nowe mieszkanie będzie idealnym miejscem do życia, pracy i
+          odpoczynku.
         </ContentSection>
       </Element>
 

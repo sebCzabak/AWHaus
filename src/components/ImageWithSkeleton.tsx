@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Skeleton, Box } from '@mui/material';
+import type { SxProps, Theme } from '@mui/material/styles';
+type ObjectFit = 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
 
 interface Props {
   src: string;
   alt: string;
   height: number | string;
+  width?: number | string | object;
+  objectFit?: ObjectFit;
+  sx?: SxProps<Theme>;
 }
 
 export function ImageWithSkeleton({ src, alt, height }: Props) {

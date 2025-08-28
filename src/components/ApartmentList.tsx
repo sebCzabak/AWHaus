@@ -1,8 +1,18 @@
-import  { useState, useEffect } from 'react';
-import { Container, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, IconButton } from '@mui/material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
-import { Link as RouterLink,useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import {
+  Container,
+  Typography,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Button,
+} from '@mui/material';
+
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 import { db } from '../data/firebase';
 import { collection, getDocs } from 'firebase/firestore';
@@ -21,11 +31,11 @@ export function ApartmentList() {
   useEffect(() => {
     const fetchAllApartments = async () => {
       const allApartments: FlatApartment[] = [];
-      const querySnapshot = await getDocs(collection(db, "investments"));
-      
+      const querySnapshot = await getDocs(collection(db, 'investments'));
+
       querySnapshot.forEach((doc) => {
         const investment = doc.data() as Investment;
-        investment.apartments.forEach(apt => {
+        investment.apartments.forEach((apt) => {
           allApartments.push({
             ...apt,
             investmentId: doc.id,
@@ -41,11 +51,21 @@ export function ApartmentList() {
   }, []);
 
   return (
-    <Container maxWidth="lg" sx={{ py: 8 }}>
-      <Typography variant="h2" component="h2" gutterBottom>
+    <Container
+      maxWidth="lg"
+      sx={{ py: 8 }}
+    >
+      <Typography
+        variant="h2"
+        component="h2"
+        gutterBottom
+      >
         Dostępne Mieszkania
       </Typography>
-      <TableContainer component={Paper} elevation={2}>
+      <TableContainer
+        component={Paper}
+        elevation={2}
+      >
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
@@ -65,25 +85,43 @@ export function ApartmentList() {
                 onClick={() => navigate(`/oferta/${apt.investmentId}/${apt.id}`)}
                 sx={{
                   '&:last-child td, &:last-child th': { border: 0 },
-                  transition: 'transform 0.2s ease-in-out, background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+                  transition:
+                    'transform 0.2s ease-in-out, background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
                   cursor: 'pointer',
                   '&:hover': {
                     backgroundColor: 'action.hover', // Standardowy kolor podświetlenia z motywu
-                    transform: 'translateY(-3px)',   // Efekt lekkiego uniesienia
+                    transform: 'translateY(-3px)', // Efekt lekkiego uniesienia
                     boxShadow: '0 4px 12px rgba(0,0,0,0.1)', // Delikatny cień dla głębi
                   },
                 }}
               >
-                <TableCell component="th" scope="row">{apt.id.toUpperCase()}</TableCell>
+                <TableCell
+                  component="th"
+                  scope="row"
+                >
+                  {apt.id.toUpperCase()}
+                </TableCell>
                 <TableCell>{apt.area.toFixed(2)}m²</TableCell>
                 <TableCell>{apt.rooms}</TableCell>
                 <TableCell>{apt.status}</TableCell>
-                <TableCell><Button variant="text" size="small">POBIERZ</Button></TableCell>
+                <TableCell>
+                  <Button
+                    variant="text"
+                    size="small"
+                  >
+                    POBIERZ
+                  </Button>
+                </TableCell>
                 <TableCell>{apt.price}</TableCell>
                 <TableCell>
-                  <Button component={RouterLink} to={`/oferta/${apt.investmentId}/${apt.id}`} variant="text" size="small">ZAPYTAJ</Button>
-                  <IconButton size="small"><CompareArrowsIcon /></IconButton>
-                  <IconButton size="small"><FavoriteBorderIcon /></IconButton>
+                  <Button
+                    component={RouterLink}
+                    to={`/oferta/${apt.investmentId}/${apt.id}`}
+                    variant="text"
+                    size="small"
+                  >
+                    ZAPYTAJ
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
