@@ -10,7 +10,11 @@ import {
   TableHead,
   TableRow,
   Button,
+  IconButton,
 } from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
@@ -43,6 +47,21 @@ export function ApartmentList() {
           });
         });
       });
+       allApartments.sort((a, b) => {
+        const numA = parseInt(a.id);
+        const numB = parseInt(b.id);
+        const charA = a.id.slice(-1);
+        const charB = b.id.slice(-1);
+
+        if (numA < numB) return -1;
+        if (numA > numB) return 1;
+        
+        // Jeśli numery są takie same, sortuj po literze
+        if (charA < charB) return -1;
+        if (charA > charB) return 1;
+
+        return 0;
+      });
       setApartments(allApartments);
       setLoading(false);
     };
@@ -73,6 +92,7 @@ export function ApartmentList() {
               <TableCell>Metraż (m²)</TableCell>
               <TableCell>Pokoje</TableCell>
               <TableCell>Status</TableCell>
+              <TableCell align="center">Premium</TableCell>
               <TableCell>Karta Lokalu</TableCell>
               <TableCell>Cena Brutto</TableCell>
               <TableCell></TableCell>
@@ -95,33 +115,22 @@ export function ApartmentList() {
                   },
                 }}
               >
-                <TableCell
-                  component="th"
-                  scope="row"
-                >
-                  {apt.id.toUpperCase()}
+              <TableCell component="th" scope="row">{apt.id.toUpperCase()}</TableCell>
+                <TableCell>{apt.area ? `${apt.area.toFixed(2)}m²` : '-'}</TableCell>
+                <TableCell>{apt.rooms || '-'}</TableCell>
+                <TableCell>{apt.floor ?? '-'}</TableCell>
+                <TableCell>{apt.status || '-'}</TableCell>
+                {/* --- POCZĄTEK ZMIANY: Nowa komórka --- */}
+                <TableCell align="center">
+                  {apt.isPremium && <CheckIcon color="primary" />}
                 </TableCell>
-                <TableCell>{apt.area.toFixed(2)}m²</TableCell>
-                <TableCell>{apt.rooms}</TableCell>
-                <TableCell>{apt.status}</TableCell>
+                {/* --- KONIEC ZMIANY --- */}
+                <TableCell><Button variant="text" size="small">POBIERZ</Button></TableCell>
+                <TableCell>{apt.price || '-'}</TableCell>
                 <TableCell>
-                  <Button
-                    variant="text"
-                    size="small"
-                  >
-                    POBIERZ
-                  </Button>
-                </TableCell>
-                <TableCell>{apt.price}</TableCell>
-                <TableCell>
-                  <Button
-                    component={RouterLink}
-                    to={`/oferta/${apt.investmentId}/${apt.id}`}
-                    variant="text"
-                    size="small"
-                  >
-                    ZAPYTAJ
-                  </Button>
+                  <Button component={RouterLink} to={`/oferta/${apt.investmentId}/${apt.id}`} variant="text" size="small">ZAPYTAJ</Button>
+                  <IconButton size="small"><CompareArrowsIcon /></IconButton>
+                  <IconButton size="small"><FavoriteBorderIcon /></IconButton>
                 </TableCell>
               </TableRow>
             ))}

@@ -13,16 +13,14 @@
     "start": "npm run build:local && vite preview --open",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
-
   },
-
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.2.0",
     "@mui/material": "^7.2.0",
-    "@types/react-scroll": "^1.8.10",
     "firebase": "^12.1.0",
+    "framer-motion": "^12.23.12",
     "react": "^19.1.0",
     "react-cookie-consent": "^9.0.0",
     "react-countup": "^6.5.3",
@@ -38,6 +36,7 @@
     "@eslint/js": "^9.30.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "@types/react-scroll": "^1.8.10",
     "@vitejs/plugin-react-swc": "^3.10.2",
     "eslint": "^9.30.1",
     "eslint-plugin-react-hooks": "^5.2.0",

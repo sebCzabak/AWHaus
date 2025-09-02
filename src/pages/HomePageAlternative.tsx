@@ -2,9 +2,9 @@ import { Hero } from '../components/Hero';
 import { FeatureSection } from '../components/FeatureSection';
 import { ApartmentList } from '../components/ApartmentList';
 
-import aImage from '../assets/wizualizacja/12.jpg';
-import bImage from '../assets/wizualizacja/22.jpg';
-import gardenImage from '../assets/wizualizacja/21.jpg';
+import happy from '../assets/happy.png'
+import rowery from '../assets/rowery.png'
+import gardenImage from '../assets/ogrod.png'
 import gardenNImage from '../assets/wizualizacja/20.jpg';
 import architekturaImage from '../assets/wizualizacja/24.jpg';
 import lokalizacjaImage from '../assets/wizualizacja/18.jpg';
@@ -17,6 +17,7 @@ import { NearbyPlaces } from '../components/NearbyPlaces';
 import { FloatingSquares } from '../components/FloatingSquares';
 import VideoComponent from '../components/VideoComponent';
 
+
 // Przygotowujemy dane dla naszej nowej siatki
 const masonryData: MasonryItem[] = [
   {
@@ -26,7 +27,7 @@ const masonryData: MasonryItem[] = [
   },
   {
     type: 'image',
-    img: aImage,
+    img: happy,
     title: 'Wizualizacja Architektury',
   },
   {
@@ -36,7 +37,7 @@ const masonryData: MasonryItem[] = [
   },
   {
     type: 'image',
-    img: bImage,
+    img: rowery,
     title: 'Widok na Okolicę',
   },
   {
@@ -60,132 +61,14 @@ export function HomePageAlternative() {
         <KeyFeatures />
       </FadeInOnScroll>
 
-      <FeatureSection
-        imageSrc={architekturaImage}
-        subheading="Komfort Życia"
-        title="Nowoczesna Architektura"
-        imageOnLeft={true}
-        backgroundColor="#f9f9f9"
-      >
-        <>
-          <Typography
-            paragraph
-            color="text.secondary"
-            sx={{ fontSize: '1.1rem' }}
-          >
-            Symfonia Górki to wyjątkowy projekt mieszkaniowy w sercu Górek, zlokalizowany w pięknej, malowniczej
-            zieleni, jedynie 10 minut jazdy samochodem od centrum miasta Opola. Dzięki tej doskonałej lokalizacji
-            przyszli mieszkańcy będą mogli cieszyć się zapierającymi dech w piersiach widokami. Krótki spacer po okolicy
-            wystarczy, by zregenerować się po ciężkim dnu pracy. Wybierz nowoczesny styl życia w Symfonia Górki i poczuj
-            się jak na wakacjach każdego dnia.
-          </Typography>
-          Oferujemy szeroki wybór mieszkań dwupoziomowych o powierzchniach od 59 do 94 m², w tym funkcjonalne 2- i
-          3-pokojowe lokale, które spełnią oczekiwania nawet najbardziej wymagających klientów.
-          <Typography
-            paragraph
-            color="text.secondary"
-            sx={{ fontSize: '1.1rem' }}
-          >
-            Kiedy powiększa się rodzina, rozbudowujesz mieszkanie o pełnowymiarowe poddasze i zyskujesz kolejny metraż.
-            Każdy mieszkaniec będzie mógł cieszyć się prywatnym ogródkiem, a do każdego budynku jest przynależne miejsce
-            parkingowe.
-            <Box sx={{ mt: 3 }}>
-              <FloatingSquares />
-            </Box>
-          </Typography>
-        </>
-      </FeatureSection>
-
-      <FeatureSection
-        imageSrc={lokalizacjaImage}
-        subheading="Twoje Miejsce"
-        title="Idealna Lokalizacja"
-        imageOnLeft={false}
-        backgroundColor="white"
-      >
-        Wybieramy tylko najlepsze lokalizacje – bliskość terenów zielonych, dogodny dojazd do centrum oraz rozbudowana
-        infrastruktura to nasze priorytety. Twoje nowe mieszkanie będzie idealnym miejscem do życia, pracy i odpoczynku,
-        z łatwym dostępem do wszystkiego, czego potrzebujesz na co dzień.
-      </FeatureSection>
-
-      <VideoComponent />
-      {/* <Box sx={{ py: 8, backgroundColor: 'background.paper' }}>
-        <Container maxWidth="lg">
-          <Typography
-            variant="h2"
-            component="h2"
-            textAlign="center"
-            gutterBottom
-          >
-            Deweloper z Pasją
-          </Typography>
-          <Typography
-            variant="h5"
-            color="text.secondary"
-            textAlign="center"
-            paragraph
-          >
-            Budujemy przyszłość, mieszkanie po mieszkaniu.
-          </Typography>
-          <Typography
-            paragraph
-            sx={{ mt: 3, textAlign: 'center', maxWidth: '800px', mx: 'auto' }}
-          >
-            Od 2010 roku z pasją tworzymy przestrzenie, które nasi klienci z dumą nazywają domem. Wierzymy, że kluczem
-            do sukcesu jest połączenie nowoczesnej architektury, najwyższej jakości materiałów i transparentnej
-            współpracy. Każdy projekt traktujemy indywidualnie, dbając o każdy, nawet najmniejszy detal.
-          </Typography>
-
-          <Typography
-            variant="h3"
-            component="h3"
-            textAlign="center"
-            gutterBottom
-            sx={{ mt: 6 }}
-          >
-            Nasz Zespół
-          </Typography>
-          <Grid
-            container
-            spacing={4}
-            sx={{ mt: 2 }}
-          >
-            <Grid
-              size={{ xs: 12, sm: 4 }}
-              sx={{ textAlign: 'center' }}
-            >
-              <Avatar sx={{ width: 100, height: 100, margin: '0 auto 16px' }} />
-              <Typography variant="h6">Jan Kowalski</Typography>
-              <Typography color="text.secondary">Prezes Zarządu</Typography>
-            </Grid>
-            <Grid
-              size={{ xs: 12, sm: 4 }}
-              sx={{ textAlign: 'center' }}
-            >
-              <Avatar sx={{ width: 100, height: 100, margin: '0 auto 16px' }} />
-              <Typography variant="h6">Anna Nowak</Typography>
-              <Typography color="text.secondary">Dyrektor Sprzedaży</Typography>
-            </Grid>
-            <Grid
-              size={{ xs: 12, sm: 4 }}
-              sx={{ textAlign: 'center' }}
-            >
-              <Avatar sx={{ width: 100, height: 100, margin: '0 auto 16px' }} />
-              <Typography variant="h6">Piotr Wiśniewski</Typography>
-              <Typography color="text.secondary">Główny Architekt</Typography>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box> */}
-
-      <FeatureSection
+      <Box id ="budynek">
+    <FeatureSection
         imageSrc={gardenNImage}
         subheading="Budynek"
         title="Żyj w harmonii z naturą"
         imageOnLeft={true}
         backgroundColor="#f9f9f9"
       >
-        <>
           <Typography
             paragraph
             color="text.secondary"
@@ -213,13 +96,64 @@ export function HomePageAlternative() {
           <Box sx={{ mt: 3 }}>
             <FloatingSquares />
           </Box>
-        </>
       </FeatureSection>
+      </Box>
+    
+
+      <FeatureSection
+        imageSrc={lokalizacjaImage}
+        subheading="Twoje Miejsce"
+        title="Idealna Lokalizacja"
+        imageOnLeft={false}
+        backgroundColor="white"
+      >
+        Wybieramy tylko najlepsze lokalizacje – bliskość terenów zielonych, dogodny dojazd do centrum oraz rozbudowana
+        infrastruktura to nasze priorytety. Twoje nowe mieszkanie będzie idealnym miejscem do życia, pracy i odpoczynku,
+        z łatwym dostępem do wszystkiego, czego potrzebujesz na co dzień.
+      </FeatureSection>
+
+      <VideoComponent />
+
+        <FeatureSection
+        imageSrc={architekturaImage}
+        subheading="Komfort Życia"
+        title="Nowoczesna Architektura"
+        imageOnLeft={true}
+        backgroundColor="#f9f9f9"
+      >
+          <Typography
+            paragraph
+            color="text.secondary"
+            sx={{ fontSize: '1.1rem' }}
+          >
+            Symfonia Górki to wyjątkowy projekt mieszkaniowy w sercu Górek, zlokalizowany w pięknej, malowniczej
+            zieleni, jedynie 10 minut jazdy samochodem od centrum miasta Opola. Dzięki tej doskonałej lokalizacji
+            przyszli mieszkańcy będą mogli cieszyć się zapierającymi dech w piersiach widokami. Krótki spacer po okolicy
+            wystarczy, by zregenerować się po ciężkim dnu pracy. Wybierz nowoczesny styl życia w Symfonia Górki i poczuj
+            się jak na wakacjach każdego dnia.
+          </Typography>
+          Oferujemy szeroki wybór mieszkań dwupoziomowych o powierzchniach od 59 do 94 m², w tym funkcjonalne 2- i
+          3-pokojowe lokale, które spełnią oczekiwania nawet najbardziej wymagających klientów.
+          <Typography
+            paragraph
+            color="text.secondary"
+            sx={{ fontSize: '1.1rem' }}
+          >
+            Kiedy powiększa się rodzina, rozbudowujesz mieszkanie o pełnowymiarowe poddasze i zyskujesz kolejny metraż.
+            Każdy mieszkaniec będzie mógł cieszyć się prywatnym ogródkiem, a do każdego budynku jest przynależne miejsce
+            parkingowe.
+            <Box sx={{ mt: 3 }}>
+              <FloatingSquares />
+            </Box>
+          </Typography>
+      </FeatureSection>
+
+  
       <FadeInOnScroll direction="right">
         <NearbyPlaces />
       </FadeInOnScroll>
 
-      <Box sx={{ py: 8 }}>
+      <Box sx={{ py: 8 }}id="dlaczego-warto">
         <Container maxWidth="xl">
           <Typography
             variant="h2"

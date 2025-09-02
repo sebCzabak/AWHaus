@@ -1,20 +1,59 @@
 import { Box, Typography, Button, Stack, Paper } from '@mui/material';
 import { keyframes } from '@mui/system';
-import { strongTextShadow } from '../oldtheme';
 import heroImage from '../assets/wizualizacja/14.jpg';
 import { Link as RouterLink } from 'react-router-dom';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+// Załóżmy, że ten import działa poprawnie w Twoim projekcie
+import { strongTextShadow } from '../oldtheme';
+// ✅ NOWE IMPORTY Z REACTA
+import { useState, useEffect } from 'react';
 
+// Istniejąca animacja Ken Burns
 const kenburns = keyframes`
   0% {
     transform: scale(1);
   }
   100% {
-    transform: scale(1.1); 
+    transform: scale(1.1);
   }
 `;
 
+// ✅ NOWA ANIMACJA DLA POJAWIAJĄCEGO SIĘ TEKSTU
+const fadeInOut = keyframes`
+  0% { opacity: 0; transform: translateX(20px); }
+  15% { opacity: 1; transform: translateX(0); }
+  85% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(-20px); }
+`;
+
+// ✅ TABLICA Z TEKSTAMI DO WYŚWIETLENIA
+const animatedTexts = [
+  { id: 1, text: 'Doskonała lokalizacja blisko miasta' },
+  { id: 2, text: 'Nowoczesna architektura i design' },
+  { id: 3, text: 'Prywatne ogrody i tereny zielone' },
+  { id: 4, text: 'Najwyższa jakość materiałów' },
+  { id: 5, text: 'Funkcjonalne układy mieszkań' },
+  { id: 6, text: 'Bliskość natury i spokój' },
+];
+
+// ✅ LICZBA TEKSTÓW WYŚWIETLANYCH JEDNOCZEŚNIE
+const TEXTS_TO_SHOW = 2;
+
 export function Hero() {
+  // ✅ STAN DO PRZECHOWYWANIA AKTUALNEGO INDEKSU TEKSTU
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // ✅ EFEKT DO USTAWIANIA INTERWAŁU, KTÓRY ZMIENIA TEKST
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Przesuwamy indeks o liczbę wyświetlanych tekstów, aby wymienić całą grupę
+      setCurrentIndex((prevIndex) => (prevIndex + TEXTS_TO_SHOW) % animatedTexts.length);
+    }, 6000); // Zmiana co 6 sekund (6000ms)
+
+    // Funkcja czyszcząca, która zatrzymuje interwał, gdy komponent zniknie
+    return () => clearInterval(interval);
+  }, []); // Pusta tablica [] sprawia, że efekt uruchomi się tylko raz
+
   return (
     <Box
       sx={{
@@ -43,6 +82,7 @@ export function Hero() {
         },
       }}
     >
+      {/* Istniejąca treść po lewej stronie */}
       <Box sx={{ p: { xs: 2, md: 6 }, zIndex: 1, maxWidth: '600px' }}>
         <Typography
           variant="h2"
@@ -73,6 +113,42 @@ export function Hero() {
           </Button>
         </Stack>
       </Box>
+
+      {/* ✅ NOWY KONTENER NA ANIMOWANE TEKSTY PO PRAWEJ STRONIE */}
+      <Stack
+        spacing={2}
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          right: { xs: '10px', md: '40px' },
+          transform: 'translateY(-50%)',
+          zIndex: 2,
+          width: { xs: '180px', md: '280px' },
+        }}
+      >
+        {/* Generujemy fragment tablicy i mapujemy go do komponentów Paper */}
+        {Array.from({ length: TEXTS_TO_SHOW }).map((_, i) => {
+          const item = animatedTexts[(currentIndex + i) % animatedTexts.length];
+          return (
+            <Paper
+              key={item.id} // Używamy unikalnego ID z obiektu jako klucza
+              elevation={4}
+              sx={{
+                p: 2,
+                backgroundColor: 'rgba(255, 255, 255, 0.85)',
+                color: 'text.primary',
+                borderRadius: '8px',
+                // Użycie `key` restartuje komponent i animację przy każdej zmianie
+                animation: `${fadeInOut} 6s ease-in-out forwards`,
+              }}
+            >
+              <Typography variant="body1" component="p" sx={{ fontWeight: '500' }}>
+                {item.text}
+              </Typography>
+            </Paper>
+          );
+        })}
+      </Stack>
     </Box>
   );
 }

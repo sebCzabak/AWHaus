@@ -121,16 +121,22 @@ export function SingleApartmentPage() {
       <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(`/oferta/${investmentId}`)}>
         Wróć do planu inwestycji
       </Button>
-      <Typography variant="h2" component="h1" gutterBottom sx={{ mt: 2 }}>
+   <Typography variant="h2" component="h1" gutterBottom sx={{ mt: 2 }}>
         Mieszkanie {apartment.id.toUpperCase()}
-      </Typography>
-      <Typography variant="h5" color="text.secondary" paragraph>
-        Nieruchomość w ramach inwestycji: {investment.name}
+        {/* Warunkowo dodajemy Chip "Premium" */}
+        {apartment.isPremium && (
+          <Chip 
+            label="Premium" 
+            color="primary" 
+            variant="outlined" 
+            sx={{ ml: 2, fontSize: '1rem', fontWeight: 'bold' }} 
+          />
+        )}
       </Typography>
 
       <Paper sx={{ p: { xs: 2, md: 4 }, mt: 4, position: 'relative', overflow: 'hidden' }}>
         
-        {apartment.isPremium && (
+        {/* {apartment.isPremium && (
           <Box
             sx={{
               position: 'absolute', top: '25px', right: '-50px',
@@ -150,7 +156,7 @@ export function SingleApartmentPage() {
               </Typography>
             </Box>
           </Box>
-        )}
+        )} */}
         
         <Grid container spacing={4}>
           <Grid size={{xs:12, md:7}}>
