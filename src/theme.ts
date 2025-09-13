@@ -13,7 +13,7 @@ export const theme = createTheme({
   palette: {
     mode: 'light', // Jasny tryb
     primary: {
-      main: '#83907c', // Twój nowy kolor główny (szałwiowa zieleń)
+      main: '#008363', //   #83907cTwój nowy kolor główny (szałwiowa zieleń)
     },
     secondary: {
       main: '#333333', // Ciemny szary/czarny dla kontrastu

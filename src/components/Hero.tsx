@@ -48,7 +48,7 @@ export function Hero() {
     const interval = setInterval(() => {
       // Przesuwamy indeks o liczbę wyświetlanych tekstów, aby wymienić całą grupę
       setCurrentIndex((prevIndex) => (prevIndex + TEXTS_TO_SHOW) % animatedTexts.length);
-    }, 6000); // Zmiana co 6 sekund (6000ms)
+    }, 7000); // Zmiana co 6 sekund (6000ms)
 
     // Funkcja czyszcząca, która zatrzymuje interwał, gdy komponent zniknie
     return () => clearInterval(interval);
@@ -67,7 +67,7 @@ export function Hero() {
         textAlign: 'center',
         px: 2,
 
-        '&::before': {
+       '&::before': {
           content: '""',
           position: 'absolute',
           top: 0,
@@ -76,21 +76,43 @@ export function Hero() {
           height: '100%',
           backgroundImage: `url(${heroImage})`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          // Ustawiamy pozycję tła na "góra", aby logo w rogu nie było ucinane
+          backgroundPosition: 'center top', 
           animation: `${kenburns} 30s ease-in-out infinite alternate`,
           zIndex: -1,
         },
       }}
     >
       {/* Istniejąca treść po lewej stronie */}
-      <Box sx={{ p: { xs: 2, md: 6 }, zIndex: 1, maxWidth: '600px' }}>
+       <Box 
+        sx={{ 
+          p: { xs: 2, md: 6 }, 
+          zIndex: 1, 
+          // Zwiększamy maksymalną szerokość
+          maxWidth: '800px', 
+          // Dodajemy subtelne, półprzezroczyste tło
+          backgroundColor: 'rgba(0, 0, 0, 0.2)', 
+          borderRadius: 2,
+          backdropFilter: 'blur(4px)', // Efekt "zamrożonej szyby" dla lepszej czytelności
+          mb: { xs: 15, md: 0 } // Dodajemy margines na mobile, aby nie nachodził na pasek akcji
+        }}
+      >
         <Typography
           variant="h2"
           component="h1"
-          sx={{ color: 'primary.main', ...strongTextShadow, textAlign: 'left' }}
+          sx={{
+            color: 'white',
+            ...strongTextShadow,
+            textAlign: 'left',
+            // Zapobiegamy łamaniu tekstu do nowej linii
+            whiteSpace: 'nowrap',
+            // Na małych ekranach pozwalamy na łamanie i zmniejszamy czcionkę
+            fontSize: { xs: '1.8rem', md: '3.75rem' } 
+          }}
         >
           Odkrywaj uroki życia blisko natury – każdego dnia
         </Typography>
+        
 
         <Stack
           direction="row"

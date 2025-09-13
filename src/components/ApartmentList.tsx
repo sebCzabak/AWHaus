@@ -10,11 +10,9 @@ import {
   TableHead,
   TableRow,
   Button,
-  IconButton,
 } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+
 
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
@@ -120,17 +118,14 @@ export function ApartmentList() {
                 <TableCell>{apt.rooms || '-'}</TableCell>
                 <TableCell>{apt.floor ?? '-'}</TableCell>
                 <TableCell>{apt.status || '-'}</TableCell>
-                {/* --- POCZĄTEK ZMIANY: Nowa komórka --- */}
                 <TableCell align="center">
                   {apt.isPremium && <CheckIcon color="primary" />}
                 </TableCell>
-                {/* --- KONIEC ZMIANY --- */}
-                <TableCell><Button variant="text" size="small">POBIERZ</Button></TableCell>
+                <TableCell><Button variant="text" size="small">ZOBACZ</Button></TableCell>
                 <TableCell>{apt.price || '-'}</TableCell>
                 <TableCell>
                   <Button component={RouterLink} to={`/oferta/${apt.investmentId}/${apt.id}`} variant="text" size="small">ZAPYTAJ</Button>
-                  <IconButton size="small"><CompareArrowsIcon /></IconButton>
-                  <IconButton size="small"><FavoriteBorderIcon /></IconButton>
+
                 </TableCell>
               </TableRow>
             ))}

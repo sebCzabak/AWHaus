@@ -2,7 +2,6 @@ import { Container, Grid, Typography, Box, Stack } from '@mui/material';
 import ParkIcon from '@mui/icons-material/Park';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import ApartmentIcon from '@mui/icons-material/Apartment';
-import StorefrontIcon from '@mui/icons-material/Storefront';
 import ChildFriendlyIcon from '@mui/icons-material/ChildFriendly';
 import NaturePeopleIcon from '@mui/icons-material/NaturePeople';
 import LocalConvenienceStoreIcon from '@mui/icons-material/LocalConvenienceStore';

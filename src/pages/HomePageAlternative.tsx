@@ -65,7 +65,7 @@ export function HomePageAlternative() {
     <FeatureSection
         imageSrc={gardenNImage}
         subheading="Budynek"
-        title="Żyj w harmonii z naturą"
+        title="Nowoczesna Architektura"
         imageOnLeft={true}
         backgroundColor="#f9f9f9"
       >
@@ -99,11 +99,11 @@ export function HomePageAlternative() {
       </FeatureSection>
       </Box>
     
-
+    <Box id="lokalizacja">
       <FeatureSection
         imageSrc={lokalizacjaImage}
         subheading="Twoje Miejsce"
-        title="Idealna Lokalizacja"
+        title="Górki - Idealna Lokalizacja"
         imageOnLeft={false}
         backgroundColor="white"
       >
@@ -111,13 +111,13 @@ export function HomePageAlternative() {
         infrastruktura to nasze priorytety. Twoje nowe mieszkanie będzie idealnym miejscem do życia, pracy i odpoczynku,
         z łatwym dostępem do wszystkiego, czego potrzebujesz na co dzień.
       </FeatureSection>
-
+</Box>
       <VideoComponent />
 
         <FeatureSection
         imageSrc={architekturaImage}
         subheading="Komfort Życia"
-        title="Nowoczesna Architektura"
+        title="Żyj w harmonii z naturą"
         imageOnLeft={true}
         backgroundColor="#f9f9f9"
       >
@@ -132,16 +132,16 @@ export function HomePageAlternative() {
             wystarczy, by zregenerować się po ciężkim dnu pracy. Wybierz nowoczesny styl życia w Symfonia Górki i poczuj
             się jak na wakacjach każdego dnia.
           </Typography>
-          Oferujemy szeroki wybór mieszkań dwupoziomowych o powierzchniach od 59 do 94 m², w tym funkcjonalne 2- i
-          3-pokojowe lokale, które spełnią oczekiwania nawet najbardziej wymagających klientów.
+              Oferujemy szeroki wybór mieszkań dwupoziomowych o powierzchniach od 59 do 94 m², w tym funkcjonalne 2- i
+              3-pokojowe lokale, które spełnią oczekiwania nawet najbardziej wymagających klientów.
           <Typography
             paragraph
             color="text.secondary"
             sx={{ fontSize: '1.1rem' }}
           >
-            Kiedy powiększa się rodzina, rozbudowujesz mieszkanie o pełnowymiarowe poddasze i zyskujesz kolejny metraż.
-            Każdy mieszkaniec będzie mógł cieszyć się prywatnym ogródkiem, a do każdego budynku jest przynależne miejsce
-            parkingowe.
+            Każde mieszkanie ma możliwość adaptacji poddasza.
+            Zyskujesz kolejny dodatkowy metraż ̴  27 m2. Każdy mieszkaniec będzie mógł cieszyć się
+            prywatnym ogródkiem, a do każdego budynku jest przynależne miejsce parkingowe
             <Box sx={{ mt: 3 }}>
               <FloatingSquares />
             </Box>

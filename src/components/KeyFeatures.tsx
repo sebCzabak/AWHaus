@@ -25,7 +25,7 @@ const features = [
     icon: <FenceIcon sx={{ fontSize: 60 }} />,
     title: 'Prywatny ogródek do dyspozycji',
     description:
-      'wypoczywaj w prywatnym ogródku z przestronnym oknem i nie martw się sąsiadem u góry - mieszkania dwu poziomowe',
+      'wypoczywaj w prywatnym ogródku z przestronnym oknem i bezpośrednim wyjściem na taras',
   },
 ];
 
