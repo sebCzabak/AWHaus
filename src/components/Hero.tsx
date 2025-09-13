@@ -89,11 +89,11 @@ export function Hero() {
           p: { xs: 2, md: 6 }, 
           zIndex: 1, 
           // Zwiększamy maksymalną szerokość
-          maxWidth: '800px', 
+          maxWidth: '1500px', 
           // Dodajemy subtelne, półprzezroczyste tło
           backgroundColor: 'rgba(0, 0, 0, 0.2)', 
           borderRadius: 2,
-          backdropFilter: 'blur(4px)', // Efekt "zamrożonej szyby" dla lepszej czytelności
+          backdropFilter: 'blur(2px)', // Efekt "zamrożonej szyby" dla lepszej czytelności
           mb: { xs: 15, md: 0 } // Dodajemy margines na mobile, aby nie nachodził na pasek akcji
         }}
       >
