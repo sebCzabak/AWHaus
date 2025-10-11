@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Typography, Box, Paper, Grid, Button, Divider, Chip, CircularProgress, Tabs, Tab } from '@mui/material';
+import { Container, Typography, Box, Paper, Grid, Button, Divider, Chip, CircularProgress } from '@mui/material';
 import { NotFoundPage } from './NotFoundPage';
-import { CustomImageCarousel } from '../components/CustomImageCarousel';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 // Importy Firebase
@@ -22,16 +21,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 
-// Komponent pomocniczy do wyświetlania treści w aktywnej zakładce
-function TabPanel(props: { children?: React.ReactNode; index: number; value: number; }) {
-  const { children, value, index, ...other } = props;
-  return (
-    <div role="tabpanel" hidden={value !== index} {...other}>
-      {value === index && <Box sx={{ pt: 3 }}>{children}</Box>}
-    </div>
-  );
-}
-
 export function SingleApartmentPage() {
   const { investmentId, apartmentId } = useParams<{ investmentId: string, apartmentId: string }>();
   const navigate = useNavigate();
@@ -39,13 +28,12 @@ export function SingleApartmentPage() {
   // Stany dla danych
   const [investment, setInvestment] = useState<Investment | null>(null);
   const [apartment, setApartment] = useState<Apartment | null>(null);
-  const [galleryUrls, setGalleryUrls] = useState<string[]>([]);
   const [planUrl, setPlanUrl] = useState<string | null>(null);
   
   // Stany dla interfejsu
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState(0);
+
 
   useEffect(() => {
     if (!investmentId || !apartmentId) {
@@ -54,7 +42,7 @@ export function SingleApartmentPage() {
       return;
     }
 
-    const fetchApartmentData = async () => {
+     const fetchApartmentData = async () => {
       try {
         setLoading(true);
         const investmentDocRef = doc(db, "investments", investmentId);
@@ -68,18 +56,9 @@ export function SingleApartmentPage() {
             setInvestment(investmentData);
             setApartment(apartmentData);
             
-            // Pobierz URL do rzutu PDF, jeśli istnieje
             if (apartmentData.planUrl) {
               const planRef = ref(storage, apartmentData.planUrl);
               getDownloadURL(planRef).then(setPlanUrl);
-            }
-
-            // Pobierz URL-e do galerii, jeśli istnieje
-            if (apartmentData.galleryImages && apartmentData.galleryImages.length > 0) {
-              const urls = await Promise.all(
-                apartmentData.galleryImages.map(path => getDownloadURL(ref(storage, path)))
-              );
-              setGalleryUrls(urls);
             }
           } else {
             setError("Nie znaleziono takiego mieszkania w tej inwestycji.");
@@ -98,9 +77,7 @@ export function SingleApartmentPage() {
     fetchApartmentData();
   }, [investmentId, apartmentId]);
 
-  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
-    setActiveTab(newValue);
-  };
+
 
   const handleInquiryClick = () => {
     if (!apartment || !investment) return;
@@ -136,60 +113,24 @@ export function SingleApartmentPage() {
 
       <Paper sx={{ p: { xs: 2, md: 4 }, mt: 4, position: 'relative', overflow: 'hidden' }}>
         
-        {/* {apartment.isPremium && (
-          <Box
-            sx={{
-              position: 'absolute', top: '25px', right: '-50px',
-              width: '200px', height: '40px', transform: 'rotate(45deg)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2,
-            }}
-          >
-            <Box sx={{ position: 'absolute', width: '100%', height: '100%', backgroundColor: '#8e0000', filter: 'blur(1px)' }} />
-            <Box sx={{
-                position: 'relative', width: 'calc(100% - 4px)', height: 'calc(100% - 4px)',
-                backgroundColor: '#D32F2F', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-              }}
-            >
-              <Typography sx={{ color: 'gold.main', fontWeight: 'bold', fontSize: '1rem', textTransform: 'uppercase' }}>
-                Premium
-              </Typography>
-            </Box>
-          </Box>
-        )} */}
+      
         
-        <Grid container spacing={4}>
-          <Grid size={{xs:12, md:7}}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={activeTab} onChange={handleTabChange}>
-                <Tab label="Rzut Architektoniczny" />
-                <Tab label="Galeria" />
-              </Tabs>
-            </Box>
-            
-            <TabPanel value={activeTab} index={0}>
-              {planUrl ? (
-                <Box sx={{ border: '1px solid #ddd', height: 500, overflowY: 'auto' }}>
-                  <Document file={planUrl}>
-                    <Page pageNumber={1} width={600} />
+         <Grid container spacing={4}>
+          {/* --- POCZĄTEK ZMIANY --- */}
+          <Grid size={{xs:12,md:7}}>
+            <Typography variant="h4" gutterBottom>Rzut Architektoniczny</Typography>
+            {planUrl ? (
+             <Box sx={{ border: '1px solid #ddd', borderRadius: 2, overflow: 'hidden' }}>
+                  <Document file={planUrl} loading={<CircularProgress />}>
+                    {/* Usunęliśmy 'width', aby PDF był w pełni responsywny */}
+                    <Page pageNumber={1} />
                   </Document>
                 </Box>
               ) : (
-                <Box sx={{ height: 400, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Box sx={{ height: 400, display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'grey.100', borderRadius: 2 }}>
                   <Typography>Brak rzutu dla tego mieszkania.</Typography>
                 </Box>
               )}
-            </TabPanel>
-
-            <TabPanel value={activeTab} index={1}>
-              {galleryUrls.length > 0 ? (
-                <CustomImageCarousel images={galleryUrls} />
-              ) : (
-                <Box sx={{ height: 400, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Typography>Brak zdjęć w galerii.</Typography>
-                </Box>
-              )}
-            </TabPanel>
           </Grid>
           <Grid size={{xs:12, md:5}}>
             <Typography variant="h4" gutterBottom>Szczegóły lokalu</Typography>
@@ -200,7 +141,7 @@ export function SingleApartmentPage() {
               <Divider sx={{ my: 1 }} />
               <Typography variant="h6">Cena: <strong>{apartment.price}</strong></Typography>
               <Divider sx={{ my: 1 }} />
-               <Typography variant="h6">Cena za m²: <strong>{apartment.cenam2}</strong></Typography>
+               <Typography variant="h6">Cena za m²: <strong>{apartment.cenaM2}</strong></Typography>
               <Divider sx={{ my: 1 }} />
               <Typography variant="h6">Status: 
                 <Chip 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink as RouterLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink as RouterLink, useLocation } from 'react-router-dom';
 import {
   AppBar,
   Box,
@@ -28,7 +28,9 @@ const navItems = [
   { text: 'Budynek', to: 'budynek' },
   {text:'Lokalizacja',to:'lokalizacja'},
   { text: 'Dlaczego warto', to: 'dlaczego-warto' },
-  {text:'Oferta',path:'/oferta'}
+  {text:'Oferta',path:'/oferta'},
+  { text: 'Kontakt', path: '/kontakt' },
+
 ];
 
 const clientMenuItems = [
@@ -40,7 +42,7 @@ const clientMenuItems = [
 
 export function Header() {
   const location = useLocation();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -71,22 +73,22 @@ export function Header() {
     setAnchorEl(null);
   };
 
-  // Logika do obsługi kliknięcia linku scrollującego z innej podstrony
-  const handleScrollClick = (to: string) => {
-    if (isHomePage) {
-      // Jeśli jesteśmy na stronie głównej, po prostu przewiń
-      const scroll = ScrollLink.prototype as any;
-      scroll.scrollTo(to, {
-        spy: true, 
-        smooth: true, 
-        offset: -70, 
-        duration: 500
-      });
-    } else {
-      // Jeśli jesteśmy na innej podstronie, wróć na stronę główną, przekazując ID sekcji
-      navigate('/', { state: { scrollTo: to } });
-    }
-  };
+  // // Logika do obsługi kliknięcia linku scrollującego z innej podstrony
+  // const handleScrollClick = (to: string) => {
+  //   if (isHomePage) {
+  //     // Jeśli jesteśmy na stronie głównej, po prostu przewiń
+  //     const scroll = ScrollLink.prototype as any;
+  //     scroll.scrollTo(to, {
+  //       spy: true, 
+  //       smooth: true, 
+  //       offset: -70, 
+  //       duration: 500
+  //     });
+  //   } else {
+  //     // Jeśli jesteśmy na innej podstronie, wróć na stronę główną, przekazując ID sekcji
+  //     navigate('/', { state: { scrollTo: to } });
+  //   }
+  // };
 
 
   const drawer = (

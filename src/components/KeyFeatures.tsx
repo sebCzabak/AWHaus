@@ -17,7 +17,7 @@ const features = [
   },
   {
     icon: <SquareFootIcon sx={{ fontSize: 60 }} />,
-    title: 'Apartament 59 m², 67 m² lub 94 m²',
+    title: 'Apartament od 57 m² do 94 m²',
     description:
       'Wybierz jeden z trzech wariantów funkcjonalnych i nowoczesnych mieszkań - z przestronnym dwu poziomowym układem pomieszczeń oraz wnętrzami pełnymi słońca przez cały dzień ',
   },
@@ -25,7 +25,7 @@ const features = [
     icon: <FenceIcon sx={{ fontSize: 60 }} />,
     title: 'Prywatny ogródek do dyspozycji',
     description:
-      'wypoczywaj w prywatnym ogródku z przestronnym oknem i bezpośrednim wyjściem na taras',
+      'Poczuj pełnię swobody i prywatności we własnym ogródku, bez sąsiadów nad głową i z kojącym widokiem na zieleń. Każdy z naszych apartamentów posiada prywatny ogródek z przestronnym tarasem, na który wyjdziesz bezpośrednio ze swojego salonu.',
   },
 ];
 

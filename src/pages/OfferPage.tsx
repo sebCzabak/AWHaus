@@ -15,35 +15,27 @@ export function OfferPage() {
     const fetchInvestments = async () => {
       try {
         setLoading(true);
-        // Krok 1: Pobierz dane (metadane) z bazy Firestore
         const querySnapshot = await getDocs(collection(db, 'investments'));
         const investmentsFromDb = querySnapshot.docs.map((doc) => ({
           ...(doc.data() as Omit<Investment, 'id'>),
           id: doc.id,
         }));
 
-        // --- KLUCZOWY FRAGMENT ---
-        // Krok 2: Dla każdej inwestycji pobierz publiczny URL do jej zdjęcia ze Storage
         const investmentsWithImages = await Promise.all(
           investmentsFromDb.map(async (inv) => {
             if (inv.mainImage && typeof inv.mainImage === 'string') {
               try {
                 const imageRef = ref(storage, inv.mainImage);
                 const imageUrl = await getDownloadURL(imageRef);
-                // Zwróć obiekt inwestycji z podmienionym, pełnym URL-em
                 return { ...inv, mainImage: imageUrl };
               } catch (imageError) {
                 console.error(`Nie udało się pobrać zdjęcia dla ścieżki: ${inv.mainImage}`, imageError);
-                return { ...inv, mainImage: '' }; // Zwróć z pustym obrazkiem w razie błędu
+                return { ...inv, mainImage: '' };
               }
             }
-            // Jeśli nie ma mainImage, zwróć obiekt bez zmian
             return inv;
           })
         );
-        // --- KONIEC KLUCZOWEGO FRAGMENTU ---
-
-        // Krok 3: Zapisz w stanie kompletną listę z pełnymi URL-ami
         setInvestments(investmentsWithImages);
       } catch (err) {
         console.error('Błąd Firebase:', err);

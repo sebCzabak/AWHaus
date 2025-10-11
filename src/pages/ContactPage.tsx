@@ -63,7 +63,9 @@ export function ContactPage() {
                   alignItems="center"
                 >
                   <PlaceIcon color="primary" />
-                  <Typography>ul. Przykładowa 1, 64-000 Opole</Typography>
+                  <Typography>	ul. PLAC WOLNOŚCI 6
+                            45-018 OPOLE
+                      OPOLSKIE</Typography>
                 </Stack>
                 <Stack
                   direction="row"

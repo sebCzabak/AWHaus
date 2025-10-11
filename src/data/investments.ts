@@ -7,9 +7,9 @@ export interface Apartment {
   planUrl?: string;
   description?: string;
   galleryImages?: string[];
-  floor?: number;
   isPremium?: boolean;
-  cenam2?: number;
+  cenaM2?: number;
+  exposure?: string;
 }
 
 export interface Investment {

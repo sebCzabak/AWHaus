@@ -15,6 +15,8 @@ import {
   ImageList,
   ImageListItem,
   Skeleton,
+  Alert,
+  AlertTitle,
 } from '@mui/material';
 import { NotFoundPage } from './NotFoundPage';
 import { InteractiveMapOverlay } from '../components/InteractiveMapOverlay';
@@ -44,14 +46,14 @@ const customApartmentOrder = [
   '1b',
   '2b',
   '2a',
-  '9a',
-  '9b',
-  '10b',
-  '10a',
   '3a',
   '3b',
   '4b',
   '4a',
+  '9a',
+  '9b',
+  '10b',
+  '10a',
   '11a',
   '11b',
   '12b',
@@ -287,7 +289,7 @@ export function SingleInvestmentPage() {
                         primary={`Mieszkanie ${apt.id.toUpperCase()} - ${
                           typeof apt.area === 'number' ? apt.area.toFixed(2) : '??'
                         } m²`}
-                        secondary={`Piętro: ${apt.floor === 0 ? 'Parter' : apt.floor ?? '??'}, Pokoje: ${
+                        secondary={`Cena: ${apt.price }, Pokoje: ${
                           apt.rooms ?? '??'
                         }`}
                       />
@@ -306,6 +308,10 @@ export function SingleInvestmentPage() {
           </TabPanel>
 
           {/* Panel dla drugiej zakładki - Galeria */}
+           <Alert severity="info" sx={{ mt: 3 }}>
+            <AlertTitle>Informacja Prawna</AlertTitle>
+            Przedstawione wizualizacje mają charakter poglądowy i nie stanowią oferty handlowej w rozumieniu art. 66 §1 Kodeksu cywilnego. Zgodnie z art. 72 ustawy z dnia 30 maja 2014 r. o prawach konsumenta, informacje zamieszczone na stronie służą wyłącznie celom informacyjnym i mogą ulec zmianie.
+          </Alert>
           <TabPanel
             value={activeTab}
             index={1}
@@ -333,6 +339,7 @@ export function SingleInvestmentPage() {
             ) : (
               <Typography>Brak zdjęć w galerii dla tej inwestycji.</Typography>
             )}
+            
           </TabPanel>
         </Paper>
       </Container>

@@ -10,12 +10,17 @@ import architekturaImage from '../assets/wizualizacja/24.jpg';
 import lokalizacjaImage from '../assets/wizualizacja/18.jpg';
 import { FadeInOnScroll } from '../components/FadeInOnScroll';
 import { KeyFeatures } from '../components/KeyFeatures';
-import { Box, Container, Typography } from '@mui/material';
-import { GoogleMap } from '../components/GoogleMap';
+import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import { MasonryGrid, type MasonryItem } from '../components/MasonryGrid';
 import { NearbyPlaces } from '../components/NearbyPlaces';
 import { FloatingSquares } from '../components/FloatingSquares';
 import VideoComponent from '../components/VideoComponent';
+import { useEffect, useState } from 'react';
+import { ref, getDownloadURL } from 'firebase/storage';
+import { storage } from '../data/firebase';
+import DownloadIcon from '@mui/icons-material/Download';
+import ArticleIcon from '@mui/icons-material/Article';
+import { InteractiveLocationMap } from '../components/InteractiveLocationMap';
 
 // Przygotowujemy dane dla naszej nowej siatki
 const masonryData: MasonryItem[] = [
@@ -52,8 +57,28 @@ const masonryData: MasonryItem[] = [
 ];
 
 export function HomePageAlternative() {
+  const [prospectusUrl, setProspectusUrl] = useState('');
+  const [specsUrl, setSpecsUrl] = useState('');
+   useEffect(() => {
+    // Pobieramy link do naszego PDF-a ze Storage
+    const fileRef = ref(storage, 'klient/Symfonia Górki.pdf');
+    
+    getDownloadURL(fileRef)
+      .then(url => setProspectusUrl(url))
+      .catch(error => console.error("Nie udało się pobrać linku do prospektu:", error));
+  }, []);
+  const specsRef = ref(storage, 'klient/Harmonogram płatności AW Haus sp. z o.o. po korekcie.docx'); // Upewnij się, że nazwa pliku się zgadza
+    getDownloadURL(specsRef)
+      .then(url => setSpecsUrl(url))
+      .catch(error => console.error("Nie udało się pobrać linku do specyfikacji:", error));
+
   return (
     <>
+     <title>Nowe Mieszkania i Domy w Opolu - Deweloper AWHaus | Osiedle Symfonia</title>
+      <meta 
+        name="description" 
+        content="Odkryj Osiedle Symfonia – Twoje nowe miejsce do życia blisko natury. Sprawdź ofertę nowoczesnych i komfortowych mieszkań od dewelopera AWHaus w Opolu." 
+      />
       <Hero />
 
       <FadeInOnScroll>
@@ -188,8 +213,63 @@ export function HomePageAlternative() {
           </Box>
         </Container>
       </Box>
-      <GoogleMap />
+       <Box sx={{ py: 8, backgroundColor: 'background.paper' }}>
+        <Container maxWidth="lg">
+          <Typography variant="h2" component="h2" textAlign="center" gutterBottom>
+            Naturalnie blisko miasta
+          </Typography>
+          <InteractiveLocationMap />
+          <Box textAlign="center" mt={4}>
+            <Button
+              variant="contained"
+              href="https://maps.app.goo.gl/DkwyaNii2VVGtqad6" 
+              target="_blank"
+            >
+              Zobacz na Google Maps
+            </Button>
+          </Box>
+        </Container>
+      </Box>
       <ApartmentList />
+      {/* Nowa sekcja z przyciskiem do pobierania */}
+   <Box sx={{ py: 8, textAlign: 'center', backgroundColor: 'background.paper' }}>
+        <Container maxWidth="md">
+          <Typography variant="h3" component="h2" gutterBottom>
+            Pobierz Dokumenty
+          </Typography>
+          <Typography color="text.secondary" sx={{ mb: 4 }}>
+            Zapoznaj się ze wszystkimi szczegółami naszej inwestycji w wygodnych dokumentach PDF.
+          </Typography>
+          
+          {/* --- POCZĄTEK ZMIANY --- */}
+          {/* 3. Używamy Stack, aby ułożyć przyciski obok siebie */}
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
+            <Button
+              variant="contained"
+              size="large"
+              startIcon={<DownloadIcon />}
+              href={prospectusUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              disabled={!prospectusUrl}
+            >
+              Prospekt Informacyjny
+            </Button>
+
+            <Button
+              variant="outlined" // Inny styl dla drugiego przycisku
+              size="large"
+              startIcon={<ArticleIcon />}
+              href={specsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              disabled={!specsUrl}
+            >
+              Harmonogram budowy
+            </Button>
+          </Stack>
+        </Container>
+      </Box>
     </>
   );
 }

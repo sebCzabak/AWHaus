@@ -27,7 +27,7 @@ interface FlatApartment extends Apartment {
 
 export function ApartmentList() {
   const [apartments, setApartments] = useState<FlatApartment[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [_loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -89,6 +89,7 @@ export function ApartmentList() {
               <TableCell>Nr Apartamentu</TableCell>
               <TableCell>Metraż (m²)</TableCell>
               <TableCell>Pokoje</TableCell>
+              <TableCell>Ekspozycja</TableCell>
               <TableCell>Status</TableCell>
               <TableCell align="center">Premium</TableCell>
               <TableCell>Karta Lokalu</TableCell>
@@ -116,7 +117,7 @@ export function ApartmentList() {
               <TableCell component="th" scope="row">{apt.id.toUpperCase()}</TableCell>
                 <TableCell>{apt.area ? `${apt.area.toFixed(2)}m²` : '-'}</TableCell>
                 <TableCell>{apt.rooms || '-'}</TableCell>
-                <TableCell>{apt.floor ?? '-'}</TableCell>
+                  <TableCell>{apt.exposure || '-'}</TableCell>
                 <TableCell>{apt.status || '-'}</TableCell>
                 <TableCell align="center">
                   {apt.isPremium && <CheckIcon color="primary" />}
