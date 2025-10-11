@@ -93,16 +93,14 @@ export function HomePageAlternative() {
           imageOnLeft={true}
           backgroundColor="#f9f9f9"
         >
-          <Typography
+         <Typography
             paragraph
             color="text.secondary"
             sx={{ fontSize: '1.1rem' }}
           >
-            Bliskość natury i malowniczych krajobrazów stały się inspiracją do stworzenia nowoczesnego projektu
-            architektonicznego, który harmonijnie łączy modernistyczny styl z otaczającym środowiskiem. Materiały do
-            wykończenia budynków zostały starannie dobrane, duże przeszklenia zapewniają naturalne światło i eksponują
-            piękno natury. Elewacja ceglana, liczne gzymsy, łączenie kolorów i detali razem z dwu spadowym dachem nadaje
-            ponadczasowy wygląd budynków oraz komfortowy styl życia.
+            Wybieramy tylko najlepsze lokalizacje – bliskość terenów zielonych, dogodny dojazd do centrum oraz
+            rozbudowana infrastruktura to nasze priorytety. Twoje nowe mieszkanie będzie idealnym miejscem do życia,
+            pracy i odpoczynku, z łatwym dostępem do wszystkiego, czego potrzebujesz na co dzień.
           </Typography>
           <strong>Symfonia Górki </strong> oferuje unikalne połączenie bliskości natury z dynamicznym życiem miejskim.
           Dzięki dobrej lokalizacji, mieszkańcy będą mieli dostęp do tras rowerowych, ścieżek spacerowych oraz miejsc do
@@ -136,10 +134,13 @@ export function HomePageAlternative() {
             color="text.secondary"
             sx={{ fontSize: '1.1rem' }}
           >
-            Wybieramy tylko najlepsze lokalizacje – bliskość terenów zielonych, dogodny dojazd do centrum oraz
-            rozbudowana infrastruktura to nasze priorytety. Twoje nowe mieszkanie będzie idealnym miejscem do życia,
-            pracy i odpoczynku, z łatwym dostępem do wszystkiego, czego potrzebujesz na co dzień.
+            Bliskość natury i malowniczych krajobrazów stały się inspiracją do stworzenia nowoczesnego projektu
+            architektonicznego, który harmonijnie łączy modernistyczny styl z otaczającym środowiskiem. Materiały do
+            wykończenia budynków zostały starannie dobrane, duże przeszklenia zapewniają naturalne światło i eksponują
+            piękno natury. Elewacja ceglana, liczne gzymsy, łączenie kolorów i detali razem z dwu spadowym dachem nadaje
+            ponadczasowy wygląd budynków oraz komfortowy styl życia.
           </Typography>
+          
           <Typography
             paragraph
             color="text.secondary"
@@ -165,8 +166,7 @@ export function HomePageAlternative() {
           color="text.secondary"
           sx={{ fontSize: '1.1rem' }}
         >
-          Oferujemy szeroki wybór mieszkań dwupoziomowych o powierzchniach od 59 do 94 m², w tym funkcjonalne 2- i
-          3-pokojowe lokale, które spełnią oczekiwania nawet najbardziej wymagających klientów.
+          Oferujemy szeroki wybór mieszkań dwupoziomowych o powierzchniach od 57 do 92 m², w tym funkcjonalny rozkład lokali oraz okno w łazience, które spełnią oczekiwania nawet najbardziej wymagających klientów.
         </Typography>
         <Typography
           paragraph

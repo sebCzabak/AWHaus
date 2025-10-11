@@ -25,7 +25,7 @@ export function PrivacyPolicyPage() {
             paragraph
             sx={{ fontStyle: 'italic', color: 'text.secondary' }}
           >
-            Ostatnia aktualizacja: 22 sierpnia 2025 r.
+            Ostatnia aktualizacja: 11 października 2025 r.
           </Typography>
 
           <Box my={3}>
@@ -36,13 +36,16 @@ export function PrivacyPolicyPage() {
               §1. Kto jest Administratorem Danych?
             </Typography>
             <Typography paragraph>
-              Administratorem Państwa danych osobowych jest **[Pełna nazwa firmy deweloperskiej]** z siedzibą w [Adres
-              firmy, np. ul. Przykładowa 1, 00-000 Warszawa], NIP: [Numer NIP], REGON: [Numer REGON] (dalej jako
+              Administratorem Państwa danych osobowych jest <strong>AWHaus</strong> z siedzibą w ul. Opolska 18 B Boguszyce, 
+            </Typography>
+            <Typography paragraph>
+              46-061 Prószków Polska,
+               NIP: <strong>9910562053</strong>, REGON: <strong>0001184227</strong> (dalej jako
               "Administrator").
             </Typography>
             <Typography paragraph>
-              Kontakt z Administratorem jest możliwy poprzez adres e-mail: **[Adres e-mail firmy]** lub telefonicznie
-              pod numerem: **[Numer telefonu firmy]**.
+              Kontakt z Administratorem jest możliwy poprzez adres e-mail: <strong>biuro@awaus.pl</strong> lub telefonicznie
+              pod numerem: <strong>600 099 572</strong>.
             </Typography>
           </Box>
 
@@ -61,11 +64,11 @@ export function PrivacyPolicyPage() {
                   treść wiadomości przetwarzamy na podstawie Art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes
                   administratora), aby móc odpowiedzieć na Państwa zapytanie.
                 </li>
-                <li>
+                {/* <li>
                   <strong>Analiza ruchu na stronie (jeśli dotyczy):</strong> Korzystamy z narzędzi analitycznych, takich
                   jak Google Analytics, w celu tworzenia statystyk i poprawy działania naszej strony. Podstawą prawną
                   jest Państwa dobrowolna zgoda (Art. 6 ust. 1 lit. a RODO), wyrażona poprzez baner cookie.
-                </li>
+                </li> */}
               </ul>
             </Typography>
           </Box>
@@ -82,12 +85,9 @@ export function PrivacyPolicyPage() {
               działalności. Są to m.in.:
               <ul>
                 <li>
-                  **Google LLC:** W zakresie usług chmurowych Firebase (hosting, baza danych) oraz usług analitycznych
-                  (Google Analytics).
+                  <strong>Google LLC</strong>: W zakresie usług chmurowych Firebase (baza danych)
                 </li>
-                <li>
-                  **[Nazwa firmy hostingowej, np. Cyber_Folks S.A.]:** W zakresie utrzymania serwera poczty e-mail.
-                </li>
+
               </ul>
               Przekazanie danych odbywa się na podstawie umów powierzenia przetwarzania danych, zapewniających ich
               bezpieczeństwo.

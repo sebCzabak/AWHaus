@@ -67,7 +67,7 @@ export function FlippingPriceTag() {
           }}
         >
           <Typography sx={{ fontWeight: 'bold' }}>
-            Cena za m² już od <span style={{ color: '#83907c' }}>8650 zł</span>
+            Cena za m² już od <span style={{ color: '#22af88' }}>8650 zł</span>
           </Typography>
         </Paper>
 
@@ -83,7 +83,7 @@ export function FlippingPriceTag() {
           }}
         >
           <Typography sx={{ fontWeight: 'bold' }}>
-            Mieszkania już od <span style={{ color: '#83907c' }}>{lowestPrice ? `${lowestPrice} zł` : '...'}</span>
+            Mieszkania już od <span style={{ color: '#22af88' }}>{lowestPrice ? `${lowestPrice} zł` : '...'}</span>
           </Typography>
         </Paper>
         {/* --- KONIEC POPRAWKI WYRÓWNANIA --- */}

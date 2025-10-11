@@ -17,7 +17,7 @@ const features = [
   },
   {
     icon: <SquareFootIcon sx={{ fontSize: 60 }} />,
-    title: 'Apartament od 57 m² do 94 m²',
+    title: 'Apartament od 57 m² do 92 m²',
     description:
       'Wybierz jeden z trzech wariantów funkcjonalnych i nowoczesnych mieszkań - z przestronnym dwu poziomowym układem pomieszczeń oraz wnętrzami pełnymi słońca przez cały dzień ',
   },

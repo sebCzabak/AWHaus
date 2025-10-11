@@ -35,7 +35,7 @@ export const sitePlanCoordinates: OverlayData[] = [
   { id: '2a',   top: '27.6%', 
     left: '3.9%', 
     width: '39%',
-    height: '4.9%',
+    height: '5.8%',
     // Kształt: prostokąt z "wycięciem" po prawej stronie na dole
     clipPath: 'polygon(0% 0%, 100% 0%, 100% 50%, 70% 50%, 70% 100%, 0% 100%)' 
   },
@@ -45,7 +45,7 @@ export const sitePlanCoordinates: OverlayData[] = [
     top: '33.5%', 
     left: '3.9%', 
     width: '39%',
-    height: '5.9%',
+    height: '6%',
     // Kształt: prostokąt z "wycięciem" po prawej stronie na dole
     clipPath: 'polygon(75% 5%, 75% 50%, 100% 50%, 100% 100%, 0 100%, 0 5%)' 
   },
@@ -67,7 +67,7 @@ export const sitePlanCoordinates: OverlayData[] = [
   { id: '4a',     top: '47.7%', 
     left: '3.9%', 
     width: '39%',
-    height: '4.5%',
+    height: '5.5%',
     // Kształt: prostokąt z "wycięciem" po prawej stronie na dole
     clipPath: 'polygon(0% 0%, 100% 0%, 100% 50%, 70% 50%, 70% 100%, 0% 100%)' 
   },

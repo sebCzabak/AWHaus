@@ -80,7 +80,7 @@ export function QuickContactFab() {
           <Stack direction="row" spacing={2} alignItems="center">
             <PhoneIcon color="secondary" sx={{ fontSize: '2.5rem' }}/>
             <Typography variant="h5" component="a" href="tel:+48123456789" sx={{ textDecoration: 'none', color: 'text.primary' }}>
-              +48 123 456 789
+              +48 600 099 572
             </Typography>
           </Stack>
         </DialogContent>

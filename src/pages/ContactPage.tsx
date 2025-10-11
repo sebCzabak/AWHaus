@@ -63,9 +63,8 @@ export function ContactPage() {
                   alignItems="center"
                 >
                   <PlaceIcon color="primary" />
-                  <Typography>	ul. PLAC WOLNOŚCI 6
-                            45-018 OPOLE
-                      OPOLSKIE</Typography>
+                  <Typography>	ul. Boguszyce 46-061
+                      ul. opolska 18b</Typography>
                 </Stack>
                 <Stack
                   direction="row"
@@ -81,7 +80,7 @@ export function ContactPage() {
                   alignItems="center"
                 >
                   <PhoneIcon color="primary" />
-                  <Typography>+48 123 456 789</Typography>
+                  <Typography>+48 600 099 572</Typography>
                 </Stack>
               </Stack>
               <Box sx={{ height: '300px', width: '100%', mt: 4, borderRadius: 2, overflow: 'hidden' }}>

@@ -2,12 +2,9 @@ import { Box, Typography } from '@mui/material';
 
 export function GoogleMap() {
   return (
-    <Box sx={{ height: '400px', width: '100%', position: 'relative', mt: 4 }}>
+    <Box sx={{ height: '800px', width: '100%', position: 'relative', mt: 4 }}>
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d24016.850729344747!2d17.897915657825777!3d50.62963166949668!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4711acd98f4aca2d%3A0xbb0afb321c77b3e3!2sStawowa%2014%2C%2046-060%20G%C3%B3rki!5e1!3m2!1spl!2spl!4v1760180749978!5m2!1spl!2spl" 
-        width="100%"
-        height="100%"
-        style={{ border: 0 }}
+        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1499.8526642053473!2d17.923916482828606!3d50.66722196976116!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1spl!2spl!4v1760184886019!5m2!1spl!2spl"
         allowFullScreen={true}
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"

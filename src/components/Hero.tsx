@@ -88,7 +88,7 @@ export function Hero() {
             Odkrywaj uroki życia blisko natury – każdego dnia
           </Typography>
           <Stack direction="row" spacing={2} sx={{ mt: 3, alignItems: 'center' }}>
-            <FlippingPriceTag /> {/* Wstawiamy nasz nowy, animowany komponent */}
+            <FlippingPriceTag /> 
             <Button component={RouterLink} to="/oferta" variant="contained" size="large" endIcon={<ArrowForwardIcon />}>
               Zobacz ofertę
             </Button>

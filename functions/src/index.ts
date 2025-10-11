@@ -6,6 +6,8 @@ import { onDocumentCreated } from 'firebase-functions/v2/firestore';
 import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { setGlobalOptions } from 'firebase-functions/v2';
 
+import { onRequest } from "firebase-functions/v2/https";
+
 admin.initializeApp();
 setGlobalOptions({ region: 'europe-west3' });
 
@@ -113,3 +115,60 @@ export const sendDailyPriceReport = onSchedule(
     }
   }
 );
+export const daneApi = onRequest(async (request, response) => {
+  // Krok 1: Ustaw nagłówki CORS, aby zezwolić na publiczny dostęp z dowolnej domeny.
+  // To jest kluczowe, aby system dane.gov.pl mógł pobrać dane.
+  response.set("Access-Control-Allow-Origin", "*");
+
+  // Upewniamy się, że odpowiadamy tylko na żądania typu GET
+  if (request.method !== "GET") {
+    response.status(405).send("Method Not Allowed");
+    return;
+  }
+
+  try {
+    // Krok 2: Pobierz wszystkie inwestycje z bazy danych
+    const investmentsSnapshot = await admin.firestore().collection("investments").get();
+
+    if (investmentsSnapshot.empty) {
+      response.status(404).json({ error: "Brak danych o inwestycjach." });
+      return;
+    }
+
+    // Krok 3: Sformatuj dane do pożądanej struktury
+    const investmentsData = investmentsSnapshot.docs.map((doc) => {
+      const investment = doc.data();
+      return {
+        idInwestycji: doc.id,
+        nazwa: investment.name,
+        lokalizacja: investment.location,
+        mieszkania: investment.apartments.map((apt: any) => ({
+          idMieszkania: apt.id,
+          status: apt.status,
+          cena: apt.price,
+          metraz: apt.area,
+          ekspozycja: apt.exposure || null, // Dodajemy nowe pole
+          premium: apt.isPremium || false,
+        })),
+      };
+    });
+
+    // Krok 4: Stwórz finalny obiekt odpowiedzi JSON
+    const apiResponse = {
+      dostawcaDanych: "AWHaus Deweloper", // Twoja nazwa firmy
+      daneNaDzien: new Date().toISOString(), // Aktualna data i czas w formacie ISO
+      zasob: {
+        typ: "API",
+        format: "JSON",
+      },
+      inwestycje: investmentsData,
+    };
+
+    // Krok 5: Wyślij odpowiedź w formacie JSON
+    response.status(200).json(apiResponse);
+
+  } catch (error) {
+    logger.error("Błąd podczas generowania danych dla API dane.gov.pl:", error);
+    response.status(500).json({ error: "Wystąpił wewnętrzny błąd serwera." });
+  }
+});
