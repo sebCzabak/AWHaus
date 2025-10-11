@@ -60,6 +60,7 @@ export function InvestmentListItem({ investment }: Props) {
     }
 
     const prices = validPricedApartments.map((apt) => parseFloat(apt.price.replace(/[^\d.-]/g, '')));
+    
 
     return {
       count: investment.apartments.length,
@@ -145,7 +146,7 @@ export function InvestmentListItem({ investment }: Props) {
                 <Stat
                   icon={<MonetizationOnOutlinedIcon color="primary" />}
                   label="Cena od"
-                  value={`${stats.minPrice}00 zł`}
+                  value={`${stats.minPrice} zł`}
                 />
               </Grid>
               <Grid
