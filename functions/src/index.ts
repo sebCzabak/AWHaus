@@ -13,6 +13,9 @@ import * as os from "os";
 import * as path from "path";
 import * as fs from "fs";
 
+import { PDFDocument, rgb } from "pdf-lib";
+import * as ExcelJS from "exceljs";
+
 
 interface Apartment {
   id: string;
@@ -55,6 +58,10 @@ export const sendMailOnNewMessage = onDocumentCreated("messages/{messageId}", as
   }
   const messageData = snapshot.data();
 
+   if (messageData.surname) {
+    logger.log("Wykryto bota (Honeypot). Wiadomość zignorowana.");
+    return;
+  }
     const adminMailOptions = {
     from: `Strona AWHaus <${process.env.SMTP_USER}>`,
     to: process.env.SMTP_USER,
@@ -158,11 +165,11 @@ export const sendMailOnNewMessage = onDocumentCreated("messages/{messageId}", as
  */
 export const sendDailyPriceReport = onSchedule(
   {
-    schedule: 'every day 21:00',
+    schedule: 'every day 21:50',
     timeZone: 'Europe/Warsaw',
   },
   async () => {
-     const transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: parseInt(process.env.SMTP_PORT || "465", 10),
       secure: (process.env.SMTP_PORT || "465") === "465",
@@ -171,57 +178,92 @@ export const sendDailyPriceReport = onSchedule(
         pass: process.env.SMTP_PASS,
       },
     });
-    functions.logger.log('Rozpoczynam generowanie dziennego raportu cen.');
+    logger.log('Rozpoczynam generowanie dziennych raportów PDF i XLSX.');
 
     try {
       const investmentsSnapshot = await admin.firestore().collection('investments').get();
 
       if (investmentsSnapshot.empty) {
-        functions.logger.log('Brak inwestycji w bazie danych do raportowania.');
+        logger.log('Brak inwestycji w bazie danych do raportowania.');
         return;
       }
+      
+      const date = new Date();
+      const dateString = date.toISOString().split("T")[0]; // format YYYY-MM-DD
+      const bucket = admin.storage().bucket();
 
-      let emailBody = `<h1>Dzienny raport cen - ${new Date().toLocaleDateString('pl-PL')}</h1>`;
-      emailBody += '<p>Poniżej znajduje się lista wszystkich mieszkań wraz z ich aktualnymi cenami.</p>';
+      // --- 1. Generowanie Pliku XLSX ---
+      const workbook = new ExcelJS.Workbook();
+      workbook.creator = "AWHaus Automated Reporter";
+      workbook.created = date;
 
       investmentsSnapshot.forEach((doc) => {
-        const investment = doc.data();
-        emailBody += `<h2>Inwestycja: ${investment.name}</h2>`;
-        emailBody +=
-          "<table border='1' cellpadding='5' cellspacing='0' style='border-collapse: collapse; width: 100%;'>";
-        emailBody += '<thead><tr><th>ID Mieszkania</th><th>Cena</th><th>Metraż</th><th>Status</th></tr></thead><tbody>';
-
-        if (investment.apartments && investment.apartments.length > 0) {
-          investment.apartments.forEach((apt: Apartment) => {
-            emailBody += `
-            <tr>
-              <td>${apt.id || 'Brak ID'}</td>
-              <td>${apt.price || 'Brak danych'}</td>
-              <td>${apt.area ? `${apt.area} m²` : 'Brak danych'}</td>
-              <td>${apt.status || 'Brak danych'}</td>
-            </tr>
-          `;
-          });
-        } else {
-          emailBody += "<tr><td colspan='4'>Brak mieszkań w tej inwestycji.</td></tr>";
+        const investment = doc.data() as Investment;
+        const sheet = workbook.addWorksheet(`Inwestycja ${investment.name.substring(0, 20)}`);
+        sheet.columns = [
+          { header: "ID Mieszkania", key: "id", width: 15 },
+          { header: "Cena", key: "price", width: 20 },
+          { header: "Metraż (m²)", key: "area", width: 15 },
+          { header: "Status", key: "status", width: 20 },
+        ];
+        if (investment.apartments) {
+          sheet.addRows(investment.apartments);
         }
-        emailBody += '</tbody></table>';
       });
 
+      const xlsxBuffer = await workbook.xlsx.writeBuffer();
+      const xlsxFile = bucket.file(`raporty/${dateString}-ceny.xlsx`);
+      await xlsxFile.save(Buffer.from(xlsxBuffer), { contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+      logger.log("Plik XLSX został zapisany w Storage.");
+
+      // --- 2. Generowanie Pliku PDF ---
+      const pdfDoc = await PDFDocument.create();
+      let page = pdfDoc.addPage(); 
+      let y = page.getHeight() - 50;
+      page.drawText(`Raport Cenowy - ${date.toLocaleDateString("pl-PL")}`, { x: 50, y, size: 24 });
+      y -= 50;
+      
+      investmentsSnapshot.forEach((doc) => {
+        const investment = doc.data() as Investment;
+        page.drawText(`Inwestycja: ${investment.name}`, { x: 50, y, size: 16, color: rgb(0.1, 0.1, 0.1) });
+        y -= 20;
+        if (investment.apartments) {
+          investment.apartments.forEach((apt: Apartment) => {
+            const text = `Mieszkanie ${apt.id}: ${apt.price}, ${apt.area} m², status: ${apt.status}`;
+            page.drawText(text, { x: 60, y, size: 10 });
+            y -= 15;
+            if (y < 40) {
+              page = pdfDoc.addPage(); // Tworzymy nową stronę i przypisujemy ją do zmiennej 'page'
+              y = page.getHeight() - 50; // Resetujemy pozycję Y
+            }
+          });
+        }
+        y -= 20;
+      });
+
+      const pdfBytes = await pdfDoc.save();
+      const pdfFile = bucket.file(`raporty/${dateString}-ceny.pdf`);
+      await pdfFile.save(Buffer.from(pdfBytes), { contentType: "application/pdf" });
+      logger.log("Plik PDF został zapisany w Storage.");
+
+      // --- 3. Wysyłka Powiadomienia E-mail ---
       const mailOptions = {
         from: `Serwer AWHaus <${process.env.SMTP_USER}>`,
         to: process.env.SMTP_USER,
-        subject: `Raport Cenowy AWHaus - ${new Date().toLocaleDateString('pl-PL')}`,
-        html: emailBody,
+        subject: `Gotowe raporty cenowe AWHaus - ${new Date().toLocaleDateString('pl-PL')}`,
+        html: `<p>Dzienny raport cenowy w formatach PDF i XLSX został wygenerowany i zapisany w Firebase Storage w folderze 'raporty'.</p>`,
       };
 
       await transporter.sendMail(mailOptions);
-      functions.logger.log('Dzienny raport cen został wysłany pomyślnie!');
+      logger.log('Powiadomienie o raporcie zostało wysłane pomyślnie!');
+      
     } catch (error) {
-      functions.logger.error('Błąd podczas generowania raportu cen:', error);
+      logger.error('Błąd podczas generowania raportu cen:', error);
     }
   }
 );
+
+
 export const daneApi = onRequest(async (request, response) => {
   // Krok 1: Ustaw nagłówki CORS, aby zezwolić na publiczny dostęp z dowolnej domeny.
   // To jest kluczowe, aby system dane.gov.pl mógł pobrać dane.
