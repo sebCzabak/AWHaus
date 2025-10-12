@@ -26,6 +26,7 @@ export function ContactForm({ isInDialog = false }: ContactFormProps) {
     name: '',
     email: '',
     phone: '',
+    surname:'',
     message: prefilledMessage,
   });
 
@@ -59,7 +60,7 @@ export function ContactForm({ isInDialog = false }: ContactFormProps) {
 
       await addDoc(collection(db, 'messages'), dataToSave);
       setSubmitStatus('success');
-      setFormData({ name: '', email: '', phone: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', message: '',surname:'' });
     } catch (error) {
       console.error("Błąd zapisu wiadomości:", error);
       setSubmitStatus('error');
@@ -79,6 +80,16 @@ export function ContactForm({ isInDialog = false }: ContactFormProps) {
         <Grid size={{ xs: 12 }}>
           <TextField fullWidth label="Telefon" name="phone" value={formData.phone} onChange={handleChange} />
         </Grid>
+        <Box component="div" sx={{ position: 'absolute', left: '-5000px' }} aria-hidden="true">
+          <TextField 
+            name="surname" // Nazwa sugerująca, że to prawdziwe pole
+            label="Surname" 
+            tabIndex={-1} // Usuwa pole z nawigacji klawiaturą
+            autoComplete="off"
+            value={formData.surname || ''} // Podpinamy do stanu, jeśli chcesz
+            onChange={handleChange}
+          />
+        </Box>
         <Grid size={{ xs: 12 }}>
           <TextField
             fullWidth

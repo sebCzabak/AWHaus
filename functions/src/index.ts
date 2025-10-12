@@ -109,7 +109,7 @@ export const sendMailOnNewMessage = onDocumentCreated("messages/{messageId}", as
         html: `
           <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
             <div style="text-align: center; padding: 20px; background-color: #f9f9f9;">
-              <img src="[URL_DO_LOGO_FIRMY_WGRANEGO_NA_STORAGE]" alt="AWHaus Logo" style="max-width: 150px;">
+              <img src="https://firebasestorage.googleapis.com/v0/b/awhaus-strona.firebasestorage.app/o/LogoW.png?alt=media&token=d378c890-59ef-4c7a-ac14-97c38913aa95" alt="AWHaus Logo" style="max-width: 150px;">
             </div>
             <div style="padding: 20px;">
               <h2 style="color: #83907c;">Dzień dobry ${messageData.name},</h2>
