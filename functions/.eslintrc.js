@@ -12,7 +12,10 @@ module.exports = {
     "google",
     "plugin:@typescript-eslint/recommended",
   ],
-  parser: "@typescript-eslint/parser",
+"parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
   parserOptions: {
     project: ["tsconfig.json", "tsconfig.dev.json"],
     sourceType: "module",
@@ -25,9 +28,14 @@ module.exports = {
     "@typescript-eslint",
     "import",
   ],
-  rules: {
+   rules: {
     "quotes": ["error", "double"],
     "import/no-unresolved": 0,
     "indent": ["error", 2],
+    "require-jsdoc": 0,
+    "max-len": ["error", { "code": 120 }],
+    
+    // Całkowicie wyłączamy regułę, która powoduje awarię
+    "@typescript-eslint/no-unused-expressions": "off",
   },
 };
