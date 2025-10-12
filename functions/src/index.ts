@@ -165,7 +165,7 @@ export const sendMailOnNewMessage = onDocumentCreated("messages/{messageId}", as
  */
 export const sendDailyPriceReport = onSchedule(
   {
-    schedule: 'every day 21:50',
+    schedule: 'every day 22:15',
     timeZone: 'Europe/Warsaw',
   },
   async () => {
@@ -218,23 +218,26 @@ export const sendDailyPriceReport = onSchedule(
 
       // --- 2. Generowanie Pliku PDF ---
       const pdfDoc = await PDFDocument.create();
+       const fontBytes = fs.readFileSync(path.join(__dirname, 'assets/Lato-Regular.ttf'));
+        const customFont = await pdfDoc.embedFont(fontBytes);
       let page = pdfDoc.addPage(); 
       let y = page.getHeight() - 50;
-      page.drawText(`Raport Cenowy - ${date.toLocaleDateString("pl-PL")}`, { x: 50, y, size: 24 });
+    // Używamy naszej nowej czcionki do rysowania tekstu
+      page.drawText(`Raport Cenowy - ${date.toLocaleDateString("pl-PL")}`, { x: 50, y, size: 24, font: customFont });
       y -= 50;
       
       investmentsSnapshot.forEach((doc) => {
         const investment = doc.data() as Investment;
-        page.drawText(`Inwestycja: ${investment.name}`, { x: 50, y, size: 16, color: rgb(0.1, 0.1, 0.1) });
+        page.drawText(`Inwestycja: ${investment.name}`, { x: 50, y, size: 16, color: rgb(0.1, 0.1, 0.1), font: customFont });
         y -= 20;
         if (investment.apartments) {
           investment.apartments.forEach((apt: Apartment) => {
             const text = `Mieszkanie ${apt.id}: ${apt.price}, ${apt.area} m², status: ${apt.status}`;
-            page.drawText(text, { x: 60, y, size: 10 });
+            page.drawText(text, { x: 60, y, size: 10, font: customFont });
             y -= 15;
             if (y < 40) {
-              page = pdfDoc.addPage(); // Tworzymy nową stronę i przypisujemy ją do zmiennej 'page'
-              y = page.getHeight() - 50; // Resetujemy pozycję Y
+              page = pdfDoc.addPage(); // Poprawka z poprzedniej rozmowy
+              y = page.getHeight() - 50;
             }
           });
         }
