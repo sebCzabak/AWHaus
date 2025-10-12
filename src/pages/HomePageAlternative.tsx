@@ -19,7 +19,6 @@ import { useEffect, useState } from 'react';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { storage } from '../data/firebase';
 import DownloadIcon from '@mui/icons-material/Download';
-import ArticleIcon from '@mui/icons-material/Article';
 import { InteractiveLocationMap } from '../components/InteractiveLocationMap';
 
 // Przygotowujemy dane dla naszej nowej siatki
@@ -58,7 +57,7 @@ const masonryData: MasonryItem[] = [
 
 export function HomePageAlternative() {
   const [prospectusUrl, setProspectusUrl] = useState('');
-  const [specsUrl, setSpecsUrl] = useState('');
+  const [_specsUrl, setSpecsUrl] = useState('');
    useEffect(() => {
     // Pobieramy link do naszego PDF-a ze Storage
     const fileRef = ref(storage, 'klient/Symfonia Górki.pdf');
@@ -146,7 +145,7 @@ export function HomePageAlternative() {
             color="text.secondary"
             sx={{ fontSize: '1.1rem' }}
           >
-            Każde mieszkanie ma możliwość adaptacji poddasza. Zyskujesz kolejny dodatkowy metraż ̴ 27 m2. Każdy
+            Każde mieszkanie ma możliwość adaptacji poddasza. Zyskujesz kolejny dodatkowy metraż. Każdy
             mieszkaniec będzie mógł cieszyć się prywatnym ogródkiem, a do każdego budynku jest przynależne miejsce
             parkingowe
           </Typography>
@@ -256,7 +255,7 @@ export function HomePageAlternative() {
               Prospekt Informacyjny
             </Button>
 
-            <Button
+            {/* <Button
               variant="outlined" // Inny styl dla drugiego przycisku
               size="large"
               startIcon={<ArticleIcon />}
@@ -266,7 +265,7 @@ export function HomePageAlternative() {
               disabled={!specsUrl}
             >
               Harmonogram budowy
-            </Button>
+            </Button> */}
           </Stack>
         </Container>
       </Box>

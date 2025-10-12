@@ -10,7 +10,7 @@ import YardIcon from '@mui/icons-material/Yard';
 
 const stats = [
   { icon: <EventIcon sx={{ fontSize: 40 }} />, endValue: 2025, label: 'ROK ODDANIA', prefix: '' },
-  { icon: <ApartmentIcon sx={{ fontSize: 40 }} />, endValue: 50, label: 'APARTAMENTÓW', prefix: '' },
+  { icon: <ApartmentIcon sx={{ fontSize: 40 }} />, endValue: 50, label: 'MIESZKAŃ', prefix: '' },
   { icon: <DirectionsCarIcon sx={{ fontSize: 40 }} />, endValue: 100, label: 'MIEJSC PARKINGOWYCH', prefix: '' },
   { icon: <YardIcon sx={{ fontSize: 40 }} />, endValue: 208, label: 'METRÓW KWADRATOWYCH OGRODU', prefix: 'do ' },
 ];

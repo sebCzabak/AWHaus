@@ -4,7 +4,7 @@ export function GoogleMap() {
   return (
     <Box sx={{ height: '800px', width: '100%', position: 'relative', mt: 4 }}>
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1499.8526642053473!2d17.923916482828606!3d50.66722196976116!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1spl!2spl!4v1760184886019!5m2!1spl!2spl"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3004.3959611700952!2d17.929762576835987!3d50.59376647703419!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4711ab9310e34c19%3A0xfe186df706e839d8!2sGREL!5e1!3m2!1spl!2spl!4v1760277305280!5m2!1spl!2spl"
         allowFullScreen={true}
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"

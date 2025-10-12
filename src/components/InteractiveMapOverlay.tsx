@@ -105,12 +105,12 @@ export function InteractiveMapOverlay({ investmentId, apartments, hoveredId, set
                 variant="h6"
                 sx={{ color: 'green.main', fontWeight: 'bold', ...strongTextShadow, backgroundColor: '#fff' }}
               >
-                - II Etap Budowy -
+                {coord.placeholderTitle}
                 <Typography
                   component="span"
                   sx={{ display: 'block', fontSize: '0.9rem', fontWeight: 'normal', backgroundColor: '#fff' }}
                 >
-                  Dostępny wkrótce
+                  {coord.placeholderSubtitle}
                 </Typography>
               </Typography>
             </Box>

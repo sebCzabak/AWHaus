@@ -122,7 +122,7 @@ export function InvestmentListItem({ investment }: Props) {
                 <Stat
                   icon={<HomeWorkOutlinedIcon color="primary" />}
                   value={stats.count}
-                  label="Apartamentów"
+                  label="Lokali"
                 />
               </Grid>
               <Grid

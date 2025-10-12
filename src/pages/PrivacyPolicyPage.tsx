@@ -36,7 +36,7 @@ export function PrivacyPolicyPage() {
               §1. Kto jest Administratorem Danych?
             </Typography>
             <Typography paragraph>
-              Administratorem Państwa danych osobowych jest <strong>AWHaus</strong> z siedzibą w ul. Opolska 18 B Boguszyce, 
+              Administratorem Państwa danych osobowych jest <strong>AWHaus</strong> z siedzibą na ul. Opolska 18 B Boguszyce, 
             </Typography>
             <Typography paragraph>
               46-061 Prószków Polska,

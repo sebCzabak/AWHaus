@@ -86,7 +86,7 @@ export function ApartmentList() {
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
-              <TableCell>Nr Apartamentu</TableCell>
+              <TableCell>Nr Lokalu</TableCell>
               <TableCell>Metraż (m²)</TableCell>
               <TableCell>Pokoje</TableCell>
               <TableCell>Ekspozycja</TableCell>

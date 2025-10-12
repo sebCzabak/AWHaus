@@ -5,6 +5,8 @@ export interface OverlayData {
   width: string;
   height: string;
   clipPath?: string;
+  placeholderTitle?: string;
+  placeholderSubtitle?: string;
 }
 
 export const sitePlanCoordinates: OverlayData[] = [
@@ -93,6 +95,9 @@ export const sitePlanCoordinates: OverlayData[] = [
   // { id: '12b', top: '38.3%', left: '53.8%', width: '44%', height: '3.9%' },
   // { id: '12a', top: '42%', left: '53.8%', width: '44%', height: '4.8%' },
 
-  { id: 'etap-2', top: '1%', left: '53%', width: '40%', height: '49%' },
-  { id: 'etap-3', top: '46%', left: '1%', width: '96%', height: '50%' },
+  { id: 'etap-2', top: '1%', left: '53%', width: '40%', height: '49%',placeholderTitle: '- II Etap Budowy -',
+    placeholderSubtitle: 'Dostępny wkrótce', },
+  { id: 'etap-3', top: '46%', left: '1%', width: '96%', height: '50%',placeholderTitle: '- III Etap Budowy -',
+    placeholderSubtitle: 'Planowany',
+ },
 ];
