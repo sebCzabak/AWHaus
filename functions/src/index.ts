@@ -15,6 +15,7 @@ import * as fs from "fs";
 
 import { PDFDocument, rgb } from "pdf-lib";
 import * as ExcelJS from "exceljs";
+import fontkit from "@pdf-lib/fontkit";
 
 
 interface Apartment {
@@ -165,7 +166,7 @@ export const sendMailOnNewMessage = onDocumentCreated("messages/{messageId}", as
  */
 export const sendDailyPriceReport = onSchedule(
   {
-    schedule: 'every day 22:15',
+    schedule: 'every day 22:55',
     timeZone: 'Europe/Warsaw',
   },
   async () => {
@@ -218,6 +219,7 @@ export const sendDailyPriceReport = onSchedule(
 
       // --- 2. Generowanie Pliku PDF ---
       const pdfDoc = await PDFDocument.create();
+           pdfDoc.registerFontkit(fontkit);
        const fontBytes = fs.readFileSync(path.join(__dirname, 'assets/Lato-Regular.ttf'));
         const customFont = await pdfDoc.embedFont(fontBytes);
       let page = pdfDoc.addPage(); 
@@ -247,7 +249,7 @@ export const sendDailyPriceReport = onSchedule(
       const pdfBytes = await pdfDoc.save();
       const pdfFile = bucket.file(`raporty/${dateString}-ceny.pdf`);
       await pdfFile.save(Buffer.from(pdfBytes), { contentType: "application/pdf" });
-      logger.log("Plik PDF został zapisany w Storage.");
+      logger.log("Plik PDF został pomyślnie zapisany w Storage.");
 
       // --- 3. Wysyłka Powiadomienia E-mail ---
       const mailOptions = {
