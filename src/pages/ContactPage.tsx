@@ -72,7 +72,7 @@ export function ContactPage() {
                   alignItems="center"
                 >
                   <EmailIcon color="primary" />
-                  <Typography>biuro@awhaus.pl</Typography>
+                  <Typography>kontakt@awhaus.pl</Typography>
                 </Stack>
                 <Stack
                   direction="row"

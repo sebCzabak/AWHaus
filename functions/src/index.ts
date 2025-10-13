@@ -135,7 +135,7 @@ export const sendMailOnNewMessage = onDocumentCreated("messages/{messageId}", as
               <p>Z pozdrowieniami,</p>
               <p><strong>Zespół AWHaus Deweloper</strong><br>
                  tel: +48 600 099 572<br>
-                 e-mail: biuro@awhaus.pl<br>
+                 e-mail: kontakt@awhaus.pl<br>
                  AWHaus.pl
               </p>
             </div>
