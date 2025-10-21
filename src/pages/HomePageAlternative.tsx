@@ -10,7 +10,7 @@ import architekturaImage from '../assets/wizualizacja/24.jpg';
 import lokalizacjaImage from '../assets/wizualizacja/18.jpg';
 import { FadeInOnScroll } from '../components/FadeInOnScroll';
 import { KeyFeatures } from '../components/KeyFeatures';
-import { Box, Button, Container, Stack, Typography } from '@mui/material';
+import { Box, Button, Container, Paper, Stack, Typography } from '@mui/material';
 import { MasonryGrid, type MasonryItem } from '../components/MasonryGrid';
 import { NearbyPlaces } from '../components/NearbyPlaces';
 import { FloatingSquares } from '../components/FloatingSquares';
@@ -20,6 +20,9 @@ import { ref, getDownloadURL } from 'firebase/storage';
 import { storage } from '../data/firebase';
 import DownloadIcon from '@mui/icons-material/Download';
 import { InteractiveLocationMap } from '../components/InteractiveLocationMap';
+import coverImage from '../assets/katalog-okladka.jpg';
+import { CatalogFlipbook } from '../components/CatalogFlipbook';
+import { color } from 'framer-motion';
 
 // Przygotowujemy dane dla naszej nowej siatki
 const masonryData: MasonryItem[] = [
@@ -58,6 +61,7 @@ const masonryData: MasonryItem[] = [
 export function HomePageAlternative() {
   const [prospectusUrl, setProspectusUrl] = useState('');
   const [_specsUrl, setSpecsUrl] = useState('');
+  const [isCatalogOpen, setIsCatalogOpen] = useState(false);
    useEffect(() => {
     // Pobieramy link do naszego PDF-a ze Storage
     const fileRef = ref(storage, 'klient/Symfonia Górki.pdf');
@@ -95,16 +99,28 @@ export function HomePageAlternative() {
          <Typography
             paragraph
             color="text.secondary"
-            sx={{ fontSize: '1.1rem' }}
+             sx={{ 
+    fontSize: '1.rem',
+    '& strong': { color: 'black' } 
+  }}
           >
             Wybieramy tylko najlepsze lokalizacje – bliskość terenów zielonych, dogodny dojazd do centrum oraz
             rozbudowana infrastruktura to nasze priorytety. Twoje nowe mieszkanie będzie idealnym miejscem do życia,
             pracy i odpoczynku, z łatwym dostępem do wszystkiego, czego potrzebujesz na co dzień.
           </Typography>
+          <Typography
+            paragraph
+            color="text.secondary"
+             sx={{ 
+    fontSize: '1.rem',
+    '& strong': { color: 'black' } 
+  }}
+  >
           <strong>Symfonia Górki </strong> oferuje unikalne połączenie bliskości natury z dynamicznym życiem miejskim.
           Dzięki dobrej lokalizacji, mieszkańcy będą mieli dostęp do tras rowerowych, ścieżek spacerowych oraz miejsc do
           wypoczynku. Kilkuminutowa przejażdżka rowerem pozwoli dotrzeć na wyspę Bolko z przepięknym ogrodem
           zoologicznym oraz nowym parkiem, basenem Wodna Nuta lub kampus Politechniki Opolskiej.
+          </Typography>
           <Typography
             paragraph
             color="text.secondary"
@@ -170,7 +186,10 @@ export function HomePageAlternative() {
         <Typography
           paragraph
           color="text.secondary"
-          sx={{ fontSize: '1.1rem' }}
+         sx={{ 
+    fontSize: '1.rem',
+    '& strong': { color: 'black' } 
+  }}
         >
           <strong>Symfonia Górki </strong> to wyjątkowy projekt mieszkaniowy w sercu Górek, zlokalizowany w pięknej,
           malowniczej zieleni, jedynie 10 minut jazdy samochodem od centrum miasta Opola. Dzięki tej doskonałej
@@ -180,7 +199,10 @@ export function HomePageAlternative() {
         <Typography
           paragraph
           color="text.secondary"
-          sx={{ fontSize: '1.2rem' }}
+          sx={{ 
+    fontSize: '1.2rem',
+    '& strong': { color: 'black' } 
+  }}
         >
           Wybierz nowoczesny styl życia w <strong> Symfonia Górki </strong> i poczuj się jak na wakacjach każdego dnia.
         </Typography>
@@ -229,7 +251,42 @@ export function HomePageAlternative() {
           </Box>
         </Container>
       </Box>
+      {/* Nowa sekcja z "zajawką" katalogu */}
+      <Box sx={{ py: 8, backgroundColor: 'background.paper' }}>
+        <Container maxWidth="lg">
+          <Paper elevation={3} sx={{ p: 4, display: 'flex', alignItems: 'center', gap: 4, borderRadius: '12px' }}>
+            <Box 
+              component="img" 
+              src={coverImage} 
+              alt="Katalog inwestycji" 
+              sx={{ 
+                width: '200px', 
+                height: 'auto', 
+                borderRadius: '8px', 
+                boxShadow: 5,
+                cursor: 'pointer',
+                transition: 'transform 0.3s',
+                '&:hover': { transform: 'scale(1.05)' }
+              }}
+              onClick={() => setIsCatalogOpen(true)}
+            />
+            <Box>
+              <Typography variant="h3" component="h2" gutterBottom>
+                Zobacz nasz katalog
+              </Typography>
+              <Typography color="text.secondary" sx={{ mb: 3 }}>
+                Przejrzyj szczegółowy, katalog naszej inwestycji w formie interaktywnego magazynu.
+              </Typography>
+              <Button variant="contained" size="large" onClick={() => setIsCatalogOpen(true)}>
+                Otwórz Katalog
+              </Button>
+            </Box>
+          </Paper>
+        </Container>
+      </Box>
+
       <ApartmentList />
+      <CatalogFlipbook open={isCatalogOpen} onClose={() => setIsCatalogOpen(false)} />
       {/* Nowa sekcja z przyciskiem do pobierania */}
    <Box sx={{ py: 8, textAlign: 'center', backgroundColor: 'background.paper' }}>
         <Container maxWidth="md">
@@ -240,8 +297,7 @@ export function HomePageAlternative() {
             Zapoznaj się ze wszystkimi szczegółami naszej inwestycji w wygodnych dokumentach PDF.
           </Typography>
           
-          {/* --- POCZĄTEK ZMIANY --- */}
-          {/* 3. Używamy Stack, aby ułożyć przyciski obok siebie */}
+          
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
             <Button
               variant="contained"

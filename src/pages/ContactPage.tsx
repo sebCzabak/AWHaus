@@ -64,7 +64,7 @@ export function ContactPage() {
                 >
                   <PlaceIcon color="primary" />
                   <Typography>	ul. Boguszyce 46-061
-                      ul. opolska 18b</Typography>
+                      ul. Opolska 18b</Typography>
                 </Stack>
                 <Stack
                   direction="row"

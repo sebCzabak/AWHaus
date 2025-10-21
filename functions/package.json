@@ -20,7 +20,8 @@
     "firebase-admin": "^12.6.0",
     "firebase-functions": "^6.5.0",
     "nodemailer": "^7.0.5",
-    "pdf-lib": "^1.17.1"
+    "pdf-lib": "^1.17.1",
+    "xmlbuilder2": "^3.1.1"
   },
   "devDependencies": {
     "@types/nodemailer": "^7.0.1",

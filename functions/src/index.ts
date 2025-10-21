@@ -13,10 +13,8 @@ import * as os from "os";
 import * as path from "path";
 import * as fs from "fs";
 
-import { PDFDocument, rgb } from "pdf-lib";
-import * as ExcelJS from "exceljs";
-import fontkit from "@pdf-lib/fontkit";
 
+import * as xmlbuilder from 'xmlbuilder2';
 
 interface Apartment {
   id: string;
@@ -43,7 +41,7 @@ setGlobalOptions({ region: 'europe-west3' });
  * Funkcja wyzwalana przez Firestore.
  */
 export const sendMailOnNewMessage = onDocumentCreated("messages/{messageId}", async (event) => {
-  const transporter = nodemailer.createTransport({
+  const smtpConfig = {
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT || "465", 10),
     secure: (process.env.SMTP_PORT || "465") === "465",
@@ -51,7 +49,8 @@ export const sendMailOnNewMessage = onDocumentCreated("messages/{messageId}", as
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     },
-  });
+  };
+  const transporter = nodemailer.createTransport(smtpConfig);
   const snapshot = event.data;
   if (!snapshot) {
     functions.logger.error("Brak danych w zdarzeniu create dla 'messages'!");
@@ -166,7 +165,7 @@ export const sendMailOnNewMessage = onDocumentCreated("messages/{messageId}", as
  */
 export const sendDailyPriceReport = onSchedule(
   {
-    schedule: 'every day 22:55',
+    schedule: 'every day 19:56',
     timeZone: 'Europe/Warsaw',
   },
   async () => {
@@ -179,95 +178,85 @@ export const sendDailyPriceReport = onSchedule(
         pass: process.env.SMTP_PASS,
       },
     });
-    logger.log('Rozpoczynam generowanie dziennych raportów PDF i XLSX.');
+    logger.log('Rozpoczynam generowanie dziennego raportu XML.');
 
     try {
       const investmentsSnapshot = await admin.firestore().collection('investments').get();
-
       if (investmentsSnapshot.empty) {
-        logger.log('Brak inwestycji w bazie danych do raportowania.');
+        logger.log('Brak inwestycji do raportowania. Plik XML nie zostanie wygenerowany.');
         return;
       }
       
       const date = new Date();
-      const dateString = date.toISOString().split("T")[0]; // format YYYY-MM-DD
+      const dateString = date.toISOString().split("T")[0];
       const bucket = admin.storage().bucket();
-
-      // --- 1. Generowanie Pliku XLSX ---
-      const workbook = new ExcelJS.Workbook();
-      workbook.creator = "AWHaus Automated Reporter";
-      workbook.created = date;
-
-      investmentsSnapshot.forEach((doc) => {
-        const investment = doc.data() as Investment;
-        const sheet = workbook.addWorksheet(`Inwestycja ${investment.name.substring(0, 20)}`);
-        sheet.columns = [
-          { header: "ID Mieszkania", key: "id", width: 15 },
-          { header: "Cena", key: "price", width: 20 },
-          { header: "Metraż (m²)", key: "area", width: 15 },
-          { header: "Status", key: "status", width: 20 },
-        ];
-        if (investment.apartments) {
-          sheet.addRows(investment.apartments);
-        }
-      });
-
-      const xlsxBuffer = await workbook.xlsx.writeBuffer();
-      const xlsxFile = bucket.file(`raporty/${dateString}-ceny.xlsx`);
-      await xlsxFile.save(Buffer.from(xlsxBuffer), { contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-      logger.log("Plik XLSX został zapisany w Storage.");
-
-      // --- 2. Generowanie Pliku PDF ---
-      const pdfDoc = await PDFDocument.create();
-           pdfDoc.registerFontkit(fontkit);
-       const fontBytes = fs.readFileSync(path.join(__dirname, 'assets/Lato-Regular.ttf'));
-        const customFont = await pdfDoc.embedFont(fontBytes);
-      let page = pdfDoc.addPage(); 
-      let y = page.getHeight() - 50;
-    // Używamy naszej nowej czcionki do rysowania tekstu
-      page.drawText(`Raport Cenowy - ${date.toLocaleDateString("pl-PL")}`, { x: 50, y, size: 24, font: customFont });
-      y -= 50;
       
+      // 1. Generowanie Pliku XML
+      const root = xmlbuilder.create({ version: '1.0', encoding: 'UTF-8' })
+  .ele('RaportDewelopera')
+    .ele('Identyfikator', process.env.NIP_REGON || 'BRAK DANYCH') // Odczytujemy z process.env
+    .up()
+    .ele('DataRaportu', dateString)
+    .up()
+    .ele('Inwestycje');
+
       investmentsSnapshot.forEach((doc) => {
         const investment = doc.data() as Investment;
-        page.drawText(`Inwestycja: ${investment.name}`, { x: 50, y, size: 16, color: rgb(0.1, 0.1, 0.1), font: customFont });
-        y -= 20;
-        if (investment.apartments) {
-          investment.apartments.forEach((apt: Apartment) => {
-            const text = `Mieszkanie ${apt.id}: ${apt.price}, ${apt.area} m², status: ${apt.status}`;
-            page.drawText(text, { x: 60, y, size: 10, font: customFont });
-            y -= 15;
-            if (y < 40) {
-              page = pdfDoc.addPage(); // Poprawka z poprzedniej rozmowy
-              y = page.getHeight() - 50;
-            }
-          });
-        }
-        y -= 20;
+        const inwestycjaEle = root.ele('Inwestycja', { id: doc.id })
+          .ele('Nazwa', investment.name).up()
+          .ele('Lokalizacja', investment.location).up()
+          .ele('Mieszkania');
+        
+        investment.apartments.forEach((apt: Apartment) => {
+          inwestycjaEle.ele('Mieszkanie', { id: apt.id })
+            .ele('Status', apt.status || 'Brak danych').up()
+            // --- POCZĄTEK POPRAWKI ---
+            // Jawnie konwertujemy liczby na string przed przekazaniem
+            .ele('Cena', String(parseFloat(apt.price?.replace(/[^\d.-]/g, '') || '0'))).up()
+            .ele('Metraz', String(apt.area ?? '0')).up()
+            // --- KONIEC POPRAWKI ---
+            .ele('Ekspozycja', apt.exposure || 'Brak danych').up()
+            .ele('Premium', apt.isPremium ? 'TAK' : 'NIE').up()
+            .up();
+        });
+      });
+      
+      const xmlString = root.end({ prettyPrint: true });
+      
+      // 2. Zapis Pliku XML do Storage
+      const xmlFilePath = `raporty-xml/${dateString}-cennik.xml`;
+      const xmlFile = bucket.file(xmlFilePath);
+      
+      await xmlFile.save(xmlString, { contentType: "application/xml" });
+      logger.log(`Plik XML został pomyślnie zapisany w Storage pod ścieżką: ${xmlFilePath}`);
+      
+      // 3. Generowanie Publicznego Linku z Tokenem
+      const [signedUrl] = await xmlFile.getSignedUrl({
+          action: 'read',
+          expires: '03-01-2500',
       });
 
-      const pdfBytes = await pdfDoc.save();
-      const pdfFile = bucket.file(`raporty/${dateString}-ceny.pdf`);
-      await pdfFile.save(Buffer.from(pdfBytes), { contentType: "application/pdf" });
-      logger.log("Plik PDF został pomyślnie zapisany w Storage.");
-
-      // --- 3. Wysyłka Powiadomienia E-mail ---
+      // 4. Wysyłka E-maila z Powiadomieniem i Linkiem
       const mailOptions = {
         from: `Serwer AWHaus <${process.env.SMTP_USER}>`,
         to: process.env.SMTP_USER,
-        subject: `Gotowe raporty cenowe AWHaus - ${new Date().toLocaleDateString('pl-PL')}`,
-        html: `<p>Dzienny raport cenowy w formatach PDF i XLSX został wygenerowany i zapisany w Firebase Storage w folderze 'raporty'.</p>`,
+        subject: `Gotowy raport XML dla dane.gov.pl - ${date.toLocaleDateString('pl-PL')}`,
+        html: `
+          <p>Dzienny raport XML z cennikiem został pomyślnie wygenerowany.</p>
+          <p><strong>Link do pliku XML:</strong></p>
+          <p><a href="${signedUrl}">${signedUrl}</a></p>
+          <p>Ten link należy przekazać do systemu dane.gov.pl.</p>
+        `,
       };
 
       await transporter.sendMail(mailOptions);
-      logger.log('Powiadomienie o raporcie zostało wysłane pomyślnie!');
+      logger.log('Powiadomienie o gotowym raporcie XML zostało wysłane!');
       
     } catch (error) {
-      logger.error('Błąd podczas generowania raportu cen:', error);
+      logger.error('Krytyczny błąd podczas generowania raportu XML:', error);
     }
   }
 );
-
 
 export const daneApi = onRequest(async (request, response) => {
   // Krok 1: Ustaw nagłówki CORS, aby zezwolić na publiczny dostęp z dowolnej domeny.
