@@ -10,6 +10,7 @@ export interface Apartment {
   isPremium?: boolean;
   cenaM2?: number;
   exposure?: string;
+  gardenm2?: number;
 }
 
 export interface Investment {

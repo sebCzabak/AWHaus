@@ -94,10 +94,12 @@ export function ApartmentList() {
               <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Metraż (m²)</TableCell>
               <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Pokoje</TableCell>
               <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Ekspozycja</TableCell>
+              <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Ogród (m²)</TableCell>
               <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Status</TableCell>
               <TableCell align="center" sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Premium</TableCell>
               <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Karta Lokalu</TableCell>
               <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Cena Brutto</TableCell>
+             
               <TableCell sx={{ border: 'none' }}></TableCell>
             </TableRow>
           </TableHead>
@@ -109,10 +111,16 @@ export function ApartmentList() {
                 sx={{
                   borderBottom: '1px solid #e0e0e0',
                   '&:last-child': { borderBottom: 'none' },
-                  transition: 'background-color 0.2s ease-in-out',
+                  transition: 'all 0.3s ease-in-out',
                   cursor: 'pointer',
+                  backgroundColor: 'transparent',
                   '&:hover': {
-                    backgroundColor: '#f9f9f9',
+                    backgroundColor: 'rgba(0, 131, 99, 0.04)',
+                    transform: 'translateY(-1px)',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+                    '& .MuiTableCell-root': {
+                      color: '#212121',
+                    },
                   },
                 }}
               >
@@ -127,6 +135,9 @@ export function ApartmentList() {
                 </TableCell>
                 <TableCell sx={{ border: 'none', py: 2.5, color: '#757575' }}>
                   {apt.exposure || '-'}
+                </TableCell>
+                <TableCell sx={{ border: 'none', py: 2.5, color: '#757575' }}>
+                  {apt.gardenm2 ? `${apt.gardenm2} m²` : '-'}
                 </TableCell>
                 <TableCell sx={{ border: 'none', py: 2.5, color: '#757575' }}>
                   {apt.status || '-'}
@@ -154,6 +165,7 @@ export function ApartmentList() {
                 <TableCell sx={{ border: 'none', py: 2.5, color: '#212121', fontWeight: 500 }}>
                   {apt.price || '-'}
                 </TableCell>
+              
                 <TableCell sx={{ border: 'none', py: 2.5 }}>
                   <Button 
                     component={RouterLink} 
