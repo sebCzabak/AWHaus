@@ -1,4 +1,4 @@
-import { Box, Tooltip, keyframes } from '@mui/material';
+import { Box, Tooltip } from '@mui/material';
 
 import mapBackground from '../assets/mapa-okolicy.png'; 
 import ParkIcon from '@mui/icons-material/Park';
@@ -17,22 +17,22 @@ const pointsOfInterest = [
   {id:'symfonia',top:'82%',left:'45%',icon:<HomeIcon/>,label:'Osiedle Symfonia'}
 ];
 
-// Definiujemy animację pulsowania
-const pulse = keyframes`
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(131, 144, 124, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(131, 144, 124, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(131, 144, 124, 0); }
-`;
 export function InteractiveLocationMap() {
   return (
     // Główny kontener z position: relative
-    <Box sx={{ position: 'relative', width: '100%', borderRadius: '12px', overflow: 'hidden', boxShadow: 5 }}>
-      {/* Obrazek mapy jako tło */}
+    <Box sx={{ position: 'relative', width: '100%', borderRadius: '8px', overflow: 'hidden', border: '1px solid #e0e0e0' }}>
+      {/* Obrazek mapy jako tło z grayscale filtrem */}
       <Box
         component="img"
         src={mapBackground}
         alt="Mapa okolicy inwestycji"
-        sx={{ width: '100%', height: 'auto', display: 'block' }}
+        sx={{ 
+          width: '100%', 
+          height: 'auto', 
+          display: 'block',
+          filter: 'grayscale(100%)',
+          opacity: 0.9,
+        }}
       />
       
       {/* Mapujemy po punktach i renderujemy wskaźniki */}
@@ -44,21 +44,20 @@ export function InteractiveLocationMap() {
               top: point.top,
               left: point.left,
               transform: 'translate(-50%, -50%)',
-              width: 48,
-              height: 48,
+              width: 40,
+              height: 40,
               borderRadius: '50%',
               backgroundColor: 'primary.main',
               color: 'white',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
               cursor: 'pointer',
-              animation: `${pulse} 2s infinite`, // Aplikujemy animację
-              transition: 'transform 0.3s ease-in-out',
+              transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
               '&:hover': {
-                transform: 'translate(-50%, -50%) scale(1.1)',
-                animationPlayState: 'paused', // Pauzujemy pulsowanie przy najechaniu
+                transform: 'translate(-50%, -50%) scale(1.15)',
+                boxShadow: '0 4px 12px rgba(0, 131, 99, 0.3)',
               },
             }}
           >

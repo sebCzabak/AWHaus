@@ -81,20 +81,24 @@ export function ApartmentList() {
       </Typography>
       <TableContainer
         component={Paper}
-        elevation={2}
+        elevation={0}
+        sx={{
+          border: '1px solid #e0e0e0',
+          borderRadius: '8px',
+        }}
       >
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
-            <TableRow>
-              <TableCell>Nr Lokalu</TableCell>
-              <TableCell>Metraż (m²)</TableCell>
-              <TableCell>Pokoje</TableCell>
-              <TableCell>Ekspozycja</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell align="center">Premium</TableCell>
-              <TableCell>Karta Lokalu</TableCell>
-              <TableCell>Cena Brutto</TableCell>
-              <TableCell></TableCell>
+            <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
+              <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Nr Lokalu</TableCell>
+              <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Metraż (m²)</TableCell>
+              <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Pokoje</TableCell>
+              <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Ekspozycja</TableCell>
+              <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Status</TableCell>
+              <TableCell align="center" sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Premium</TableCell>
+              <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Karta Lokalu</TableCell>
+              <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Cena Brutto</TableCell>
+              <TableCell sx={{ border: 'none' }}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -103,30 +107,72 @@ export function ApartmentList() {
                 key={`${apt.investmentId}-${apt.id}`}
                 onClick={() => navigate(`/oferta/${apt.investmentId}/${apt.id}`)}
                 sx={{
-                  '&:last-child td, &:last-child th': { border: 0 },
-                  transition:
-                    'transform 0.2s ease-in-out, background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+                  borderBottom: '1px solid #e0e0e0',
+                  '&:last-child': { borderBottom: 'none' },
+                  transition: 'background-color 0.2s ease-in-out',
                   cursor: 'pointer',
                   '&:hover': {
-                    backgroundColor: 'action.hover', // Standardowy kolor podświetlenia z motywu
-                    transform: 'translateY(-3px)', // Efekt lekkiego uniesienia
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)', // Delikatny cień dla głębi
+                    backgroundColor: '#f9f9f9',
                   },
                 }}
               >
-              <TableCell component="th" scope="row">{apt.id.toUpperCase()}</TableCell>
-                <TableCell>{apt.area ? `${apt.area.toFixed(2)}m²` : '-'}</TableCell>
-                <TableCell>{apt.rooms || '-'}</TableCell>
-                  <TableCell>{apt.exposure || '-'}</TableCell>
-                <TableCell>{apt.status || '-'}</TableCell>
-                <TableCell align="center">
-                  {apt.isPremium && <CheckIcon color="primary" />}
+                <TableCell component="th" scope="row" sx={{ border: 'none', py: 2.5, color: '#212121' }}>
+                  {apt.id.toUpperCase()}
                 </TableCell>
-                <TableCell><Button variant="text" size="small">ZOBACZ</Button></TableCell>
-                <TableCell>{apt.price || '-'}</TableCell>
-                <TableCell>
-                  <Button component={RouterLink} to={`/oferta/${apt.investmentId}/${apt.id}`} variant="text" size="small">ZAPYTAJ</Button>
-
+                <TableCell sx={{ border: 'none', py: 2.5, color: '#212121', fontWeight: 500 }}>
+                  {apt.area ? `${apt.area.toFixed(2)}m²` : '-'}
+                </TableCell>
+                <TableCell sx={{ border: 'none', py: 2.5, color: '#757575' }}>
+                  {apt.rooms || '-'}
+                </TableCell>
+                <TableCell sx={{ border: 'none', py: 2.5, color: '#757575' }}>
+                  {apt.exposure || '-'}
+                </TableCell>
+                <TableCell sx={{ border: 'none', py: 2.5, color: '#757575' }}>
+                  {apt.status || '-'}
+                </TableCell>
+                <TableCell align="center" sx={{ border: 'none', py: 2.5 }}>
+                  {apt.isPremium && <CheckIcon sx={{ color: 'primary.main' }} />}
+                </TableCell>
+                <TableCell sx={{ border: 'none', py: 2.5 }}>
+                  <Button 
+                    variant="text" 
+                    size="small"
+                    sx={{
+                      color: 'primary.main',
+                      textTransform: 'none',
+                      fontWeight: 500,
+                      '&:hover': {
+                        backgroundColor: 'transparent',
+                        textDecoration: 'underline',
+                      },
+                    }}
+                  >
+                    ZOBACZ
+                  </Button>
+                </TableCell>
+                <TableCell sx={{ border: 'none', py: 2.5, color: '#212121', fontWeight: 500 }}>
+                  {apt.price || '-'}
+                </TableCell>
+                <TableCell sx={{ border: 'none', py: 2.5 }}>
+                  <Button 
+                    component={RouterLink} 
+                    to={`/oferta/${apt.investmentId}/${apt.id}`} 
+                    variant="outlined" 
+                    size="small"
+                    sx={{
+                      color: 'primary.main',
+                      borderColor: 'primary.main',
+                      textTransform: 'none',
+                      fontWeight: 500,
+                      '&:hover': {
+                        borderColor: 'primary.main',
+                        backgroundColor: 'rgba(0, 131, 99, 0.04)',
+                      },
+                    }}
+                  >
+                    ZAPYTAJ
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

@@ -7,17 +7,17 @@ import NaturePeopleIcon from '@mui/icons-material/NaturePeople';
 import LocalConvenienceStoreIcon from '@mui/icons-material/LocalConvenienceStore';
 
 const places = [
-  { icon: <NaturePeopleIcon sx={{ fontSize: 60 }} />, name: 'Wyspa bolko, Zoo', time: '– 5 min samochodem' },
-  { icon: <ShoppingBagIcon sx={{ fontSize: 60 }} />, name: 'Galeria Karolinka ', time: '– 10 min samochodem' },
+  { icon: <NaturePeopleIcon sx={{ fontSize: 48 }} />, name: 'Wyspa bolko, Zoo', time: '– 5 min samochodem' },
+  { icon: <ShoppingBagIcon sx={{ fontSize: 48 }} />, name: 'Galeria Karolinka ', time: '– 10 min samochodem' },
   {
-    icon: <ApartmentIcon sx={{ fontSize: 60 }} />,
+    icon: <ApartmentIcon sx={{ fontSize: 48 }} />,
     name: 'Centrum miasta Opole',
     time: '– 10 min samochodem',
   },
-  { icon: <ParkIcon sx={{ fontSize: 60 }} />, name: 'Rozległy las ', time: '– na miejscu!' },
-  { icon: <LocalConvenienceStoreIcon sx={{ fontSize: 60 }} />, name: 'Sklep i paczkomat ', time: '– 2 min spacerem' },
+  { icon: <ParkIcon sx={{ fontSize: 48 }} />, name: 'Rozległy las ', time: '– na miejscu!' },
+  { icon: <LocalConvenienceStoreIcon sx={{ fontSize: 48 }} />, name: 'Sklep i paczkomat ', time: '– 2 min spacerem' },
   {
-    icon: <ChildFriendlyIcon sx={{ fontSize: 60 }} />,
+    icon: <ChildFriendlyIcon sx={{ fontSize: 48 }} />,
     name: 'Publiczne przedszkole i szkoła publiczna',
     time: '– 5 min samochodem',
   },
@@ -25,11 +25,11 @@ const places = [
 
 export function NearbyPlaces() {
   return (
-    <Box sx={{ py: 6 }}>
+    <Box sx={{ py: 8, backgroundColor: '#fff' }}>
       <Container maxWidth="lg">
         <Grid
           container
-          spacing={4}
+          spacing={6}
           justifyContent="center"
         >
           {places.map((place, index) => (
@@ -38,26 +38,42 @@ export function NearbyPlaces() {
               key={index}
             >
               <Stack
-                spacing={2}
+                spacing={3}
                 // Ustawiamy kierunek i wyrównanie warunkowo
                 direction={{ xs: 'column', sm: 'row' }}
                 alignItems="center"
+                sx={{
+                  p: 3,
+                  backgroundColor: '#fff',
+                  border: '1px solid #e0e0e0',
+                  borderRadius: '8px',
+                  transition: 'border-color 0.3s ease',
+                  '&:hover': {
+                    borderColor: 'primary.main',
+                  },
+                }}
               >
                 <Box
-                  sx={{ p: 2, backgroundColor: 'primary.main', borderRadius: 2, color: 'white', mb: { xs: 1, sm: 0 } }}
+                  sx={{ 
+                    color: 'primary.main',
+                    mb: { xs: 1, sm: 0 },
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
                 >
                   {place.icon}
                 </Box>
                 {/* Wyrównujemy tekst warunkowo */}
-                <Box sx={{ textAlign: { xs: 'center', sm: 'left' } }}>
+                <Box sx={{ textAlign: { xs: 'center', sm: 'left' }, flex: 1 }}>
                   <Typography
                     variant="h6"
                     component="p"
-                    sx={{ fontWeight: 'bold' }}
+                    sx={{ fontWeight: 600, mb: 0.5, color: '#212121' }}
                   >
                     {place.name}
                   </Typography>
-                  <Typography color="text.secondary">{place.time}</Typography>
+                  <Typography sx={{ color: '#757575' }}>{place.time}</Typography>
                 </Box>
               </Stack>
             </Grid>
