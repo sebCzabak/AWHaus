@@ -1,9 +1,10 @@
-import { Container, Typography, Box, Paper, Grid, Stack } from '@mui/material';
+import { Container, Typography, Box, Paper, Grid, Stack, Alert } from '@mui/material';
 import { ContactForm } from '../components/ContactForm';
 import { GoogleMap } from '../components/GoogleMap';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import PlaceIcon from '@mui/icons-material/Place';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 export function ContactPage() {
   return (
@@ -44,6 +45,16 @@ export function ContactPage() {
               >
                 Napisz do nas
               </Typography>
+              <Alert
+                icon={<InfoOutlinedIcon />}
+                severity="info"
+                sx={{ mb: 3 }}
+              >
+                <Typography variant="body2">
+                  <strong>Wskazówka:</strong> Jeśli użyjesz przycisku "Zapytaj o mieszkanie" przy konkretnym lokalu (np. mieszkanie 1A), 
+                  otrzymasz na maila spersonalizowaną odpowiedź z szczegółowymi informacjami o wybranym mieszkaniu oraz rzutem architektonicznym w formie PDF.
+                </Typography>
+              </Alert>
               <ContactForm />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>

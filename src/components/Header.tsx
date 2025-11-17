@@ -25,9 +25,11 @@ const logoPath = '/LogoW.png';
 
 const navItems = [
   { text: 'Start', path: '/' },
-  { text: 'Budynek', to: 'budynek' },
-  {text:'Lokalizacja',to:'lokalizacja'},
+  { text: 'Twoje miejsce', to: 'budynek' },
+  { text: 'Budynek', to: 'lokalizacja' },
+  { text: 'Komfort życia', to: 'komfort-zycia' },
   { text: 'Dlaczego warto', to: 'dlaczego-warto' },
+  {text:'Lokalizacja',to:'mapa'},
   {text:'Oferta',path:'/oferta'},
   { text: 'Kontakt', path: '/kontakt' },
 

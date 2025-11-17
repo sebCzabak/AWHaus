@@ -76,8 +76,7 @@ export const sendMailOnNewMessage = onDocumentCreated('messages/{messageId}', as
   } catch (error) {
     functions.logger.error('Błąd podczas wysyłania e-maila z formularza:', error);
   }
-  // --- CZĘŚĆ 2: WYSYŁKA AUTOMATYCZNEJ ODPOWIEDZI DO KLIENTA ---
-  // Ta część wykona się tylko, jeśli zapytanie dotyczyło konkretnego mieszkania.
+
   if (messageData.investmentId && messageData.apartmentId) {
     try {
       // --- Krok 1: Pobierz dane inwestycji z Firestore ---
@@ -93,24 +92,11 @@ export const sendMailOnNewMessage = onDocumentCreated('messages/{messageId}', as
         throw new Error(`Nie znaleziono mieszkania o ID: ${messageData.apartmentId}`);
       }
 
-      // Dalsza część kodu wykona się tylko, jeśli mieszkanie ma rzut PDF
-      if (!apartment.planUrl) {
-        logger.warn(`Mieszkanie ${apartment.id} nie ma przypisanego rzutu PDF. Auto-odpowiedź nie zostanie wysłana.`);
-        return;
-      }
-
-      // --- Krok 3: Pobierz plik PDF ze Storage ---
-      const bucket = admin.storage().bucket();
-      const filePath = apartment.planUrl;
-      const tempFilePath = path.join(os.tmpdir(), path.basename(filePath));
-      await bucket.file(filePath).download({ destination: tempFilePath });
-      logger.log(`Plik PDF "${filePath}" pobrany do ścieżki tymczasowej.`);
-
-      // --- Krok 4: Skonfiguruj i wyślij e-mail do klienta ---
-      const clientMailOptions = {
+      // --- Krok 3: Wyślij natychmiastowy mail z podziękowaniem ---
+      const immediateMailOptions = {
         from: `AWHaus Deweloper <${process.env.SMTP_USER}>`,
         to: messageData.email,
-        subject: `Potwierdzenie zapytania - Mieszkanie ${apartment.id.toUpperCase()} w ${investmentData.name}`,
+        subject: `Dziękujemy za zainteresowanie - ${investmentData.name}`,
         html: `
           <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
             <div style="text-align: center; padding: 20px; background-color: #f9f9f9;">
@@ -118,17 +104,61 @@ export const sendMailOnNewMessage = onDocumentCreated('messages/{messageId}', as
             </div>
             <div style="padding: 20px;">
               <h2 style="color: #83907c;">Dzień dobry ${messageData.name},</h2>
-              <p>dziękujemy za zainteresowanie naszą inwestycją <strong>${
+              <p>dziękujemy za zainteresowanie mieszkaniem <strong>${apartment.id.toUpperCase()}</strong> w naszej inwestycji <strong>${
                 investmentData.name
-              }</strong>. To doskonały wybór!</p>
-              <p>Poniżej przesyłamy podsumowanie dotyczące mieszkania, o które Państwo pytali:</p>
+              }</strong>.</p>
+              <p>Za chwilę wyślemy Państwu szczegółową ofertę z pełnymi informacjami o tym mieszkaniu.</p>
+              <br>
+              <p>Z pozdrowieniami,</p>
+              <p><strong>Zespół AWHaus Deweloper</strong></p>
+            </div>
+          </div>
+        `,
+      };
+
+      await transporter.sendMail(immediateMailOptions);
+      logger.log(`Natychmiastowy mail z podziękowaniem wysłany do: ${messageData.email}`);
+
+      // --- Krok 4: Opóźnione wysłanie maila z pełnymi informacjami (po 3 minutach) ---
+      // Używamy setTimeout z Promise, aby opóźnić wysłanie drugiego maila
+      await new Promise((resolve) => setTimeout(resolve, 3 * 60 * 1000)); // 3 minuty = 180000 ms
+
+      // Sprawdź czy mieszkanie ma rzut PDF przed wysłaniem drugiego maila
+      if (!apartment.planUrl) {
+        logger.warn(`Mieszkanie ${apartment.id} nie ma przypisanego rzutu PDF. Drugi mail zostanie wysłany bez załącznika.`);
+      }
+
+      // --- Krok 5: Pobierz plik PDF ze Storage (jeśli istnieje) ---
+      const bucket = admin.storage().bucket();
+      let tempFilePath: string | null = null;
+      
+      if (apartment.planUrl) {
+        const filePath = apartment.planUrl;
+        tempFilePath = path.join(os.tmpdir(), path.basename(filePath));
+        await bucket.file(filePath).download({ destination: tempFilePath });
+        logger.log(`Plik PDF "${filePath}" pobrany do ścieżki tymczasowej.`);
+      }
+
+      // --- Krok 6: Skonfiguruj i wyślij drugi e-mail do klienta z pełnymi informacjami ---
+      const detailedMailOptions: nodemailer.SendMailOptions = {
+        from: `AWHaus Deweloper <${process.env.SMTP_USER}>`,
+        to: messageData.email,
+        subject: `Szczegółowa oferta - Mieszkanie ${apartment.id.toUpperCase()} w ${investmentData.name}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+            <div style="text-align: center; padding: 20px; background-color: #f9f9f9;">
+              <img src="https://firebasestorage.googleapis.com/v0/b/awhaus-strona.firebasestorage.app/o/LogoW.png?alt=media&token=d378c890-59ef-4c7a-ac14-97c38913aa95" alt="AWHaus Logo" style="max-width: 150px;">
+            </div>
+            <div style="padding: 20px;">
+              <h2 style="color: #83907c;">Dzień dobry ${messageData.name},</h2>
+              <p>Poniżej przesyłamy szczegółowe informacje dotyczące mieszkania, o które Państwo pytali:</p>
               <div style="border: 1px solid #eee; padding: 15px; border-radius: 8px; background-color: #fdfdfd;">
                 <p><strong>Numer lokalu:</strong> ${apartment.id.toUpperCase()}</p>
                 <p><strong>Liczba pokoi:</strong> ${apartment.rooms}</p>
                 <p><strong>Metraż:</strong> ${apartment.area} m²</p>
                 <p><strong>Status:</strong> ${apartment.status}</p>
               </div>
-              <p>W załączniku znajdą Państwo szczegółowy rzut architektoniczny tego mieszkania.</p>
+              ${apartment.planUrl ? '<p>W załączniku znajdą Państwo szczegółowy rzut architektoniczny tego mieszkania.</p>' : ''}
               <p>Nasz doradca skontaktuje się z Państwem w ciągu 24 godzin, aby odpowiedzieć na wszelkie pytania.</p>
               <br>
               <p>Z pozdrowieniami,</p>
@@ -140,20 +170,26 @@ export const sendMailOnNewMessage = onDocumentCreated('messages/{messageId}', as
             </div>
           </div>
         `,
-        attachments: [
+      };
+
+      // Dodaj załącznik PDF tylko jeśli plik został pobrany
+      if (tempFilePath) {
+        detailedMailOptions.attachments = [
           {
             filename: `AWHaus - Rzut mieszkania ${apartment.id.toUpperCase()}.pdf`,
             path: tempFilePath,
             contentType: 'application/pdf',
           },
-        ],
-      };
+        ];
+      }
 
-      await transporter.sendMail(clientMailOptions);
-      logger.log(`Automatyczna odpowiedź z PDF wysłana do: ${messageData.email}`);
+      await transporter.sendMail(detailedMailOptions);
+      logger.log(`Szczegółowy mail z PDF wysłany do: ${messageData.email}`);
 
-      // --- Krok 5: Usuń plik tymczasowy ---
-      fs.unlinkSync(tempFilePath);
+      // --- Krok 7: Usuń plik tymczasowy (jeśli został pobrany) ---
+      if (tempFilePath) {
+        fs.unlinkSync(tempFilePath);
+      }
     } catch (error) {
       logger.error('Błąd podczas wysyłania automatycznej odpowiedzi do klienta:', error);
     }
@@ -165,7 +201,7 @@ export const sendMailOnNewMessage = onDocumentCreated('messages/{messageId}', as
  */
 export const sendDailyPriceReport = onSchedule(
   {
-    schedule: '56 19 * * *', // Cron format: runs every day at 19:56 (7:56 PM)
+    schedule: '35 21 * * *', // Cron format: runs every day at 20:55 (8:55 PM)
     timeZone: 'Europe/Warsaw',
   },
   async () => {
@@ -194,40 +230,39 @@ export const sendDailyPriceReport = onSchedule(
       // 1. Generowanie Pliku XML
       const root = xmlbuilder
         .create({ version: '1.0', encoding: 'UTF-8' })
-        .ele('RaportDewelopera')
-        .ele('Identyfikator', process.env.NIP_REGON || 'BRAK DANYCH') // Odczytujemy z process.env
-        .up()
-        .ele('DataRaportu', dateString)
-        .up()
-        .ele('Inwestycje');
+        .ele('RaportDewelopera');
+      
+      // Bezpieczne dodanie Identyfikatora - używamy .txt() dla wartości
+      root.ele('Identyfikator').txt(String(process.env.NIP_REGON || 'BRAK DANYCH'));
+      
+      root.ele('DataRaportu').txt(dateString);
+      const inwestycjeEle = root.ele('Inwestycje');
 
       investmentsSnapshot.forEach((doc) => {
         const investment = doc.data() as Investment;
-        const inwestycjaEle = root
-          .ele('Inwestycja', { id: doc.id })
-          .ele('Nazwa', investment.name)
-          .up()
-          .ele('Lokalizacja', investment.location)
-          .up()
-          .ele('Mieszkania');
+        // Bezpieczne dodanie atrybutu id - escapujemy nieprawidłowe znaki
+        const safeId = String(doc.id).replace(/[^a-zA-Z0-9_-]/g, '_');
+        const inwestycjaEle = inwestycjeEle
+          .ele('Inwestycja')
+          .att('id', safeId);
+        
+        inwestycjaEle.ele('Nazwa').txt(investment.name || '');
+        inwestycjaEle.ele('Lokalizacja').txt(investment.location || '');
+        const mieszkaniaEle = inwestycjaEle.ele('Mieszkania');
 
         investment.apartments.forEach((apt: Apartment) => {
-          inwestycjaEle
-            .ele('Mieszkanie', { id: apt.id })
-            .ele('Status', apt.status || 'Brak danych')
-            .up()
-            // --- POCZĄTEK POPRAWKI ---
-            // Jawnie konwertujemy liczby na string przed przekazaniem
-            .ele('Cena', String(parseFloat(apt.price?.replace(/[^\d.-]/g, '') || '0')))
-            .up()
-            .ele('Metraz', String(apt.area ?? '0'))
-            .up()
-            // --- KONIEC POPRAWKI ---
-            .ele('Ekspozycja', apt.exposure || 'Brak danych')
-            .up()
-            .ele('Premium', apt.isPremium ? 'TAK' : 'NIE')
-            .up()
-            .up();
+          // Bezpieczne dodanie atrybutu id dla mieszkania
+          const safeAptId = String(apt.id).replace(/[^a-zA-Z0-9_-]/g, '_');
+          const mieszkanieEle = mieszkaniaEle
+            .ele('Mieszkanie')
+            .att('id', safeAptId);
+          
+          mieszkanieEle.ele('Status').txt(apt.status || 'Brak danych');
+          // Jawnie konwertujemy liczby na string przed przekazaniem
+          mieszkanieEle.ele('Cena').txt(String(parseFloat(apt.price?.replace(/[^\d.-]/g, '') || '0')));
+          mieszkanieEle.ele('Metraz').txt(String(apt.area ?? '0'));
+          mieszkanieEle.ele('Ekspozycja').txt(apt.exposure || 'Brak danych');
+          mieszkanieEle.ele('Premium').txt(apt.isPremium ? 'TAK' : 'NIE');
         });
       });
 
@@ -240,11 +275,29 @@ export const sendDailyPriceReport = onSchedule(
       await xmlFile.save(xmlString, { contentType: 'application/xml' });
       logger.log(`Plik XML został pomyślnie zapisany w Storage pod ścieżką: ${xmlFilePath}`);
 
-      // 3. Generowanie Publicznego Linku z Tokenem
-      const [signedUrl] = await xmlFile.getSignedUrl({
-        action: 'read',
-        expires: '03-01-2500',
-      });
+      // 3. Generowanie URL do pliku XML
+      // UWAGA: Dla dane.gov.pl plik musi być publicznie dostępny
+      // Jeśli potrzebujesz większego bezpieczeństwa, użyj signed URL z odpowiednimi uprawnieniami IAM
+      let fileUrl: string;
+      try {
+        await xmlFile.makePublic();
+        fileUrl = `https://storage.googleapis.com/${bucket.name}/${xmlFilePath}`;
+        logger.log(`Plik XML został ustawiony jako publiczny. URL: ${fileUrl}`);
+      } catch (publicError) {
+        // Jeśli makePublic nie działa, spróbuj użyć signed URL (wymaga uprawnień IAM)
+        logger.warn('Nie udało się ustawić pliku jako publiczny, próbuję signed URL:', publicError);
+        try {
+          const [signedUrl] = await xmlFile.getSignedUrl({
+            action: 'read',
+            expires: '03-01-2500', // Data wygaśnięcia w przyszłości
+          });
+          fileUrl = signedUrl;
+          logger.log(`Użyto signed URL dla pliku XML.`);
+        } catch (signedError) {
+          logger.error('Nie udało się wygenerować żadnego URL do pliku XML:', signedError);
+          throw new Error('Nie można wygenerować URL do pliku XML. Sprawdź uprawnienia IAM.');
+        }
+      }
 
       // 4. Wysyłka E-maila z Powiadomieniem i Linkiem
       const mailOptions = {
@@ -254,7 +307,7 @@ export const sendDailyPriceReport = onSchedule(
         html: `
           <p>Dzienny raport XML z cennikiem został pomyślnie wygenerowany.</p>
           <p><strong>Link do pliku XML:</strong></p>
-          <p><a href="${signedUrl}">${signedUrl}</a></p>
+          <p><a href="${fileUrl}">${fileUrl}</a></p>
           <p>Ten link należy przekazać do systemu dane.gov.pl.</p>
         `,
       };

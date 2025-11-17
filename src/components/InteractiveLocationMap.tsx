@@ -21,7 +21,7 @@ export function InteractiveLocationMap() {
   return (
     // Główny kontener z position: relative
     <Box sx={{ position: 'relative', width: '100%', borderRadius: '8px', overflow: 'hidden', border: '1px solid #e0e0e0' }}>
-      {/* Obrazek mapy jako tło z grayscale filtrem */}
+      {/* Obrazek mapy jako tło */}
       <Box
         component="img"
         src={mapBackground}
@@ -30,8 +30,6 @@ export function InteractiveLocationMap() {
           width: '100%', 
           height: 'auto', 
           display: 'block',
-          filter: 'grayscale(100%)',
-          opacity: 0.9,
         }}
       />
       

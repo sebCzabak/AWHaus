@@ -25,6 +25,9 @@ import coverImage from '../assets/katalog-okladka.jpg';
 import { CatalogFlipbook } from '../components/CatalogFlipbook';
 import { FloatingTriangles } from '../components/FloatingTriangles';
 import { BrickWall } from '../components/BrickWall';
+import { CreditCalculator } from '../components/CreditCalculator';
+import { Link } from 'react-router-dom';
+import ArticleIcon from '@mui/icons-material/Article';
 
 // Przygotowujemy dane dla naszej nowej siatki
 const masonryData: MasonryItem[] = [
@@ -106,209 +109,6 @@ export function HomePageAlternative() {
         <KeyFeatures />
       </FadeInOnScroll>
 
-      <Box
-        id="budynek"
-        sx={{ backgroundColor: '#fff' }}
-      >
-        <FeatureSection
-          imageSrc={lokalizacjaImage}
-          subheading="Twoje Miejsce"
-          title="Górki - Idealna Lokalizacja"
-          imageOnLeft={true}
-          backgroundColor="#fff"
-        >
-          <Typography
-            paragraph
-            color="text.secondary"
-            sx={{
-              fontSize: '1.2rem',
-              '& strong': { color: 'black' },
-            }}
-          >
-            Wybieramy tylko najlepsze lokalizacje – bliskość terenów zielonych, dogodny dojazd do centrum oraz
-            rozbudowana infrastruktura to nasze priorytety. Twoje nowe mieszkanie będzie idealnym miejscem do życia,
-            pracy i odpoczynku, z łatwym dostępem do wszystkiego, czego potrzebujesz na co dzień.
-          </Typography>
-          <Typography
-            paragraph
-            color="text.secondary"
-            sx={{
-              fontSize: '1.2rem',
-              '& strong': { color: 'black' },
-            }}
-          >
-            <strong>Symfonia Górki </strong> oferuje unikalne połączenie bliskości natury z dynamicznym życiem miejskim.
-            Dzięki dobrej lokalizacji, mieszkańcy będą mieli dostęp do tras rowerowych, ścieżek spacerowych oraz miejsc
-            do wypoczynku. Kilkuminutowa przejażdżka rowerem pozwoli dotrzeć na wyspę Bolko z przepięknym ogrodem
-            zoologicznym oraz nowym parkiem, basenem Wodna Nuta lub kampus Politechniki Opolskiej.
-          </Typography>
-          <Typography
-            paragraph
-            color="text.secondary"
-            sx={{ fontSize: '1.2rem' }}
-          >
-            Rozwinięta infrastruktura drogowa i komunikacja miejska zapewniają szybki dostęp do kluczowych punktów
-            miasta oraz szkół, przedszkoli i licznych sklepów. To miejsce idealne dla każdego, kto ceni ciszę, spokój i
-            zieleń w połączeniu z wygodnym życiem miejskim.
-          </Typography>
-          <Box sx={{ mt: 3 }}>
-            <FloatingTriangles />
-          </Box>
-        </FeatureSection>
-      </Box>
-
-      <Box
-        id="lokalizacja"
-        sx={{ backgroundColor: '#fff' }}
-      >
-        <FeatureSection
-          imageSrc={gardenNImage}
-          subheading="Budynek"
-          title="Nowoczesna Architektura"
-          imageOnLeft={false}
-          backgroundColor="#fff"
-        >
-          <Typography
-            paragraph
-            color="text.secondary"
-            sx={{ fontSize: '1.2rem' }}
-          >
-            Bliskość natury i malowniczych krajobrazów stały się inspiracją do stworzenia nowoczesnego projektu
-            architektonicznego, który harmonijnie łączy modernistyczny styl z otaczającym środowiskiem. Materiały do
-            wykończenia budynków zostały starannie dobrane, duże przeszklenia zapewniają naturalne światło i eksponują
-            piękno natury. Elewacja ceglana, liczne gzymsy, łączenie kolorów i detali razem z dwu spadowym dachem nadaje
-            ponadczasowy wygląd budynków oraz komfortowy styl życia.
-          </Typography>
-
-          <Typography
-            paragraph
-            color="text.secondary"
-            sx={{ fontSize: '1.2rem' }}
-          >
-            Każde mieszkanie ma możliwość adaptacji poddasza. Zyskujesz kolejny dodatkowy metraż. Każdy mieszkaniec
-            będzie mógł cieszyć się prywatnym ogródkiem, a do każdego budynku jest przynależne miejsce parkingowe
-          </Typography>
-          <Box sx={{ mt: 5 }}>
-            <BrickWall
-              loop={true}
-              loopDelay={2}
-            />
-          </Box>
-        </FeatureSection>
-      </Box>
-      <VideoComponent />
-
-      <FadeInOnScroll direction="right">
-        <NearbyPlaces />
-      </FadeInOnScroll>
-
-      <Box sx={{ backgroundColor: '#fff' }}>
-        <FeatureSection
-          imageSrc={architekturaImage}
-          subheading="Komfort Życia"
-          title="Żyj w harmonii z naturą"
-          imageOnLeft={true}
-          backgroundColor="#fff"
-        >
-          <Typography
-            paragraph
-            color="text.secondary"
-            sx={{ fontSize: '1.2rem' }}
-          >
-            Oferujemy szeroki wybór mieszkań dwupoziomowych o powierzchniach od 57 do 92 m², w tym funkcjonalny rozkład
-            lokali oraz okno w łazience, które spełnią oczekiwania nawet najbardziej wymagających klientów.
-          </Typography>
-          <Typography
-            paragraph
-            color="text.secondary"
-            sx={{
-              fontSize: '1.2rem',
-              '& strong': { color: 'black' },
-            }}
-          >
-            <strong>Symfonia Górki </strong> to wyjątkowy projekt mieszkaniowy w sercu Górek, zlokalizowany w pięknej,
-            malowniczej zieleni, jedynie 10 minut jazdy samochodem od centrum miasta Opola. Dzięki tej doskonałej
-            lokalizacji przyszli mieszkańcy będą mogli cieszyć się zapierającymi dech w piersiach widokami. Krótki
-            spacer po okolicy wystarczy, by zregenerować się po ciężkim dnu pracy.
-          </Typography>
-          <Typography
-            paragraph
-            color="text.secondary"
-            sx={{
-              fontSize: '1.2rem',
-              '& strong': { color: 'black' },
-            }}
-          >
-            Wybierz nowoczesny styl życia w <strong> Symfonia Górki </strong> i poczuj się jak na wakacjach każdego
-            dnia.
-          </Typography>
-
-          <Box sx={{ mt: 5 }}>
-            <FloatingSquares />
-          </Box>
-        </FeatureSection>
-      </Box>
-
-      <Box
-        sx={{ py: 12, backgroundColor: '#fff', px: { xs: 2, md: 0 } }}
-        id="dlaczego-warto"
-      >
-        <Container
-          maxWidth={false}
-          sx={{ px: { xs: 2, sm: 3, md: 4 } }}
-        >
-          <Typography
-            variant="h2"
-            component="h2"
-            gutterBottom
-            textAlign="center"
-            sx={{ mb: 6, color: '#212121' }}
-          >
-            Dlaczego warto!
-          </Typography>
-          <Box sx={{ width: '100%' }}>
-            <MasonryGrid items={masonryData} />
-          </Box>
-        </Container>
-      </Box>
-      <Box sx={{ py: 12, backgroundColor: '#fff' }}>
-        <Container maxWidth="lg">
-          <Typography
-            variant="h2"
-            component="h2"
-            textAlign="center"
-            gutterBottom
-            sx={{ mb: 6, color: '#212121' }}
-          >
-            Naturalnie blisko miasta
-          </Typography>
-          <InteractiveLocationMap />
-          <Box
-            textAlign="center"
-            mt={6}
-          >
-            <Button
-              variant="outlined"
-              href="https://maps.app.goo.gl/DkwyaNii2VVGtqad6"
-              target="_blank"
-              sx={{
-                color: 'primary.main',
-                borderColor: 'primary.main',
-                textTransform: 'none',
-                fontWeight: 500,
-                px: 4,
-                py: 1.5,
-                '&:hover': {
-                  borderColor: 'primary.main',
-                  backgroundColor: 'rgba(0, 131, 99, 0.04)',
-                },
-              }}
-            >
-              Zobacz na Google Maps
-            </Button>
-          </Box>
-        </Container>
-      </Box>
       <Box sx={{ py: 12, backgroundColor: '#fff' }}>
         <Container maxWidth="lg">
           <Paper
@@ -363,6 +163,251 @@ export function HomePageAlternative() {
         </Container>
       </Box>
 
+      <Box
+        id="budynek"
+        sx={{ backgroundColor: '#fff' }}
+      >
+        <FeatureSection
+          imageSrc={lokalizacjaImage}
+          subheading="Twoje Miejsce"
+          title="Górki - Idealna Lokalizacja"
+          imageOnLeft={true}
+          backgroundColor="#fff"
+        >
+          <Typography
+            paragraph
+            color="text.secondary"
+            sx={{
+              fontSize: '1.2rem',
+              '& strong': { color: 'black' },
+            }}
+          >
+            Wybieramy tylko najlepsze lokalizacje – bliskość terenów zielonych, dogodny dojazd do centrum oraz
+            rozbudowana infrastruktura to nasze priorytety. Twoje nowe mieszkanie będzie idealnym miejscem do życia,
+            pracy i odpoczynku, z łatwym dostępem do wszystkiego, czego potrzebujesz na co dzień.
+          </Typography>
+          <Typography
+            paragraph
+            color="text.secondary"
+            sx={{
+              fontSize: '1.2rem',
+              '& strong': { color: 'black' },
+            }}
+          >
+            <strong>Symfonia Górki </strong> oferuje unikalne połączenie bliskości natury z dynamicznym życiem miejskim.
+            Dzięki dobrej lokalizacji, mieszkańcy będą mieli dostęp do tras rowerowych, ścieżek spacerowych oraz miejsc
+            do wypoczynku. Kilkuminutowa przejażdżka rowerem pozwoli dotrzeć na wyspę Bolko z przepięknym ogrodem
+            zoologicznym oraz nowym parkiem, basenem Wodna Nuta lub kampus Politechniki Opolskiej.
+          </Typography>
+          <Typography
+            paragraph
+            color="text.secondary"
+            sx={{ fontSize: '1.2rem' }}
+          >
+            Rozwinięta infrastruktura drogowa i komunikacja miejska zapewniają szybki dostęp do kluczowych punktów
+            miasta oraz szkół, przedszkoli i licznych sklepów. To miejsce idealne dla każdego, kto ceni ciszę, spokój i
+            zieleń w połączeniu z wygodnym życiem miejskim.
+          </Typography>
+          <Box sx={{ mt: 3, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
+            <FloatingTriangles />
+            <Button
+              variant="contained"
+              component={Link}
+              to="/oferta/osiedle-symfonia"
+              sx={{
+                textTransform: 'none',
+                fontWeight: 500,
+                px: 3,
+                py: 1.5,
+              }}
+            >
+              Zobacz Ofertę
+            </Button>
+          </Box>
+        </FeatureSection>
+      </Box>
+
+      <Box
+        id="lokalizacja"
+        sx={{ backgroundColor: '#fff' }}
+      >
+        <FeatureSection
+          imageSrc={gardenNImage}
+          subheading="Budynek"
+          title="Nowoczesna Architektura"
+          imageOnLeft={false}
+          backgroundColor="#fff"
+        >
+          <Typography
+            paragraph
+            color="text.secondary"
+            sx={{ fontSize: '1.2rem' }}
+          >
+            Bliskość natury i malowniczych krajobrazów stały się inspiracją do stworzenia nowoczesnego projektu
+            architektonicznego, który harmonijnie łączy modernistyczny styl z otaczającym środowiskiem. Materiały do
+            wykończenia budynków zostały starannie dobrane, duże przeszklenia zapewniają naturalne światło i eksponują
+            piękno natury. Elewacja ceglana, liczne gzymsy, łączenie kolorów i detali razem z dwu spadowym dachem nadaje
+            ponadczasowy wygląd budynków oraz komfortowy styl życia.
+          </Typography>
+
+          <Typography
+            paragraph
+            color="text.secondary"
+            sx={{ fontSize: '1.2rem' }}
+          >
+            Każde mieszkanie ma możliwość adaptacji poddasza. Zyskujesz kolejny dodatkowy metraż. Każdy mieszkaniec
+            będzie mógł cieszyć się prywatnym ogródkiem, a do każdego budynku jest przynależne miejsce parkingowe
+          </Typography>
+          <Box sx={{ mt: 5, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
+            <BrickWall
+              loop={true}
+              loopDelay={2}
+            />
+            <Button
+              variant="contained"
+              component={Link}
+              to="/oferta/osiedle-symfonia"
+              sx={{
+                textTransform: 'none',
+                fontWeight: 500,
+                px: 3,
+                py: 1.5,
+              }}
+            >
+              Zobacz Ofertę
+            </Button>
+          </Box>
+        </FeatureSection>
+      </Box>
+      <VideoComponent />
+
+      <FadeInOnScroll direction="right">
+        <NearbyPlaces />
+      </FadeInOnScroll>
+
+      <Box id="komfort-zycia" sx={{ backgroundColor: '#fff' }}>
+        <FeatureSection
+          imageSrc={architekturaImage}
+          subheading="Komfort Życia"
+          title="Żyj w harmonii z naturą"
+          imageOnLeft={true}
+          backgroundColor="#fff"
+        >
+          <Typography
+            paragraph
+            color="text.secondary"
+            sx={{ fontSize: '1.2rem' }}
+          >
+            Oferujemy szeroki wybór mieszkań dwupoziomowych o powierzchniach od 57 do 92 m², w tym funkcjonalny rozkład
+            lokali oraz okno w łazience, które spełnią oczekiwania nawet najbardziej wymagających klientów.
+          </Typography>
+          <Typography
+            paragraph
+            color="text.secondary"
+            sx={{
+              fontSize: '1.2rem',
+              '& strong': { color: 'black' },
+            }}
+          >
+            <strong>Symfonia Górki </strong> to wyjątkowy projekt mieszkaniowy w sercu Górek, zlokalizowany w pięknej,
+            malowniczej zieleni, jedynie 10 minut jazdy samochodem od centrum miasta Opola. Dzięki tej doskonałej
+            lokalizacji przyszli mieszkańcy będą mogli cieszyć się zapierającymi dech w piersiach widokami. Krótki
+            spacer po okolicy wystarczy, by zregenerować się po ciężkim dnu pracy.
+          </Typography>
+          <Typography
+            paragraph
+            color="text.secondary"
+            sx={{
+              fontSize: '1.2rem',
+              '& strong': { color: 'black' },
+            }}
+          >
+            Wybierz nowoczesny styl życia w <strong> Symfonia Górki </strong> i poczuj się jak na wakacjach każdego
+            dnia.
+          </Typography>
+
+          <Box sx={{ mt: 5, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
+            <FloatingSquares />
+            <Button
+              variant="contained"
+              component={Link}
+              to="/oferta/osiedle-symfonia"
+              sx={{
+                textTransform: 'none',
+                fontWeight: 500,
+                px: 3,
+                py: 1.5,
+              }}
+            >
+              Zobacz Ofertę
+            </Button>
+          </Box>
+        </FeatureSection>
+      </Box>
+
+      <Box
+        sx={{ py: 12, backgroundColor: '#fff', px: { xs: 2, md: 0 } }}
+        id="dlaczego-warto"
+      >
+        <Container
+          maxWidth={false}
+          sx={{ px: { xs: 2, sm: 3, md: 4 } }}
+        >
+          <Typography
+            variant="h2"
+            component="h2"
+            gutterBottom
+            textAlign="center"
+            sx={{ mb: 6, color: '#212121' }}
+          >
+            Dlaczego warto!
+          </Typography>
+          <Box sx={{ width: '100%' }}>
+            <MasonryGrid items={masonryData} />
+          </Box>
+        </Container>
+      </Box>
+      <Box sx={{ py: 12, backgroundColor: '#fff' }}>
+        <CreditCalculator />
+      </Box>
+      <Box id="mapa" sx={{ py: 12, backgroundColor: '#fff' }}>
+        <Container maxWidth="lg">
+          <Typography
+            variant="h2"
+            component="h2"
+            textAlign="center"
+            gutterBottom
+            sx={{ mb: 6, color: '#212121' }}
+          >
+            Naturalnie blisko miasta
+          </Typography>
+          <InteractiveLocationMap />
+          <Box
+            textAlign="center"
+            mt={6}
+          >
+            <Button
+              variant="outlined"
+              href="https://maps.app.goo.gl/DkwyaNii2VVGtqad6"
+              target="_blank"
+              sx={{
+                color: 'primary.main',
+                borderColor: 'primary.main',
+                textTransform: 'none',
+                fontWeight: 500,
+                px: 4,
+                py: 1.5,
+                '&:hover': {
+                  borderColor: 'primary.main',
+                  backgroundColor: 'rgba(0, 131, 99, 0.04)',
+                },
+              }}
+            >
+              Zobacz na Google Maps
+            </Button>
+          </Box>
+        </Container>
+      </Box>
       <ApartmentList />
       <CatalogFlipbook
         open={isCatalogOpen}
@@ -412,17 +457,17 @@ export function HomePageAlternative() {
               Prospekt Informacyjny
             </Button>
 
-            {/* <Button
+            <Button
               variant="outlined" // Inny styl dla drugiego przycisku
               size="large"
               startIcon={<ArticleIcon />}
-              href={specsUrl}
+              href={_specsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              disabled={!specsUrl}
+              disabled={!_specsUrl}
             >
               Harmonogram budowy
-            </Button> */}
+            </Button>
           </Stack>
         </Container>
       </Box>
