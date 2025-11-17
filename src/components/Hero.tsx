@@ -52,13 +52,20 @@ export function Hero() {
         display: 'flex',
         alignItems: 'flex-end',
         color: 'white',
+        pt: { xs: '60px', md: '72px' }, // Padding-top aby uwzględnić navbar
         '&::before': {
           content: '""',
-          position: 'absolute', top: 0, left: 0,
-          width: '100%', height: '100%',
+          position: 'absolute', 
+          top: { xs: '64px', md: '72px' }, // Przesunięcie obrazu pod navbar
+          left: 0,
+          width: '100%', 
+          height: 'calc(100% - 64px)', // Wysokość minus wysokość navbara
+          '@media (min-width: 900px)': {
+            height: 'calc(100% - 72px)', // Wysokość minus wysokość navbara na desktop
+          },
           backgroundImage: `url(${heroImage})`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center', 
+          backgroundPosition: 'center top', // Przesunięcie pozycji na górę, aby podczas zoom był widoczny w całości
           animation: `${kenburns} 30s ease-in-out infinite alternate`,
           zIndex: -1,
         },
@@ -76,7 +83,7 @@ export function Hero() {
         {/* Lewa strona z tytułem i przyciskami */}
         <Box 
           sx={{ 
-            zIndex: 1, 
+            zIndex: 0, // Zmniejszony z-index aby był pod navbar
             maxWidth: '1500px', 
             backgroundColor: 'rgba(0, 0, 0, 0.2)', 
             borderRadius: 2,
@@ -100,7 +107,7 @@ export function Hero() {
           spacing={2}
           sx={{
             display: { xs: 'none', md: 'flex' }, // Ukryte na mobile
-            zIndex: 2,
+            zIndex: 0, // Zmniejszony z-index aby był pod navbar
             width: { md: '280px' },
           }}
         >

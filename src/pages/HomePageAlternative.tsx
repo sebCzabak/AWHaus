@@ -216,9 +216,9 @@ export function HomePageAlternative() {
               to="/oferta/osiedle-symfonia"
               sx={{
                 textTransform: 'none',
-                fontWeight: 500,
-                px: 3,
-                py: 1.5,
+                fontWeight: 900,
+                px: 4,
+                py: 2,
               }}
             >
               Zobacz Ofertę
@@ -269,9 +269,9 @@ export function HomePageAlternative() {
               to="/oferta/osiedle-symfonia"
               sx={{
                 textTransform: 'none',
-                fontWeight: 500,
-                px: 3,
-                py: 1.5,
+                fontWeight: 900,
+                px: 4,
+                py: 2,
               }}
             >
               Zobacz Ofertę
@@ -334,9 +334,9 @@ export function HomePageAlternative() {
               to="/oferta/osiedle-symfonia"
               sx={{
                 textTransform: 'none',
-                fontWeight: 500,
-                px: 3,
-                py: 1.5,
+                fontWeight: 900,
+                px: 4,
+                py: 2,
               }}
             >
               Zobacz Ofertę

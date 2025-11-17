@@ -12,6 +12,7 @@ import { logger } from 'firebase-functions';
 import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs';
+import * as crypto from 'crypto';
 
 import * as xmlbuilder from 'xmlbuilder2';
 
@@ -268,14 +269,17 @@ export const sendDailyPriceReport = onSchedule(
 
       const xmlString = root.end({ prettyPrint: true });
 
-      // 2. Zapis Pliku XML do Storage
-      const xmlFilePath = `raporty-xml/${dateString}-cennik.xml`;
+      // 2. Generowanie hash MD5 z zawartości XML
+      const md5Hash = crypto.createHash('md5').update(xmlString).digest('hex').substring(0, 8);
+      
+      // 3. Zapis Pliku XML do Storage z hash MD5 w nazwie
+      const xmlFilePath = `raporty-xml/${dateString}-cennik-${md5Hash}.xml`;
       const xmlFile = bucket.file(xmlFilePath);
 
       await xmlFile.save(xmlString, { contentType: 'application/xml' });
       logger.log(`Plik XML został pomyślnie zapisany w Storage pod ścieżką: ${xmlFilePath}`);
 
-      // 3. Generowanie URL do pliku XML
+      // 4. Generowanie URL do pliku XML
       // UWAGA: Dla dane.gov.pl plik musi być publicznie dostępny
       // Jeśli potrzebujesz większego bezpieczeństwa, użyj signed URL z odpowiednimi uprawnieniami IAM
       let fileUrl: string;
@@ -299,7 +303,7 @@ export const sendDailyPriceReport = onSchedule(
         }
       }
 
-      // 4. Wysyłka E-maila z Powiadomieniem i Linkiem
+      // 5. Wysyłka E-maila z Powiadomieniem i Linkiem
       const mailOptions = {
         from: `Serwer AWHaus <${process.env.SMTP_USER}>`,
         to: process.env.SMTP_USER,
