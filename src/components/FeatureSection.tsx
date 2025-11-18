@@ -71,9 +71,9 @@ export function FeatureSection({
               </Typography>
             )}
             <Typography variant="h2" component="h2" sx={{ fontWeight: 'bold' }}>{title}</Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ mt: 3, fontSize: '1.1rem', maxWidth: '700px' }}>
+            <Box sx={{ mt: 3, fontSize: '1.1rem', maxWidth: '700px', color: 'text.secondary' }}>
               {children}
-            </Typography>
+            </Box>
 
           </Box>
         </Grid>

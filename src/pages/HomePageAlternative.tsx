@@ -208,7 +208,16 @@ export function HomePageAlternative() {
             miasta oraz szkół, przedszkoli i licznych sklepów. To miejsce idealne dla każdego, kto ceni ciszę, spokój i
             zieleń w połączeniu z wygodnym życiem miejskim.
           </Typography>
-          <Box sx={{ mt: 3, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
+          <Box
+            sx={{
+              mt: 3,
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 2,
+            }}
+          >
             <FloatingTriangles />
             <Button
               variant="contained"
@@ -258,7 +267,16 @@ export function HomePageAlternative() {
             Każde mieszkanie ma możliwość adaptacji poddasza. Zyskujesz kolejny dodatkowy metraż. Każdy mieszkaniec
             będzie mógł cieszyć się prywatnym ogródkiem, a do każdego budynku jest przynależne miejsce parkingowe
           </Typography>
-          <Box sx={{ mt: 5, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
+          <Box
+            sx={{
+              mt: 5,
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 2,
+            }}
+          >
             <BrickWall
               loop={true}
               loopDelay={2}
@@ -285,7 +303,10 @@ export function HomePageAlternative() {
         <NearbyPlaces />
       </FadeInOnScroll>
 
-      <Box id="komfort-zycia" sx={{ backgroundColor: '#fff' }}>
+      <Box
+        id="komfort-zycia"
+        sx={{ backgroundColor: '#fff' }}
+      >
         <FeatureSection
           imageSrc={architekturaImage}
           subheading="Komfort Życia"
@@ -326,7 +347,16 @@ export function HomePageAlternative() {
             dnia.
           </Typography>
 
-          <Box sx={{ mt: 5, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
+          <Box
+            sx={{
+              mt: 5,
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 2,
+            }}
+          >
             <FloatingSquares />
             <Button
               variant="contained"
@@ -370,7 +400,10 @@ export function HomePageAlternative() {
       <Box sx={{ py: 12, backgroundColor: '#fff' }}>
         <CreditCalculator />
       </Box>
-      <Box id="mapa" sx={{ py: 12, backgroundColor: '#fff' }}>
+      <Box
+        id="mapa"
+        sx={{ py: 12, backgroundColor: '#fff' }}
+      >
         <Container maxWidth="lg">
           <Typography
             variant="h2"
@@ -437,9 +470,7 @@ export function HomePageAlternative() {
               variant="outlined"
               size="large"
               startIcon={<DownloadIcon />}
-              href={prospectusUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              {...(prospectusUrl ? { href: prospectusUrl, target: '_blank', rel: 'noopener noreferrer' } : {})}
               disabled={!prospectusUrl}
               sx={{
                 color: 'primary.main',
@@ -461,9 +492,7 @@ export function HomePageAlternative() {
               variant="outlined" // Inny styl dla drugiego przycisku
               size="large"
               startIcon={<ArticleIcon />}
-              href={_specsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              {...(_specsUrl ? { href: _specsUrl, target: '_blank', rel: 'noopener noreferrer' } : {})}
               disabled={!_specsUrl}
             >
               Harmonogram budowy

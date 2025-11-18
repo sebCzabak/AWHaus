@@ -20,6 +20,68 @@ import { db } from '../data/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import type { Investment, Apartment } from '../data/investments';
 
+// Helper function to format price with dots as thousands separators, comma for decimals, and add "zł"
+const formatPrice = (price: number | string | undefined | null): string => {
+  if (!price) return '-';
+  
+  let priceNum: number;
+  
+  if (typeof price === 'number') {
+    priceNum = price;
+  } else {
+    // Handle string formats like "639.220,80" or "639220.80" or "639220,80"
+    const priceStr = String(price);
+    
+    // Check if it has Polish format (dot for thousands, comma for decimal)
+    if (priceStr.includes(',') && priceStr.includes('.')) {
+      // Format: "639.220,80" - replace dot with nothing, comma with dot for parsing
+      const normalized = priceStr.replace(/\./g, '').replace(',', '.');
+      priceNum = parseFloat(normalized);
+    } else if (priceStr.includes(',')) {
+      // Format: "639220,80" - replace comma with dot
+      priceNum = parseFloat(priceStr.replace(',', '.'));
+    } else if (priceStr.includes('.')) {
+      // Format: "639220.80" or "639.220"
+      // Check if dot is decimal separator (only one dot, and it's followed by 1-2 digits at the end)
+      const dotIndex = priceStr.lastIndexOf('.');
+      const afterDot = priceStr.substring(dotIndex + 1);
+      // If after the last dot there are 1-2 digits and it's at the end, it's likely a decimal separator
+      if (afterDot.length <= 2 && /^\d+$/.test(afterDot) && dotIndex > 0) {
+        // It's a decimal separator (e.g., "639220.80")
+        priceNum = parseFloat(priceStr);
+      } else {
+        // It's thousands separators (e.g., "639.220")
+        const cleaned = priceStr.replace(/\./g, '');
+        priceNum = parseFloat(cleaned);
+      }
+    } else {
+      // No separators, just digits
+      priceNum = parseFloat(priceStr);
+    }
+  }
+  
+  if (isNaN(priceNum) || !isFinite(priceNum)) return '-';
+  
+  // Check if the number has decimal places
+  const hasDecimals = priceNum % 1 !== 0;
+  
+  if (hasDecimals) {
+    // Format with 2 decimal places: dot for thousands, comma for decimal (Polish format: 639.220,80)
+    const parts = priceNum.toFixed(2).split('.');
+    const integerPart = parseInt(parts[0], 10);
+    const decimalPart = parts[1];
+    
+    // Format integer part with dots as thousands separators
+    const formattedInteger = integerPart.toLocaleString('pl-PL', { useGrouping: true }).replace(/\s/g, '.');
+    
+    return `${formattedInteger},${decimalPart} zł`;
+  } else {
+    // No decimals: format with dots as thousands separators (Polish format: 499.000)
+    const formatted = Math.round(priceNum).toLocaleString('pl-PL', { useGrouping: true });
+    return `${formatted.replace(/\s/g, '.')} zł`;
+  }
+};
+
 interface FlatApartment extends Apartment {
   investmentId: string;
   investmentName: string;
@@ -163,7 +225,7 @@ export function ApartmentList() {
                   </Button>
                 </TableCell>
                 <TableCell sx={{ border: 'none', py: 2.5, color: '#212121', fontWeight: 500 }}>
-                  {apt.price || '-'}
+                  {formatPrice(apt.price)}
                 </TableCell>
               
                 <TableCell sx={{ border: 'none', py: 2.5 }}>

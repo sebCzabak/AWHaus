@@ -289,7 +289,52 @@ export function SingleInvestmentPage() {
                         primary={`Mieszkanie ${apt.id.toUpperCase()} - ${
                           typeof apt.area === 'number' ? apt.area.toFixed(2) : '??'
                         } m²`}
-                        secondary={`Cena: ${apt.price }, Pokoje: ${
+                        secondary={`Cena: ${(() => {
+                          if (!apt.price) return '-';
+                          
+                          let priceNum: number;
+                          if (typeof apt.price === 'number') {
+                            priceNum = apt.price;
+                          } else {
+                            const priceStr = String(apt.price);
+                            if (priceStr.includes(',') && priceStr.includes('.')) {
+                              const normalized = priceStr.replace(/\./g, '').replace(',', '.');
+                              priceNum = parseFloat(normalized);
+                            } else if (priceStr.includes(',')) {
+                              priceNum = parseFloat(priceStr.replace(',', '.'));
+                            } else if (priceStr.includes('.')) {
+                              // Format: "639220.80" or "639.220"
+                              // Check if dot is decimal separator
+                              const dotIndex = priceStr.lastIndexOf('.');
+                              const afterDot = priceStr.substring(dotIndex + 1);
+                              if (afterDot.length <= 2 && /^\d+$/.test(afterDot) && dotIndex > 0) {
+                                // It's a decimal separator (e.g., "639220.80")
+                                priceNum = parseFloat(priceStr);
+                              } else {
+                                // It's thousands separators (e.g., "639.220")
+                                const cleaned = priceStr.replace(/\./g, '');
+                                priceNum = parseFloat(cleaned);
+                              }
+                            } else {
+                              // No separators, just digits
+                              priceNum = parseFloat(priceStr);
+                            }
+                          }
+                          
+                          if (isNaN(priceNum) || !isFinite(priceNum)) return '-';
+                          
+                          const hasDecimals = priceNum % 1 !== 0;
+                          if (hasDecimals) {
+                            const parts = priceNum.toFixed(2).split('.');
+                            const integerPart = parseInt(parts[0], 10);
+                            const decimalPart = parts[1];
+                            const formattedInteger = integerPart.toLocaleString('pl-PL', { useGrouping: true }).replace(/\s/g, '.');
+                            return `${formattedInteger},${decimalPart} zł`;
+                          } else {
+                            const formatted = Math.round(priceNum).toLocaleString('pl-PL', { useGrouping: true });
+                            return `${formatted.replace(/\s/g, '.')} zł`;
+                          }
+                        })()}, Pokoje: ${
                           apt.rooms ?? '??'
                         }`}
                       />
