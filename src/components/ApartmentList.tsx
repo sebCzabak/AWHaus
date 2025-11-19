@@ -10,9 +10,9 @@ import {
   TableHead,
   TableRow,
   Button,
+  Chip,
 } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check'
-
+import CheckIcon from '@mui/icons-material/Check';
 
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
@@ -23,15 +23,15 @@ import type { Investment, Apartment } from '../data/investments';
 // Helper function to format price with dots as thousands separators, comma for decimals, and add "zł"
 const formatPrice = (price: number | string | undefined | null): string => {
   if (!price) return '-';
-  
+
   let priceNum: number;
-  
+
   if (typeof price === 'number') {
     priceNum = price;
   } else {
     // Handle string formats like "639.220,80" or "639220.80" or "639220,80"
     const priceStr = String(price);
-    
+
     // Check if it has Polish format (dot for thousands, comma for decimal)
     if (priceStr.includes(',') && priceStr.includes('.')) {
       // Format: "639.220,80" - replace dot with nothing, comma with dot for parsing
@@ -59,21 +59,21 @@ const formatPrice = (price: number | string | undefined | null): string => {
       priceNum = parseFloat(priceStr);
     }
   }
-  
+
   if (isNaN(priceNum) || !isFinite(priceNum)) return '-';
-  
+
   // Check if the number has decimal places
   const hasDecimals = priceNum % 1 !== 0;
-  
+
   if (hasDecimals) {
     // Format with 2 decimal places: dot for thousands, comma for decimal (Polish format: 639.220,80)
     const parts = priceNum.toFixed(2).split('.');
     const integerPart = parseInt(parts[0], 10);
     const decimalPart = parts[1];
-    
+
     // Format integer part with dots as thousands separators
     const formattedInteger = integerPart.toLocaleString('pl-PL', { useGrouping: true }).replace(/\s/g, '.');
-    
+
     return `${formattedInteger},${decimalPart} zł`;
   } else {
     // No decimals: format with dots as thousands separators (Polish format: 499.000)
@@ -107,7 +107,7 @@ export function ApartmentList() {
           });
         });
       });
-       allApartments.sort((a, b) => {
+      allApartments.sort((a, b) => {
         const numA = parseInt(a.id);
         const numB = parseInt(b.id);
         const charA = a.id.slice(-1);
@@ -115,7 +115,7 @@ export function ApartmentList() {
 
         if (numA < numB) return -1;
         if (numA > numB) return 1;
-        
+
         // Jeśli numery są takie same, sortuj po literze
         if (charA < charB) return -1;
         if (charA > charB) return 1;
@@ -158,10 +158,16 @@ export function ApartmentList() {
               <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Ekspozycja</TableCell>
               <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Ogród (m²)</TableCell>
               <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Status</TableCell>
-              <TableCell align="center" sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Premium</TableCell>
+              <TableCell
+                align="center"
+                sx={{ border: 'none', fontWeight: 600, color: '#212121' }}
+              >
+                Premium
+              </TableCell>
               <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Karta Lokalu</TableCell>
               <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Cena Brutto</TableCell>
-             
+              <TableCell sx={{ border: 'none', fontWeight: 600, color: '#212121' }}>Cena za m²</TableCell>
+
               <TableCell sx={{ border: 'none' }}></TableCell>
             </TableRow>
           </TableHead>
@@ -186,30 +192,56 @@ export function ApartmentList() {
                   },
                 }}
               >
-                <TableCell component="th" scope="row" sx={{ border: 'none', py: 2.5, color: '#212121' }}>
+                <TableCell
+                  component="th"
+                  scope="row"
+                  sx={{ border: 'none', py: 2.5, color: '#212121' }}
+                >
                   {apt.id.toUpperCase()}
                 </TableCell>
                 <TableCell sx={{ border: 'none', py: 2.5, color: '#212121', fontWeight: 500 }}>
                   {apt.area ? `${apt.area.toFixed(2)}m²` : '-'}
                 </TableCell>
-                <TableCell sx={{ border: 'none', py: 2.5, color: '#757575' }}>
-                  {apt.rooms || '-'}
-                </TableCell>
-                <TableCell sx={{ border: 'none', py: 2.5, color: '#757575' }}>
-                  {apt.exposure || '-'}
-                </TableCell>
+                <TableCell sx={{ border: 'none', py: 2.5, color: '#757575' }}>{apt.rooms || '-'}</TableCell>
+                <TableCell sx={{ border: 'none', py: 2.5, color: '#757575' }}>{apt.exposure || '-'}</TableCell>
                 <TableCell sx={{ border: 'none', py: 2.5, color: '#757575' }}>
                   {apt.gardenm2 ? `${apt.gardenm2} m²` : '-'}
                 </TableCell>
-                <TableCell sx={{ border: 'none', py: 2.5, color: '#757575' }}>
-                  {apt.status || '-'}
+                <TableCell sx={{ border: 'none', py: 2.5 }}>
+                  {apt.status ? (
+                    <Chip
+                      label={apt.status}
+                      size="small"
+                      sx={{
+                        backgroundColor:
+                          apt.status === 'dostępne'
+                            ? 'rgba(34, 175, 136, 0.1)'
+                            : apt.status === 'zarezerwowane'
+                            ? 'rgba(255, 193, 7, 0.15)'
+                            : 'rgba(211, 47, 47, 0.1)',
+                        color:
+                          apt.status === 'dostępne'
+                            ? '#22af88'
+                            : apt.status === 'zarezerwowane'
+                            ? '#ff9800'
+                            : '#d32f2f',
+                        fontWeight: 500,
+                        border: 'none',
+                      }}
+                    />
+                  ) : (
+                    '-'
+                  )}
                 </TableCell>
-                <TableCell align="center" sx={{ border: 'none', py: 2.5 }}>
+                <TableCell
+                  align="center"
+                  sx={{ border: 'none', py: 2.5 }}
+                >
                   {apt.isPremium && <CheckIcon sx={{ color: 'primary.main' }} />}
                 </TableCell>
                 <TableCell sx={{ border: 'none', py: 2.5 }}>
-                  <Button 
-                    variant="text" 
+                  <Button
+                    variant="text"
                     size="small"
                     sx={{
                       color: 'primary.main',
@@ -227,12 +259,49 @@ export function ApartmentList() {
                 <TableCell sx={{ border: 'none', py: 2.5, color: '#212121', fontWeight: 500 }}>
                   {formatPrice(apt.price)}
                 </TableCell>
-              
+                <TableCell sx={{ border: 'none', py: 2.5, color: '#212121', fontWeight: 500 }}>
+                  {(() => {
+                    // Use cenaM2 if available, otherwise calculate from price and area
+                    if (apt.cenaM2) {
+                      return formatPrice(apt.cenaM2);
+                    }
+                    if (apt.price && apt.area) {
+                      let priceNum: number;
+                      if (typeof apt.price === 'number') {
+                        priceNum = apt.price;
+                      } else {
+                        const priceStr = String(apt.price);
+                        if (priceStr.includes(',') && priceStr.includes('.')) {
+                          const normalized = priceStr.replace(/\./g, '').replace(',', '.');
+                          priceNum = parseFloat(normalized);
+                        } else if (priceStr.includes(',')) {
+                          priceNum = parseFloat(priceStr.replace(',', '.'));
+                        } else if (priceStr.includes('.')) {
+                          const dotIndex = priceStr.lastIndexOf('.');
+                          const afterDot = priceStr.substring(dotIndex + 1);
+                          if (afterDot.length <= 2 && /^\d+$/.test(afterDot) && dotIndex > 0) {
+                            priceNum = parseFloat(priceStr);
+                          } else {
+                            const cleaned = priceStr.replace(/\./g, '');
+                            priceNum = parseFloat(cleaned);
+                          }
+                        } else {
+                          priceNum = parseFloat(priceStr);
+                        }
+                      }
+                      if (!isNaN(priceNum) && isFinite(priceNum) && priceNum > 0 && apt.area > 0) {
+                        return formatPrice(priceNum / apt.area);
+                      }
+                    }
+                    return '-';
+                  })()}
+                </TableCell>
+
                 <TableCell sx={{ border: 'none', py: 2.5 }}>
-                  <Button 
-                    component={RouterLink} 
-                    to={`/oferta/${apt.investmentId}/${apt.id}`} 
-                    variant="outlined" 
+                  <Button
+                    component={RouterLink}
+                    to={`/oferta/${apt.investmentId}/${apt.id}`}
+                    variant="outlined"
                     size="small"
                     sx={{
                       color: 'primary.main',

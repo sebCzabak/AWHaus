@@ -82,7 +82,9 @@ const masonryData: MasonryItem[] = [
 export function HomePageAlternative() {
   const [prospectusUrl, setProspectusUrl] = useState('');
   const [_specsUrl, setSpecsUrl] = useState('');
+  const [etap1Url, setEtap1Url] = useState('');
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
+
   useEffect(() => {
     // Pobieramy link do naszego PDF-a ze Storage
     const fileRef = ref(storage, 'klient/Symfonia Górki.pdf');
@@ -91,10 +93,20 @@ export function HomePageAlternative() {
       .then((url) => setProspectusUrl(url))
       .catch((error) => console.error('Nie udało się pobrać linku do prospektu:', error));
   }, []);
-  const specsRef = ref(storage, 'klient/Harmonogram płatności AW Haus sp. z o.o. po korekcie.docx'); // Upewnij się, że nazwa pliku się zgadza
-  getDownloadURL(specsRef)
-    .then((url) => setSpecsUrl(url))
-    .catch((error) => console.error('Nie udało się pobrać linku do specyfikacji:', error));
+
+  useEffect(() => {
+    const specsRef = ref(storage, 'klient/Harmonogram płatności AW Haus sp. z o.o. po korekcie.docx');
+    getDownloadURL(specsRef)
+      .then((url) => setSpecsUrl(url))
+      .catch((error) => console.error('Nie udało się pobrać linku do specyfikacji:', error));
+  }, []);
+
+  useEffect(() => {
+    const etap1Ref = ref(storage, 'klient/AW HAUS - Prospekt informacyjny - etap 1.docx.pdf');
+    getDownloadURL(etap1Ref)
+      .then((url) => setEtap1Url(url))
+      .catch((error) => console.error('Nie udało się pobrać linku do prospektu etap 1:', error));
+  }, []);
 
   return (
     <>
@@ -262,10 +274,14 @@ export function HomePageAlternative() {
           <Typography
             paragraph
             color="text.secondary"
-            sx={{ fontSize: '1.2rem' }}
+            sx={{
+              fontSize: '1.2rem',
+              '& strong': { color: 'black' },
+            }}
           >
-            Każde mieszkanie ma możliwość adaptacji poddasza. Zyskujesz kolejny dodatkowy metraż. Każdy mieszkaniec
-            będzie mógł cieszyć się prywatnym ogródkiem, a do każdego budynku jest przynależne miejsce parkingowe
+            <strong> Każde mieszkanie ma możliwość adaptacji poddasza.</strong> Zyskujesz kolejny dodatkowy metraż.
+            Każdy mieszkaniec będzie mógł cieszyć się prywatnym ogródkiem, a do każdego budynku jest przynależne miejsce
+            parkingowe
           </Typography>
           <Box
             sx={{
@@ -485,17 +501,51 @@ export function HomePageAlternative() {
                 },
               }}
             >
-              Prospekt Informacyjny
+              Broszura Informacyjna
             </Button>
 
             <Button
-              variant="outlined" // Inny styl dla drugiego przycisku
+              variant="outlined"
               size="large"
               startIcon={<ArticleIcon />}
               {...(_specsUrl ? { href: _specsUrl, target: '_blank', rel: 'noopener noreferrer' } : {})}
               disabled={!_specsUrl}
+              sx={{
+                color: 'primary.main',
+                borderColor: 'primary.main',
+                textTransform: 'none',
+                fontWeight: 500,
+                px: 4,
+                py: 1.5,
+                '&:hover': {
+                  borderColor: 'primary.main',
+                  backgroundColor: 'rgba(0, 131, 99, 0.04)',
+                },
+              }}
             >
-              Harmonogram budowy
+              Harmonogram płatności
+            </Button>
+
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<DownloadIcon />}
+              {...(etap1Url ? { href: etap1Url, target: '_blank', rel: 'noopener noreferrer' } : {})}
+              disabled={!etap1Url}
+              sx={{
+                color: 'primary.main',
+                borderColor: 'primary.main',
+                textTransform: 'none',
+                fontWeight: 500,
+                px: 4,
+                py: 1.5,
+                '&:hover': {
+                  borderColor: 'primary.main',
+                  backgroundColor: 'rgba(0, 131, 99, 0.04)',
+                },
+              }}
+            >
+              Prospekt informacyjny - etap 1
             </Button>
           </Stack>
         </Container>
