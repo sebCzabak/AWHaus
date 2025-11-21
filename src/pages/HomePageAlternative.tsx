@@ -504,7 +504,7 @@ export function HomePageAlternative() {
               Broszura Informacyjna
             </Button>
 
-            <Button
+            {/* <Button
               variant="outlined"
               size="large"
               startIcon={<ArticleIcon />}
@@ -524,7 +524,7 @@ export function HomePageAlternative() {
               }}
             >
               Harmonogram płatności
-            </Button>
+            </Button> */}
 
             <Button
               variant="outlined"
